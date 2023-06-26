@@ -1,0 +1,18 @@
+import ctypes
+
+# Load the DLL
+dll = ctypes.cdll.LoadLibrary('dlls/mydll.dll')
+
+# Call the process_image function
+dll.process_image(b'p_image/my_image.png')
+
+#Load the dynamic link library (.dll) file using the ctypes.WinDLL() function. You need to provide the path to the .dll file as an argument to the function.
+mydll = ctypes.WinDLL('path/to/mydll.dll')
+
+
+#Once the DLL is loaded, you can access its functions using the ctypes.CDLL object. You can define the return type and argument types of the functions using the .restype and .argtypes attributes, respectively.
+mydll.my_function.restype = ctypes.c_int
+mydll.my_function.argtypes = [ctypes.c_int, ctypes.c_int]
+
+#Finally, you can call the functions using the .call() method.
+result = mydll.my_function(2, 3)
