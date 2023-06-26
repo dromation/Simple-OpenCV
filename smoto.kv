@@ -1,0 +1,160 @@
+#:import KivyLexer kivy.extras.highlight.KivyLexer
+#:import Factory kivy.factory.Factory
+# SMOTO version 0.01
+
+
+MDBoxLayout:
+    screen_manager: sm
+    toolbar: toolbar
+    size: root.width, root.height
+    orientation: "vertical"
+    #pos_hint: {'center_x': 0.0, 'center_y': 0.0}
+    #adaptive_height: True
+    #md_bg_color: app.theme_cls.primary_color
+    #MDBoxLayout:
+        #orientation: "horizontal"
+        #size_hint: 1, 0.1
+        #pos_hint: {"center_x": .5, "center_y": 0.9}
+
+    MDTopAppBar:
+        id: toolbar
+        use_overflow: True
+        #text: "Simple OpenCV"        
+        pos_hint: {"top": 1}
+        size_hint_x: 1
+        left_action_items: [["home"],["menu", lambda x: app.callback(x)],["file", lambda x: app.file_manager_open()]]
+        right_action_items: [["tools", lambda x: sm.current == 'home'],["information", lambda x: app.app_timer()],["help", lambda x: app.help()]]
+        md_bg_color: app.theme_cls.primary_color
+
+
+
+    ScreenManager:
+        id: sm
+        size_hint: 1, 0.9
+        pos_hint: {"center_x": .5, "center_y": 0.5}
+        
+        HomeScreen:
+            id: home
+            name: "HomeScreen"
+           
+
+
+        CameraScreen:
+            id: camproc
+            name: "CameraScreen"
+            orientation: "vertical"
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            
+
+
+            
+            
+            
+            MDBottomNavigation:
+                #color
+                #panel_color: 0,0,1,.5ww
+
+                MDBottomNavigationItem:
+                    id: images
+
+                    name: 'images'
+                    text: "Image Settings"
+                    icon: 'image'
+                    
+                
+                    MDFloatLayout:
+                        text: "Home"
+                        pos_hint: {"center_x": .5, "center_y": 0.5}
+                        
+                                        
+
+                        #MDFloatingActionButtonSpeedDial:
+                         #   data: app.imagemenus
+                          #  root_button_anim: True
+                            #label_text_color: 1,0,0,1 #texti poleg gumbov
+                            #bg_color_stack_button:1,0,0,1 #gumbi v meniju 
+                            #bg_color_root_button: 1,0,0,1 #gumb za meni
+                            #color_icon_root_button: 1,0,0,1 #znak v gumba meni
+                            #color_icon_stack_button: 1,0,0,1 #barva ikon
+                           # bg_hint_color: 'red' #ko odpres meni se barva spremeni
+
+                            #callback: app.imgcallback
+
+                            #odpri
+                            #on_open: app.imgopen()
+                            #on_close: app.imgclose()
+
+                        
+
+                MDBottomNavigationItem:
+                    id: templates
+                    name: 'templates'
+                    text: "Image Processing"
+                    icon: 'image-filter-none'
+                    MDFloatLayout:
+                        text: "Home"
+                        pos_hint: {"center_x": .5, "center_y": 0.5}
+                        
+                        MDRaisedButton:
+                            text: "Next"
+                            pos_hint: {"center_x": .5, "center_y": 0.5}
+                            md_bg_color: toolbar.md_bg_color
+                            on_release: sm.current = 'home'
+
+                        #MDFloatingActionButtonSpeedDial:
+                         #   data: app.templatecoms
+                          #  root_button_anim: True
+                            #label_text_color: 1,0,0,1 #texti poleg gumbov
+                            #bg_color_stack_button:1,0,0,1 #gumbi v meniju 
+                            #bg_color_root_button: 1,0,0,1 #gumb za meni
+                            #color_icon_root_button: 1,0,0,1 #znak v gumba meni
+                            #color_icon_stack_button: 1,0,0,1 #barva ikon
+                           # bg_hint_color: 'red' #ko odpres meni se barva spremeni
+
+                           # callback: app.tmpcallback
+
+                            #odpri
+                            #on_open: app.tmpopen()
+                            #on_close: app.tmpclose()
+                        
+                MDBottomNavigationItem:
+                    name: 'screen 3'
+                    text: "Camera Settings"
+                    icon: 'camera'
+                    MDBoxLayout:
+                        orientation: "vertical"
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                        
+                        Camera:
+                            id: camera
+                            pos_hint: {"center_x": 0.5, "center_y": 0.6}
+                            play: False
+
+                        MDFloatingActionButton:
+                            #text: 'Play'
+                            icon: 'record'
+                            on_press: camera.play = not camera.play
+                            size_hint_y: None
+                            height: '48dp'
+                            pos_hint: {"center_x": 0.5, "center_y": 0.1}
+
+                        MDRaisedButton:
+                            text: 'Capture'
+                            size_hint_y: None
+                            height: '48dp'
+                            pos_hint: {"center_x": 0.5, "center_y": 0.05}
+
+                            on_press: root.capture()
+
+                MDBottomNavigationItem:
+                    name: 'screen 4'
+                    text: "Machine Vision"
+                    icon: 'camera-control'
+
+                    MDBoxLayout:
+                        size_hint: 0.8, 0.5
+                        pos_hint: {'center_x': .5, 'center_y': 0.6}
+                    MDLabel:
+                        text: "Machine Vision Controls"
+                        halign: 'center'
+
