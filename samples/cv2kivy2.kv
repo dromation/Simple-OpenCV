@@ -1,0 +1,12 @@
+<CameraScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        
+        Image:
+            id: camera
+            allow_stretch: True
+
+        MDIconButton:
+            icon: 'camera'
+            pos_hint: {'center_x': 0.5}
+            on_release: root.start_camera() if not root.ids.camera.texture else root.stop_camera()
