@@ -1,0 +1,13 @@
+CameraScreen:
+    name: "CameraScreen"
+    MDRaisedButton:
+        text: "Back Home"
+        pos_hint: {"center_x": .5, "center_y": .4}
+        on_release:
+            for screen_name in app.screen_names:
+                if screen_manager.current == screen_name:
+                    continue
+                app.load_screen(screen_name)
+                screen_manager.current = screen_name
+                break
+        md_bg_color: toolbar.md_bg_color
