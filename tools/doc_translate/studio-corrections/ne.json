@@ -1,0 +1,97 @@
+{
+  "status": "targeted interface terminology corrections; native technical review pending",
+  "entries": {
+    "save": {
+      "source": "Save state",
+      "translation": "अवस्था सुरक्षित गर्नुहोस्"
+    },
+    "run": {
+      "source": "Run",
+      "translation": "चलाउनुहोस्"
+    },
+    "pause": {
+      "source": "Pause",
+      "translation": "रोक्नुहोस्"
+    },
+    "unsaved": {
+      "source": "Unsaved",
+      "translation": "सुरक्षित गरिएको छैन"
+    },
+    "saved": {
+      "source": "Saved",
+      "translation": "सुरक्षित गरियो"
+    },
+    "undo": {
+      "source": "Undo",
+      "translation": "पूर्ववत् गर्नुहोस्"
+    },
+    "redo": {
+      "source": "Redo",
+      "translation": "फेरि गर्नुहोस्"
+    },
+    "close": {
+      "source": "Close",
+      "translation": "बन्द गर्नुहोस्"
+    },
+    "closeBlock": {
+      "source": "Remove block",
+      "translation": "ब्लक हटाउनुहोस्"
+    },
+    "gain": {
+      "source": "Display gain",
+      "translation": "प्रदर्शन गेन"
+    },
+    "signed": {
+      "source": "Signed signal",
+      "translation": "चिह्नसहितको सङ्केत"
+    },
+    "confidenceBlock": {
+      "source": "Confidence A",
+      "translation": "विश्वसनीयता A"
+    },
+    "export": {
+      "source": "Export Python",
+      "translation": "Python निर्यात गर्नुहोस्"
+    },
+    "import": {
+      "source": "Import JSON",
+      "translation": "JSON आयात गर्नुहोस्"
+    },
+    "step": {
+      "source": "Single frame",
+      "translation": "एउटा फ्रेम"
+    },
+    "channelsBlock": {
+      "source": "RGB channels",
+      "translation": "RGB च्यानलहरू"
+    },
+    "differenceBlock": {
+      "source": "Frame difference",
+      "translation": "फ्रेमको अन्तर"
+    },
+    "algebraBlock": {
+      "source": "Channel algebra",
+      "translation": "च्यानल बीजगणित"
+    },
+    "gaussianBlock": {
+      "source": "Gaussian",
+      "translation": "गाउसियन फिल्टर"
+    },
+    "medianBlock": {
+      "source": "Median",
+      "translation": "मध्यिका फिल्टर"
+    },
+    "kernelBlock": {
+      "source": "Custom kernel",
+      "translation": "अनुकूलित कर्नेल"
+    },
+    "thresholdBlock": {
+      "source": "Threshold",
+      "translation": "सीमा मान"
+    },
+    "threshold": {
+      "source": "Threshold",
+      "translation": "सीमा मान"
+    }
+  }
+}

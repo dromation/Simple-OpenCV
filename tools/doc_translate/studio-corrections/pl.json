@@ -1,0 +1,97 @@
+{
+  "status": "targeted interface terminology corrections; native technical review pending",
+  "entries": {
+    "save": {
+      "source": "Save state",
+      "translation": "Zapisz stan"
+    },
+    "run": {
+      "source": "Run",
+      "translation": "Uruchom"
+    },
+    "pause": {
+      "source": "Pause",
+      "translation": "Pauza"
+    },
+    "unsaved": {
+      "source": "Unsaved",
+      "translation": "Niezapisane"
+    },
+    "saved": {
+      "source": "Saved",
+      "translation": "Zapisane"
+    },
+    "undo": {
+      "source": "Undo",
+      "translation": "Cofnij"
+    },
+    "redo": {
+      "source": "Redo",
+      "translation": "Ponów"
+    },
+    "close": {
+      "source": "Close",
+      "translation": "Zamknij"
+    },
+    "closeBlock": {
+      "source": "Remove block",
+      "translation": "Usuń blok"
+    },
+    "gain": {
+      "source": "Display gain",
+      "translation": "Wzmocnienie wyświetlania"
+    },
+    "signed": {
+      "source": "Signed signal",
+      "translation": "Sygnał ze znakiem"
+    },
+    "confidenceBlock": {
+      "source": "Confidence A",
+      "translation": "Wiarygodność A"
+    },
+    "export": {
+      "source": "Export Python",
+      "translation": "Eksportuj Python"
+    },
+    "import": {
+      "source": "Import JSON",
+      "translation": "Importuj JSON"
+    },
+    "step": {
+      "source": "Single frame",
+      "translation": "Jedna klatka"
+    },
+    "channelsBlock": {
+      "source": "RGB channels",
+      "translation": "Kanały RGB"
+    },
+    "differenceBlock": {
+      "source": "Frame difference",
+      "translation": "Różnica klatek"
+    },
+    "algebraBlock": {
+      "source": "Channel algebra",
+      "translation": "Algebra kanałów"
+    },
+    "gaussianBlock": {
+      "source": "Gaussian",
+      "translation": "Filtr Gaussa"
+    },
+    "medianBlock": {
+      "source": "Median",
+      "translation": "Filtr medianowy"
+    },
+    "kernelBlock": {
+      "source": "Custom kernel",
+      "translation": "Własne jądro"
+    },
+    "thresholdBlock": {
+      "source": "Threshold",
+      "translation": "Próg"
+    },
+    "threshold": {
+      "source": "Threshold",
+      "translation": "Próg"
+    }
+  }
+}

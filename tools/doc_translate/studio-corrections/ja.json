@@ -1,0 +1,97 @@
+{
+  "status": "targeted interface terminology corrections; native technical review pending",
+  "entries": {
+    "save": {
+      "source": "Save state",
+      "translation": "状態を保存"
+    },
+    "run": {
+      "source": "Run",
+      "translation": "実行"
+    },
+    "pause": {
+      "source": "Pause",
+      "translation": "一時停止"
+    },
+    "unsaved": {
+      "source": "Unsaved",
+      "translation": "未保存"
+    },
+    "saved": {
+      "source": "Saved",
+      "translation": "保存済み"
+    },
+    "undo": {
+      "source": "Undo",
+      "translation": "元に戻す"
+    },
+    "redo": {
+      "source": "Redo",
+      "translation": "やり直す"
+    },
+    "close": {
+      "source": "Close",
+      "translation": "閉じる"
+    },
+    "closeBlock": {
+      "source": "Remove block",
+      "translation": "ブロックを削除"
+    },
+    "gain": {
+      "source": "Display gain",
+      "translation": "表示ゲイン"
+    },
+    "signed": {
+      "source": "Signed signal",
+      "translation": "符号付き信号"
+    },
+    "confidenceBlock": {
+      "source": "Confidence A",
+      "translation": "信頼度 A"
+    },
+    "export": {
+      "source": "Export Python",
+      "translation": "Python をエクスポート"
+    },
+    "import": {
+      "source": "Import JSON",
+      "translation": "JSON をインポート"
+    },
+    "step": {
+      "source": "Single frame",
+      "translation": "1 フレーム"
+    },
+    "channelsBlock": {
+      "source": "RGB channels",
+      "translation": "RGB チャンネル"
+    },
+    "differenceBlock": {
+      "source": "Frame difference",
+      "translation": "フレーム差分"
+    },
+    "algebraBlock": {
+      "source": "Channel algebra",
+      "translation": "チャンネル演算"
+    },
+    "gaussianBlock": {
+      "source": "Gaussian",
+      "translation": "ガウシアン"
+    },
+    "medianBlock": {
+      "source": "Median",
+      "translation": "メディアン"
+    },
+    "kernelBlock": {
+      "source": "Custom kernel",
+      "translation": "カスタムカーネル"
+    },
+    "thresholdBlock": {
+      "source": "Threshold",
+      "translation": "しきい値"
+    },
+    "threshold": {
+      "source": "Threshold",
+      "translation": "しきい値"
+    }
+  }
+}

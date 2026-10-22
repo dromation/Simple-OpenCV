@@ -114,3 +114,7 @@ protected inline spans are copied exactly. Generated translations are labelled
 machine-unreviewed, with English comparison in the guide. The original PDF
 manuals remain in English. No translation service or API key is required.
 The language registry and flat catalog CLI are reusable for future instructions.
+
+## Studio interface catalogs
+
+`src/simplemotocam/studio_ui/i18n/en.json` and `sl.json` are authored interface catalogs. Run `Update-Studio-Translations.cmd` to translate the other 19 languages locally and rebuild `studio_ui/i18n.js`. Equations and user-entered channel identifiers are never translated. `studio-corrections/` preserves targeted terminology corrections (for example, the software meanings of “save state” and “run”); the bundle rejects stale corrections. These remain machine drafts pending native technical review. No translation model is needed to run the application.

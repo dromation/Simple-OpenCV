@@ -1,0 +1,97 @@
+{
+  "status": "targeted interface terminology corrections; native technical review pending",
+  "entries": {
+    "save": {
+      "source": "Save state",
+      "translation": "상태 저장"
+    },
+    "run": {
+      "source": "Run",
+      "translation": "실행"
+    },
+    "pause": {
+      "source": "Pause",
+      "translation": "일시 정지"
+    },
+    "unsaved": {
+      "source": "Unsaved",
+      "translation": "저장되지 않음"
+    },
+    "saved": {
+      "source": "Saved",
+      "translation": "저장됨"
+    },
+    "undo": {
+      "source": "Undo",
+      "translation": "실행 취소"
+    },
+    "redo": {
+      "source": "Redo",
+      "translation": "다시 실행"
+    },
+    "close": {
+      "source": "Close",
+      "translation": "닫기"
+    },
+    "closeBlock": {
+      "source": "Remove block",
+      "translation": "블록 제거"
+    },
+    "gain": {
+      "source": "Display gain",
+      "translation": "표시 게인"
+    },
+    "signed": {
+      "source": "Signed signal",
+      "translation": "부호 있는 신호"
+    },
+    "confidenceBlock": {
+      "source": "Confidence A",
+      "translation": "신뢰도 A"
+    },
+    "export": {
+      "source": "Export Python",
+      "translation": "Python 내보내기"
+    },
+    "import": {
+      "source": "Import JSON",
+      "translation": "JSON 가져오기"
+    },
+    "step": {
+      "source": "Single frame",
+      "translation": "한 프레임"
+    },
+    "channelsBlock": {
+      "source": "RGB channels",
+      "translation": "RGB 채널"
+    },
+    "differenceBlock": {
+      "source": "Frame difference",
+      "translation": "프레임 차이"
+    },
+    "algebraBlock": {
+      "source": "Channel algebra",
+      "translation": "채널 대수"
+    },
+    "gaussianBlock": {
+      "source": "Gaussian",
+      "translation": "가우시안 필터"
+    },
+    "medianBlock": {
+      "source": "Median",
+      "translation": "중앙값 필터"
+    },
+    "kernelBlock": {
+      "source": "Custom kernel",
+      "translation": "사용자 정의 커널"
+    },
+    "thresholdBlock": {
+      "source": "Threshold",
+      "translation": "임계값"
+    },
+    "threshold": {
+      "source": "Threshold",
+      "translation": "임계값"
+    }
+  }
+}

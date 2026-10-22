@@ -663,3 +663,155 @@ dialog::backdrop {
   background: #06655e;
   color: white;
 }
+
+/* Shared application language and in-place classroom. */
+header {
+  flex-wrap: wrap;
+}
+.app-language {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 9px;
+  color: #658477;
+  max-width: 170px;
+}
+.app-language select {
+  max-width: 170px;
+}
+.toolbar {
+  flex-wrap: wrap;
+  height: auto;
+  min-height: 45px;
+  padding-block: 8px;
+}
+.interface-draft {
+  color: #987326;
+  font-size: 10px;
+  max-width: 250px;
+}
+.text-button {
+  border: 0;
+  background: transparent;
+  color: var(--teal);
+  padding: 4px 0;
+  text-align: start;
+}
+.node-head {
+  padding-right: 23px;
+}
+.node-close {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 27px;
+  height: 27px;
+  padding: 0;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #759288;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+.node-close:hover {
+  color: #ae3b3b;
+  background: #fff0ed;
+}
+#classroom {
+  width: min(1320px, 96vw);
+  max-width: 96vw;
+  height: 92dvh;
+  max-height: 92dvh;
+  padding: 0;
+  overflow: hidden;
+}
+#classroom[open] {
+  display: flex;
+  flex-direction: column;
+}
+.classroom-head {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  padding: 15px 52px 15px 20px;
+  border-bottom: 1px solid var(--line);
+  background: #f5faf7;
+}
+.classroom-head h2 {
+  margin: 0;
+}
+#closeClassroom {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  font-size: 23px;
+  padding: 0;
+}
+#classroomFrame {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  border: 0;
+  background: white;
+}
+.formula,
+pre,
+textarea,
+[data-parameter="output"],
+#graph {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+html[dir="rtl"] .node {
+  direction: rtl;
+}
+html[dir="rtl"] .node-head {
+  padding-left: 0;
+}
+html[dir="rtl"] .library-card {
+  text-align: right;
+}
+html[dir="rtl"] #name {
+  margin-left: 0;
+  margin-right: 15px;
+}
+@media (min-width: 1151px) {
+  body {
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+  main {
+    flex: 1;
+    height: auto;
+    min-height: 0;
+  }
+  header,
+  .toolbar,
+  footer {
+    flex-shrink: 0;
+  }
+}
+@media (max-width: 650px) {
+  .app-language {
+    max-width: 100%;
+    flex: 1;
+  }
+  .app-language select {
+    max-width: 100%;
+  }
+  #classroom {
+    width: 98vw;
+    max-width: 98vw;
+    height: 96dvh;
+    max-height: 96dvh;
+  }
+  html[dir="rtl"] #name {
+    margin: 0;
+  }
+}

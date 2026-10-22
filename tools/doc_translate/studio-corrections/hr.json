@@ -1,0 +1,97 @@
+{
+  "status": "targeted interface terminology corrections; native technical review pending",
+  "entries": {
+    "save": {
+      "source": "Save state",
+      "translation": "Spremi stanje"
+    },
+    "run": {
+      "source": "Run",
+      "translation": "Pokreni"
+    },
+    "pause": {
+      "source": "Pause",
+      "translation": "Pauza"
+    },
+    "unsaved": {
+      "source": "Unsaved",
+      "translation": "Nespremljeno"
+    },
+    "saved": {
+      "source": "Saved",
+      "translation": "Spremljeno"
+    },
+    "undo": {
+      "source": "Undo",
+      "translation": "Poništi"
+    },
+    "redo": {
+      "source": "Redo",
+      "translation": "Ponovi"
+    },
+    "close": {
+      "source": "Close",
+      "translation": "Zatvori"
+    },
+    "closeBlock": {
+      "source": "Remove block",
+      "translation": "Ukloni blok"
+    },
+    "gain": {
+      "source": "Display gain",
+      "translation": "Pojačanje prikaza"
+    },
+    "signed": {
+      "source": "Signed signal",
+      "translation": "Signal s predznakom"
+    },
+    "confidenceBlock": {
+      "source": "Confidence A",
+      "translation": "Pouzdanost A"
+    },
+    "export": {
+      "source": "Export Python",
+      "translation": "Izvezi Python"
+    },
+    "import": {
+      "source": "Import JSON",
+      "translation": "Uvezi JSON"
+    },
+    "step": {
+      "source": "Single frame",
+      "translation": "Jedna sličica"
+    },
+    "channelsBlock": {
+      "source": "RGB channels",
+      "translation": "RGB kanali"
+    },
+    "differenceBlock": {
+      "source": "Frame difference",
+      "translation": "Razlika sličica"
+    },
+    "algebraBlock": {
+      "source": "Channel algebra",
+      "translation": "Algebra kanala"
+    },
+    "gaussianBlock": {
+      "source": "Gaussian",
+      "translation": "Gaussov filtar"
+    },
+    "medianBlock": {
+      "source": "Median",
+      "translation": "Medijanski filtar"
+    },
+    "kernelBlock": {
+      "source": "Custom kernel",
+      "translation": "Vlastita jezgra"
+    },
+    "thresholdBlock": {
+      "source": "Threshold",
+      "translation": "Prag"
+    },
+    "threshold": {
+      "source": "Threshold",
+      "translation": "Prag"
+    }
+  }
+}

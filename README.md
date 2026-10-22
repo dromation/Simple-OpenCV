@@ -67,9 +67,13 @@ The integrated learning companion covers channels, differences, algebra, confide
 
 Slovenščina · English · 日本語 · 中文 · Deutsch · Hrvatski · Српски · Русский · हिन्दी · Español · العربية · 한국어 · Italiano · Français · Polski · Svenska · Português · Bahasa Indonesia · ไทย · বাংলা · नेपाली
 
-![Japanese explanation in the actual studio, with the English original available for comparison](docs/images/studio-japanese.png)
+![Japanese interface and explanation in the actual studio](docs/images/studio-japanese.png)
 
-The studio controls are currently Slovenian. English and Slovenian lessons are authored; **the other 19 explanation languages are machine drafts**, visibly labelled and accompanied by the English original. Optional open-source [M2M100/CTranslate2 tooling](tools/doc_translate/README.md) generates the local catalogs. Equations and code remain protected. This is an eight-topic companion, not a translation of the entire OpenCV documentation.
+![Classroom displayed over the same application](docs/images/studio-classroom.png)
+
+One language selector in the application header updates the studio controls, block library, parameters and lesson inspector together. The classroom opens as an overlay inside the studio; changing its language also updates the application. Close it with × or Escape to return to the same experiment. Block removal uses × in the top-right corner of each removable card.
+
+English and Slovenian interface text and lessons are authored; **the other 19 languages are machine drafts**, visibly labelled and accompanied by the English original. Optional open-source [M2M100/CTranslate2 tooling](tools/doc_translate/README.md) generates the local catalogs. Equations and code remain protected. This is an eight-topic companion, not a translation of the entire OpenCV documentation.
 
 Three unchanged [official OpenCV 2.4 PDF manuals](docs/opencv-2.4-manuals/README.md) are included for offline study. The application runs on **OpenCV 4**; the archived OpenCV 2.4 source and old examples are historical references.
 

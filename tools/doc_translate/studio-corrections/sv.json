@@ -1,0 +1,97 @@
+{
+  "status": "targeted interface terminology corrections; native technical review pending",
+  "entries": {
+    "save": {
+      "source": "Save state",
+      "translation": "Spara tillstånd"
+    },
+    "run": {
+      "source": "Run",
+      "translation": "Kör"
+    },
+    "pause": {
+      "source": "Pause",
+      "translation": "Pausa"
+    },
+    "unsaved": {
+      "source": "Unsaved",
+      "translation": "Osparat"
+    },
+    "saved": {
+      "source": "Saved",
+      "translation": "Sparat"
+    },
+    "undo": {
+      "source": "Undo",
+      "translation": "Ångra"
+    },
+    "redo": {
+      "source": "Redo",
+      "translation": "Gör om"
+    },
+    "close": {
+      "source": "Close",
+      "translation": "Stäng"
+    },
+    "closeBlock": {
+      "source": "Remove block",
+      "translation": "Ta bort block"
+    },
+    "gain": {
+      "source": "Display gain",
+      "translation": "Visningsförstärkning"
+    },
+    "signed": {
+      "source": "Signed signal",
+      "translation": "Signal med tecken"
+    },
+    "confidenceBlock": {
+      "source": "Confidence A",
+      "translation": "Tillförlitlighet A"
+    },
+    "export": {
+      "source": "Export Python",
+      "translation": "Exportera Python"
+    },
+    "import": {
+      "source": "Import JSON",
+      "translation": "Importera JSON"
+    },
+    "step": {
+      "source": "Single frame",
+      "translation": "En bildruta"
+    },
+    "channelsBlock": {
+      "source": "RGB channels",
+      "translation": "RGB-kanaler"
+    },
+    "differenceBlock": {
+      "source": "Frame difference",
+      "translation": "Bilddifferens"
+    },
+    "algebraBlock": {
+      "source": "Channel algebra",
+      "translation": "Kanalalgebra"
+    },
+    "gaussianBlock": {
+      "source": "Gaussian",
+      "translation": "Gaussfilter"
+    },
+    "medianBlock": {
+      "source": "Median",
+      "translation": "Medianfilter"
+    },
+    "kernelBlock": {
+      "source": "Custom kernel",
+      "translation": "Egen filterkärna"
+    },
+    "thresholdBlock": {
+      "source": "Threshold",
+      "translation": "Tröskelvärde"
+    },
+    "threshold": {
+      "source": "Threshold",
+      "translation": "Tröskelvärde"
+    }
+  }
+}

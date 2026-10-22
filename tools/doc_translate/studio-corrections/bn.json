@@ -1,0 +1,97 @@
+{
+  "status": "targeted interface terminology corrections; native technical review pending",
+  "entries": {
+    "save": {
+      "source": "Save state",
+      "translation": "অবস্থা সংরক্ষণ করুন"
+    },
+    "run": {
+      "source": "Run",
+      "translation": "চালান"
+    },
+    "pause": {
+      "source": "Pause",
+      "translation": "বিরতি"
+    },
+    "unsaved": {
+      "source": "Unsaved",
+      "translation": "সংরক্ষিত নয়"
+    },
+    "saved": {
+      "source": "Saved",
+      "translation": "সংরক্ষিত"
+    },
+    "undo": {
+      "source": "Undo",
+      "translation": "পূর্বাবস্থায় ফেরান"
+    },
+    "redo": {
+      "source": "Redo",
+      "translation": "পুনরায় করুন"
+    },
+    "close": {
+      "source": "Close",
+      "translation": "বন্ধ করুন"
+    },
+    "closeBlock": {
+      "source": "Remove block",
+      "translation": "ব্লক সরান"
+    },
+    "gain": {
+      "source": "Display gain",
+      "translation": "প্রদর্শন গেইন"
+    },
+    "signed": {
+      "source": "Signed signal",
+      "translation": "চিহ্নযুক্ত সংকেত"
+    },
+    "confidenceBlock": {
+      "source": "Confidence A",
+      "translation": "নির্ভরযোগ্যতা A"
+    },
+    "export": {
+      "source": "Export Python",
+      "translation": "Python রপ্তানি করুন"
+    },
+    "import": {
+      "source": "Import JSON",
+      "translation": "JSON আমদানি করুন"
+    },
+    "step": {
+      "source": "Single frame",
+      "translation": "একটি ফ্রেম"
+    },
+    "channelsBlock": {
+      "source": "RGB channels",
+      "translation": "RGB চ্যানেল"
+    },
+    "differenceBlock": {
+      "source": "Frame difference",
+      "translation": "ফ্রেমের পার্থক্য"
+    },
+    "algebraBlock": {
+      "source": "Channel algebra",
+      "translation": "চ্যানেল বীজগণিত"
+    },
+    "gaussianBlock": {
+      "source": "Gaussian",
+      "translation": "গাউসীয় ফিল্টার"
+    },
+    "medianBlock": {
+      "source": "Median",
+      "translation": "মধ্যমা ফিল্টার"
+    },
+    "kernelBlock": {
+      "source": "Custom kernel",
+      "translation": "কাস্টম কার্নেল"
+    },
+    "thresholdBlock": {
+      "source": "Threshold",
+      "translation": "সীমামান"
+    },
+    "threshold": {
+      "source": "Threshold",
+      "translation": "সীমামান"
+    }
+  }
+}

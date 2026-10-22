@@ -1,0 +1,97 @@
+{
+  "status": "targeted interface terminology corrections; native technical review pending",
+  "entries": {
+    "save": {
+      "source": "Save state",
+      "translation": "حفظ الحالة"
+    },
+    "run": {
+      "source": "Run",
+      "translation": "تشغيل"
+    },
+    "pause": {
+      "source": "Pause",
+      "translation": "إيقاف مؤقت"
+    },
+    "unsaved": {
+      "source": "Unsaved",
+      "translation": "غير محفوظ"
+    },
+    "saved": {
+      "source": "Saved",
+      "translation": "محفوظ"
+    },
+    "undo": {
+      "source": "Undo",
+      "translation": "تراجع"
+    },
+    "redo": {
+      "source": "Redo",
+      "translation": "إعادة"
+    },
+    "close": {
+      "source": "Close",
+      "translation": "إغلاق"
+    },
+    "closeBlock": {
+      "source": "Remove block",
+      "translation": "إزالة الكتلة"
+    },
+    "gain": {
+      "source": "Display gain",
+      "translation": "كسب العرض"
+    },
+    "signed": {
+      "source": "Signed signal",
+      "translation": "إشارة ذات إشارة جبرية"
+    },
+    "confidenceBlock": {
+      "source": "Confidence A",
+      "translation": "الموثوقية A"
+    },
+    "export": {
+      "source": "Export Python",
+      "translation": "تصدير Python"
+    },
+    "import": {
+      "source": "Import JSON",
+      "translation": "استيراد JSON"
+    },
+    "step": {
+      "source": "Single frame",
+      "translation": "إطار واحد"
+    },
+    "channelsBlock": {
+      "source": "RGB channels",
+      "translation": "قنوات RGB"
+    },
+    "differenceBlock": {
+      "source": "Frame difference",
+      "translation": "فرق الإطارات"
+    },
+    "algebraBlock": {
+      "source": "Channel algebra",
+      "translation": "جبر القنوات"
+    },
+    "gaussianBlock": {
+      "source": "Gaussian",
+      "translation": "مرشح غاوسي"
+    },
+    "medianBlock": {
+      "source": "Median",
+      "translation": "مرشح الوسيط"
+    },
+    "kernelBlock": {
+      "source": "Custom kernel",
+      "translation": "نواة مخصصة"
+    },
+    "thresholdBlock": {
+      "source": "Threshold",
+      "translation": "العتبة"
+    },
+    "threshold": {
+      "source": "Threshold",
+      "translation": "العتبة"
+    }
+  }
+}

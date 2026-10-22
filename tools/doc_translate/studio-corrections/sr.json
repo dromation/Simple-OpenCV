@@ -1,0 +1,97 @@
+{
+  "status": "targeted interface terminology corrections; native technical review pending",
+  "entries": {
+    "save": {
+      "source": "Save state",
+      "translation": "Сачувај стање"
+    },
+    "run": {
+      "source": "Run",
+      "translation": "Покрени"
+    },
+    "pause": {
+      "source": "Pause",
+      "translation": "Пауза"
+    },
+    "unsaved": {
+      "source": "Unsaved",
+      "translation": "Несачувано"
+    },
+    "saved": {
+      "source": "Saved",
+      "translation": "Сачувано"
+    },
+    "undo": {
+      "source": "Undo",
+      "translation": "Опозови"
+    },
+    "redo": {
+      "source": "Redo",
+      "translation": "Понови"
+    },
+    "close": {
+      "source": "Close",
+      "translation": "Затвори"
+    },
+    "closeBlock": {
+      "source": "Remove block",
+      "translation": "Уклони блок"
+    },
+    "gain": {
+      "source": "Display gain",
+      "translation": "Појачање приказа"
+    },
+    "signed": {
+      "source": "Signed signal",
+      "translation": "Сигнал са предзнаком"
+    },
+    "confidenceBlock": {
+      "source": "Confidence A",
+      "translation": "Поузданост A"
+    },
+    "export": {
+      "source": "Export Python",
+      "translation": "Извези Python"
+    },
+    "import": {
+      "source": "Import JSON",
+      "translation": "Увези JSON"
+    },
+    "step": {
+      "source": "Single frame",
+      "translation": "Једна сличица"
+    },
+    "channelsBlock": {
+      "source": "RGB channels",
+      "translation": "RGB канали"
+    },
+    "differenceBlock": {
+      "source": "Frame difference",
+      "translation": "Разлика сличица"
+    },
+    "algebraBlock": {
+      "source": "Channel algebra",
+      "translation": "Алгебра канала"
+    },
+    "gaussianBlock": {
+      "source": "Gaussian",
+      "translation": "Гаусов филтер"
+    },
+    "medianBlock": {
+      "source": "Median",
+      "translation": "Медијански филтер"
+    },
+    "kernelBlock": {
+      "source": "Custom kernel",
+      "translation": "Прилагођено језгро"
+    },
+    "thresholdBlock": {
+      "source": "Threshold",
+      "translation": "Праг"
+    },
+    "threshold": {
+      "source": "Threshold",
+      "translation": "Праг"
+    }
+  }
+}

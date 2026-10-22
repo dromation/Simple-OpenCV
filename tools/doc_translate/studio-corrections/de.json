@@ -1,0 +1,177 @@
+{
+  "status": "targeted interface terminology corrections; native technical review pending",
+  "entries": {
+    "save": {
+      "source": "Save state",
+      "translation": "Zustand speichern"
+    },
+    "run": {
+      "source": "Run",
+      "translation": "Starten"
+    },
+    "pause": {
+      "source": "Pause",
+      "translation": "Pause"
+    },
+    "unsaved": {
+      "source": "Unsaved",
+      "translation": "Nicht gespeichert"
+    },
+    "saved": {
+      "source": "Saved",
+      "translation": "Gespeichert"
+    },
+    "undo": {
+      "source": "Undo",
+      "translation": "Rückgängig"
+    },
+    "redo": {
+      "source": "Redo",
+      "translation": "Wiederholen"
+    },
+    "close": {
+      "source": "Close",
+      "translation": "Schließen"
+    },
+    "closeBlock": {
+      "source": "Remove block",
+      "translation": "Block entfernen"
+    },
+    "gain": {
+      "source": "Display gain",
+      "translation": "Anzeigeverstärkung"
+    },
+    "signed": {
+      "source": "Signed signal",
+      "translation": "Vorzeichenbehaftetes Signal"
+    },
+    "confidenceBlock": {
+      "source": "Confidence A",
+      "translation": "Zuverlässigkeit A"
+    },
+    "export": {
+      "source": "Export Python",
+      "translation": "Python exportieren"
+    },
+    "import": {
+      "source": "Import JSON",
+      "translation": "JSON importieren"
+    },
+    "step": {
+      "source": "Single frame",
+      "translation": "Einzelbild"
+    },
+    "channelsBlock": {
+      "source": "RGB channels",
+      "translation": "RGB-Kanäle"
+    },
+    "differenceBlock": {
+      "source": "Frame difference",
+      "translation": "Bilddifferenz"
+    },
+    "algebraBlock": {
+      "source": "Channel algebra",
+      "translation": "Kanalalgebra"
+    },
+    "gaussianBlock": {
+      "source": "Gaussian",
+      "translation": "Gaußfilter"
+    },
+    "medianBlock": {
+      "source": "Median",
+      "translation": "Medianfilter"
+    },
+    "kernelBlock": {
+      "source": "Custom kernel",
+      "translation": "Eigenes Filterkernel"
+    },
+    "thresholdBlock": {
+      "source": "Threshold",
+      "translation": "Schwellenwert"
+    },
+    "threshold": {
+      "source": "Threshold",
+      "translation": "Schwellenwert"
+    },
+    "guide": {
+      "source": "Classroom",
+      "translation": "Lernbereich"
+    },
+    "language": {
+      "source": "Application language",
+      "translation": "Sprache der Anwendung"
+    },
+    "builder": {
+      "source": "Algorithm builder",
+      "translation": "Algorithmus-Editor"
+    },
+    "library": {
+      "source": "Block library",
+      "translation": "Bausteinbibliothek"
+    },
+    "libraryHint": {
+      "source": "Drag a block onto the canvas or click to add it.",
+      "translation": "Ziehe einen Block auf die Arbeitsfläche oder füge ihn durch Anklicken hinzu."
+    },
+    "planned": {
+      "source": "Planned modules",
+      "translation": "Geplante Module"
+    },
+    "flow": {
+      "source": "Channels → mathematics → filters → result",
+      "translation": "Kanäle → Mathematik → Filter → Ergebnis"
+    },
+    "signedMath": {
+      "source": "float32 · signed values preserved",
+      "translation": "float32 · Vorzeichen bleiben erhalten"
+    },
+    "mathGroup": {
+      "source": "Channels and mathematics",
+      "translation": "Kanäle und Mathematik"
+    },
+    "filterGroup": {
+      "source": "Filters and edges",
+      "translation": "Filter und Kanten"
+    },
+    "coefficients": {
+      "source": "Custom coefficients",
+      "translation": "Eigene Koeffizienten"
+    },
+    "inspect": {
+      "source": "Explore block",
+      "translation": "Block untersuchen"
+    },
+    "kernel": {
+      "source": "Kernel 3 × 3 (JSON)",
+      "translation": "Filterkernel 3 × 3 (JSON)"
+    },
+    "expression": {
+      "source": "Mathematical expression",
+      "translation": "Mathematischer Ausdruck"
+    },
+    "margin": {
+      "source": "Saturation margin",
+      "translation": "Sättigungsgrenze"
+    },
+    "preview": {
+      "source": "Live preview",
+      "translation": "Live-Vorschau"
+    },
+    "sourceHint": {
+      "source": "Synthetic demo or selected source",
+      "translation": "Synthetisches Beispiel oder ausgewählte Quelle"
+    },
+    "frame": {
+      "source": "Frame",
+      "translation": "Bild"
+    },
+    "configured": {
+      "source": "Changes applied",
+      "translation": "Änderungen übernommen"
+    },
+    "projectName": {
+      "source": "Project name",
+      "translation": "Projektname"
+    }
+  }
+}

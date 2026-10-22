@@ -21,19 +21,44 @@ const limits = {
   margin: [0.001, 0.5, 0.001],
   threshold: [-10, 10, 0.01],
 };
-const labels = {
-  expression: "Matematični izraz",
-  input: "Vhodni kanal",
-  output: "Izhodni kanal",
-  sigma: "σ · standardni odklon",
-  size: "Velikost jedra",
-  margin: "Meja nasičenja",
-  threshold: "Prag",
-  kernel: "Jedro 3 × 3 (JSON)",
-  wR: "wR",
-  wG: "wG",
-  wB: "wB",
-};
+function t(key) {
+  return (
+    window.STUDIO_I18N?.[state?.view.locale]?.strings?.[key] ||
+    window.STUDIO_I18N?.en?.strings?.[key] ||
+    key
+  );
+}
+function blockLabel(kind) {
+  return t(kind === "source" ? "source" : kind + "Block");
+}
+function paramLabel(key) {
+  return ["wR", "wG", "wB"].includes(key) ? key : t(key);
+}
+function translateInterface() {
+  const lang = window.TRANSLATIONS.languages.find(
+    (l) => l.id === state.view.locale,
+  ) || { tag: "en", dir: "ltr" };
+  document.documentElement.lang = lang.tag;
+  document.documentElement.dir = lang.dir;
+  for (const [attribute, target] of [
+    ["data-i18n", null],
+    ["data-i18n-placeholder", "placeholder"],
+    ["data-i18n-aria", "aria-label"],
+    ["data-i18n-alt", "alt"],
+    ["data-i18n-title", "title"],
+  ]) {
+    document.querySelectorAll("[" + attribute + "]").forEach((e) => {
+      const text = t(e.getAttribute(attribute));
+      if (target) e.setAttribute(target, text);
+      else e.textContent = text;
+    });
+  }
+  $("run").textContent =
+    (running ? "Ⅱ " : "▶ ") + t(running ? "pause" : "run");
+  $("interfaceDraft").hidden = ["sl", "en"].includes(state.view.locale);
+  syncClassroom();
+}
+
 function el(tag, text, cls) {
   const e = document.createElement(tag);
   if (text !== undefined) e.textContent = text;
@@ -68,8 +93,8 @@ function serial(fn) {
   const p = queue.then(fn);
   queue = p.catch((e) => {
     running = false;
-    $("run").textContent = "▶ Zaženi";
-    status(e.message, true);
+    $("run").textContent = "▶ " + t("run");
+    status(t("error") + ": " + e.message, true);
   });
   return p;
 }
@@ -83,7 +108,7 @@ function channels(before = state.nodes.length) {
 }
 function mark() {
   dirty = JSON.stringify(state) !== saved;
-  $("dirty").textContent = dirty ? "● Neshranjeno" : "✓ Shranjeno";
+  $("dirty").textContent = dirty ? "● " + t("unsaved") : "✓ " + t("saved");
   $("undo").disabled = !history.length;
   $("redo").disabled = !future.length;
 }
@@ -92,7 +117,7 @@ function remember() {
   if (history.length > 60) history.shift();
   future = [];
 }
-function commit(change, redraw = true) {
+function commit(change, redraw = true, preview = true) {
   remember();
   change();
   mark();
@@ -104,10 +129,8 @@ function commit(change, redraw = true) {
       const r = await api("/api/config", snapshot);
       revision = r.revision;
       valid = true;
-      status(
-        "Spremembe uveljavljene · časovna zgodovina ponastavljena ob spremembi algoritma",
-      );
-      if (!running) await frame();
+      status(t("configured"));
+      if (!running && preview) await frame();
     } catch (e) {
       valid = false;
       throw e;
@@ -132,14 +155,14 @@ function download(text, name, type = "application/json") {
 }
 function slider(node, key, container) {
   const box = el("div", undefined, "param");
-  const label = el("label", labels[key] || key),
+  const label = el("label", paramLabel(key)),
     out = el("span", String(node.params[key]));
   label.append(out);
   const input = el("input");
   input.type = "range";
   [input.min, input.max, input.step] = limits[key];
   input.value = node.params[key];
-  input.setAttribute("aria-label", `${blocks[node.kind].label} ${key}`);
+  input.setAttribute("aria-label", `${blockLabel(node.kind)} ${key}`);
   input.oninput = () => (out.textContent = input.value);
   input.onchange = () => commit(() => (node.params[key] = Number(input.value)));
   input.onclick = (e) => e.stopPropagation();
@@ -150,9 +173,9 @@ function renderLibrary() {
   const list = $("library");
   list.replaceChildren();
   const groups = [
-    ["KANALI & MATEMATIKA", ["difference", "algebra", "confidence"]],
+    [t("mathGroup"), ["difference", "algebra", "confidence"]],
     [
-      "FILTRI & ROBOVI",
+      t("filterGroup"),
       ["gaussian", "median", "kernel", "sobel", "scharr", "threshold"],
     ],
   ];
@@ -160,7 +183,7 @@ function renderLibrary() {
     list.append(el("h3", name));
     for (const kind of kinds) {
       if (
-        !`${kind} ${blocks[kind].label}`
+        !`${kind} ${blockLabel(kind)}`
           .toLowerCase()
           .includes($("search").value.toLowerCase())
       )
@@ -169,13 +192,13 @@ function renderLibrary() {
       b.dataset.kind = kind;
       b.draggable = true;
       b.append(
-        el("b", `＋ ${blocks[kind].label}`),
+        el("b", `＋ ${blockLabel(kind)}`),
         el(
           "small",
           kind === "algebra"
             ? "f(R, G, B, ΔR, …)"
             : kind === "kernel"
-              ? "3 × 3 · lastni koeficienti"
+              ? t("coefficients")
               : `OpenCV / ${kind}`,
         ),
       );
@@ -188,7 +211,7 @@ function renderLibrary() {
 }
 function add(kind, index = state.nodes.length) {
   if (kind === "difference" && state.nodes.some((n) => n.kind === kind)) {
-    status("Blok razlike je že na platnu. Izberi ga za razlago.");
+    status(t("exists"));
     return;
   }
   commit(() => {
@@ -235,6 +258,7 @@ function renderGraph() {
       `node${node.id === selected ? " selected" : ""}${node.enabled ? "" : " bypass"}`,
     );
     card.dataset.id = node.id;
+    if (node.kind === "source") card.dataset.sourceType = state.source.type;
     card.draggable = index >= 2;
     card.tabIndex = 0;
     card.onclick = () => {
@@ -243,7 +267,7 @@ function renderGraph() {
       renderInspector();
     };
     card.onkeydown = (e) => {
-      if (e.key === "Enter") {
+      if (e.target === card && e.key === "Enter") {
         selected = node.id;
         render();
       }
@@ -268,7 +292,7 @@ function renderGraph() {
     const head = el("div", undefined, "node-head");
     head.append(
       el("span", String(index + 1).padStart(2, "0"), "node-number"),
-      el("h3", blocks[node.kind].label),
+      el("h3", blockLabel(node.kind)),
     );
     card.append(head);
     if (node.params.expression)
@@ -277,18 +301,12 @@ function renderGraph() {
       card.append(
         el(
           "div",
-          `${state.source.type} · ${state.source.type === "camera" ? "kamera " + state.source.camera : "lokalni vir"}`,
+          `${t(state.source.type)} · ${state.source.type === "camera" ? t("camera") + " " + state.source.camera : t("sourceLocal")}`,
           "description",
         ),
       );
     else if (node.kind === "channels")
-      card.append(
-        el(
-          "div",
-          "R  ·  G  ·  B  ·  A\nNormalizacija [0, 1] + ocena nasičenja",
-          "description",
-        ),
-      );
+      card.append(el("div", t("normalized"), "description"));
     else if (node.kind === "difference")
       card.append(
         el("div", "ΔC = C(t) − C(t−1)\nΔR · ΔG · ΔB · ΔA", "description"),
@@ -304,24 +322,27 @@ function renderGraph() {
     for (const k of ["wR", "wG", "wB", "sigma", "margin", "threshold"])
       if (k in node.params) slider(node, k, card);
     if (index >= 2) {
+      const close = el("button", "×", "node-close");
+      close.type = "button";
+      close.title = t("closeBlock");
+      close.setAttribute(
+        "aria-label",
+        t("closeBlock") + ": " + blockLabel(node.kind),
+      );
+      close.onclick = (e) => {
+        e.stopPropagation();
+        removeNode(node.id);
+      };
+      close.onpointerdown = (e) => e.stopPropagation();
+      card.append(close);
       const controls = el("div", undefined, "node-controls");
       for (const [text, title, fn] of [
-        ["↑", "Move earlier", () => reorder(node.id, index - 1)],
-        ["↓", "Move later", () => reorder(node.id, index + 1)],
-        [
-          "×",
-          "Remove block",
-          () =>
-            commit(() => {
-              state.nodes.splice(index, 1);
-              selected = state.nodes[Math.max(0, index - 1)].id;
-              for (const k of ["signal", "result"])
-                if (!channels().includes(state.view[k])) state.view[k] = "R";
-            }),
-        ],
+        ["↑", t("earlier"), () => reorder(node.id, index - 1)],
+        ["↓", t("later"), () => reorder(node.id, index + 1)],
       ]) {
         const b = el("button", text);
         b.title = title;
+        b.dataset.action = text === "↑" ? "earlier" : "later";
         b.onclick = (e) => {
           e.stopPropagation();
           fn();
@@ -331,6 +352,16 @@ function renderGraph() {
       card.append(controls);
     }
     graph.append(card);
+  });
+}
+function removeNode(id) {
+  commit(() => {
+    const index = state.nodes.findIndex((n) => n.id === id);
+    if (index < 2) return;
+    state.nodes.splice(index, 1);
+    if (selected === id) selected = state.nodes[Math.max(0, index - 1)].id;
+    for (const key of ["signal", "result"])
+      if (!channels().includes(state.view[key])) state.view[key] = "R";
   });
 }
 function drop(e, index) {
@@ -353,17 +384,17 @@ function field(title, input) {
 function renderInspector() {
   const node = state.nodes.find((n) => n.id === selected) || state.nodes[0];
   selected = node.id;
-  $("selectedTitle").textContent = blocks[node.kind].label;
+  $("selectedTitle").textContent = blockLabel(node.kind);
   $("parameters").replaceChildren();
   if (node.kind === "source") {
     const source = el("select");
     selectOptions(
       source,
       [
-        { id: "synthetic", name: "Sintetični demo" },
-        { id: "camera", name: "Kamera" },
-        { id: "image", name: "Slika …" },
-        { id: "video", name: "Video …" },
+        { id: "synthetic", name: t("synthetic") },
+        { id: "camera", name: t("camera") },
+        { id: "image", name: t("image") },
+        { id: "video", name: t("video") },
       ],
       state.source.type,
     );
@@ -373,7 +404,7 @@ function renderInspector() {
         source.value = state.source.type;
       } else commit(() => (state.source.type = source.value));
     };
-    field("Vir zajema", source);
+    field(t("sourceChoice"), source);
     if (state.source.type === "camera") {
       const cam = el("input");
       cam.type = "number";
@@ -382,18 +413,16 @@ function renderInspector() {
       cam.value = state.source.camera;
       cam.onchange = () =>
         commit(() => (state.source.camera = Number(cam.value)));
-      field("Indeks kamere", cam);
+      field(t("cameraIndex"), cam);
     }
-    const upload = el("button", "Izberi sliko ali video …");
+    const upload = el("button", t("chooseMedia"));
     upload.onclick = () => $("media").click();
     $("parameters").append(upload);
   } else if (["channels", "difference"].includes(node.kind)) {
     $("parameters").append(
       el(
         "p",
-        node.kind === "difference"
-          ? "Prva sličica po spremembi algoritma ima ničelno razliko."
-          : "A je izpeljana ocena nasičenja, ne meritev prosojnosti ali verjetnost.",
+        node.kind === "difference" ? t("firstDifference") : t("confidenceHint"),
       ),
     );
   }
@@ -441,17 +470,17 @@ function renderInspector() {
               : input.value;
         commit(() => (node.params[key] = v));
       } catch (e) {
-        status(e.message, true);
+        status(t("error") + ": " + e.message, true);
       }
     };
-    field(labels[key] || key, input);
+    field(paramLabel(key), input);
   }
   if ("input" in node.params) {
     const enabled = el("input");
     enabled.type = "checkbox";
     enabled.checked = node.enabled;
     enabled.onchange = () => commit(() => (node.enabled = enabled.checked));
-    field("Operacija vključena (izklop = prehod vhoda)", enabled);
+    field(t("enabled"), enabled);
   }
   renderLesson(node);
 }
@@ -460,9 +489,7 @@ function renderLesson(node) {
   const area = $("lesson");
   area.replaceChildren();
   if (!lesson) {
-    area.append(
-      el("p", "Učni paket ni nameščen. Odpri dokumentacijo v repozitoriju."),
-    );
+    area.append(el("p", t("missingLesson")));
     return;
   }
   const locale = state.view.locale,
@@ -475,14 +502,7 @@ function renderLesson(node) {
     lesson[key]?.[locale] ||
     lesson[key]?.en ||
     "";
-  if (!["sl", "en"].includes(locale))
-    area.append(
-      el(
-        "p",
-        "Machine translation · strojni osnutek. Verify with the English original.",
-        "draft",
-      ),
-    );
+  if (!["sl", "en"].includes(locale)) area.append(el("p", t("draft"), "draft"));
   area.append(
     el("p", translated("summary")),
     el("div", lesson.formula, "formula"),
@@ -494,21 +514,22 @@ function renderLesson(node) {
   detail.open = !["sl", "en"].includes(locale);
   detail.dir = "ltr";
   detail.append(
-    el("summary", "English original"),
+    el("summary", t("original")),
     el("p", lesson.summary.en),
     el("p", lesson.variables.en),
     el("p", lesson.caution.en),
   );
   area.append(detail);
-  const link = el("a", "Celotna razlaga / Full lesson ↗");
-  link.href = "/manuals/learning/index.html#" + lesson.id;
-  link.target = "_blank";
-  link.rel = "noopener";
+  const link = el("button", t("fullLesson"), "text-button full-lesson");
+  link.onclick = () => openClassroom(lesson.id);
   area.append(link);
-  $("example").textContent =
-    lesson[state.view.codeLanguage] || "Example unavailable";
+  $("example").textContent = lesson[state.view.codeLanguage] || t("noExample");
 }
 function render() {
+  try {
+    localStorage.setItem("simplemotocam-studio-locale", state.view.locale);
+  } catch {}
+  translateInterface();
   $("name").value = state.name;
   renderLibrary();
   renderGraph();
@@ -526,8 +547,8 @@ async function frame() {
   const data = await api("/api/frame", {});
   if (data.ended) {
     running = false;
-    $("run").textContent = "▶ Zaženi";
-    status(data.message);
+    $("run").textContent = "▶ " + t("run");
+    status(t("ended"));
     return;
   }
   if (data.revision !== revision) return;
@@ -544,8 +565,9 @@ async function frame() {
         `min ${s.min.toFixed(4)} · max ${s.max.toFixed(4)} · μ ${s.mean.toFixed(4)}`;
   }
   $("dimensions").textContent = data.size.join(" × ");
+  $("status").dataset.frame = String(data.frame);
   status(
-    `Sličica ${data.frame} · ${data.processingMs} ms · ${data.ready ? "Δ zgodovina pripravljena" : "Prva sličica: Δ = 0"}${data.size[0] !== data.originalSize[0] ? " · predogled pomanjšan na največ 960 px" : ""}`,
+    `${t("frame")} ${data.frame} · ${data.processingMs} ms · ${data.ready ? t("historyReady") : t("firstFrame") + ": Δ = 0"}${data.size[0] !== data.originalSize[0] ? " · " + t("resized") : ""}`,
   );
 }
 async function loop() {
@@ -557,18 +579,18 @@ async function loop() {
 }
 $("run").onclick = () => {
   if (!valid) {
-    status("Najprej popravi označeno konfiguracijo.", true);
+    status(t("fix"), true);
     return;
   }
   running = !running;
-  $("run").textContent = running ? "Ⅱ Premor" : "▶ Zaženi";
+  $("run").textContent = running ? "Ⅱ " + t("pause") : "▶ " + t("run");
   if (running) loop();
   else if (state.source.type === "camera") serial(() => api("/api/stop", {}));
 };
 $("step").onclick = () => serial(frame);
 $("name").onchange = () => commit(() => (state.name = $("name").value), false);
 $("search").oninput = renderLibrary;
-for (const key of ["signal", "result", "locale", "codeLanguage"])
+for (const key of ["signal", "result", "codeLanguage"])
   $(key).onchange = () => commit(() => (state.view[key] = $(key).value));
 $("gain").onchange = () =>
   commit(() => (state.view.gain = Number($("gain").value)));
@@ -594,26 +616,26 @@ for (const [id, from, to] of [
   };
 $("save").onclick = () =>
   serial(async () => {
-    if (!valid) throw Error("Popravi konfiguracijo pred shranjevanjem.");
+    if (!valid) throw Error(t("fix"));
     const record = await api("/api/save", state);
     saved = JSON.stringify(state);
     mark();
     download(JSON.stringify(record.state, null, 2), "simplemotocam-state.json");
-    status("Stanje shranjeno lokalno in preneseno kot JSON.");
+    status(t("stateSaved"));
   });
 $("export").onclick = () =>
   serial(async () => {
-    if (!valid) throw Error("Popravi konfiguracijo pred izvozom.");
+    if (!valid) throw Error(t("fix"));
     download(
       await api("/api/export", state, true),
       "simplemotocam_algorithm.py",
       "text/x-python",
     );
-    status("Samostojni Python algoritem izvožen · zahteva NumPy in OpenCV.");
+    status(t("exported"));
   });
 async function load(newState) {
   running = false;
-  $("run").textContent = "▶ Zaženi";
+  $("run").textContent = "▶ " + t("run");
   const r = await api("/api/config", newState);
   remember();
   state = r.state;
@@ -635,11 +657,7 @@ $("open").onclick = () =>
         `${item.name} · ${new Date(item.savedAt).toLocaleString()}`,
       );
       b.onclick = () => {
-        if (
-          dirty &&
-          !confirm("Odpri projekt in zapusti neshranjene spremembe?")
-        )
-          return;
+        if (dirty && !confirm(t("confirmOpen"))) return;
         serial(async () =>
           load(
             (await api("/api/projects/" + encodeURIComponent(item.id))).state,
@@ -648,23 +666,16 @@ $("open").onclick = () =>
       };
       $("projectList").append(b);
     }
-    if (!projects.length)
-      $("projectList").append(
-        el(
-          "p",
-          "Ni shranjenih projektov. Uvozi JSON ali shrani trenutno stanje.",
-        ),
-      );
+    if (!projects.length) $("projectList").append(el("p", t("noProjects")));
     $("projects").showModal();
   });
 $("closeProjects").onclick = () => $("projects").close();
 $("import").onchange = async () => {
   const file = $("import").files[0];
   if (!file) return;
-  if (dirty && !confirm("Uvozi projekt in zapusti neshranjene spremembe?"))
-    return;
+  if (dirty && !confirm(t("confirmImport"))) return;
   serial(async () => {
-    if (file.size > 262144) throw Error("JSON je prevelik (največ 256 KB).");
+    if (file.size > 262144) throw Error(t("jsonLarge"));
     const data = JSON.parse(await file.text());
     await load(data.state || data);
   });
@@ -674,8 +685,7 @@ $("media").onchange = () => {
   const file = $("media").files[0];
   if (!file) return;
   serial(async () => {
-    if (file.size > 100 * 1024 * 1024)
-      throw Error("Največja velikost vira je 100 MB.");
+    if (file.size > 100 * 1024 * 1024) throw Error(t("mediaLarge"));
     const r = await fetch("/api/upload", {
       method: "POST",
       headers: {
@@ -696,8 +706,69 @@ $("media").onchange = () => {
   });
   $("media").value = "";
 };
-$("guide").onclick = () =>
-  window.open("/manuals/learning/index.html", "_blank", "noopener");
+function syncClassroom(topic) {
+  const frame = $("classroomFrame");
+  if (!frame.getAttribute("src")) return;
+  frame.contentWindow.postMessage(
+    {
+      type: "studio-learning-context",
+      locale: state.view.locale,
+      program: state.view.codeLanguage,
+      topic,
+    },
+    location.origin,
+  );
+}
+let classroomTopic;
+function openClassroom(topic) {
+  classroomTopic = topic;
+  if (!$("classroom").open) $("classroom").showModal();
+  let needsLesson = !$("classroomFrame").getAttribute("src");
+  try {
+    needsLesson ||=
+      $("classroomFrame").contentWindow.location.pathname !==
+      "/manuals/learning/index.html";
+  } catch {
+    needsLesson = true;
+  }
+  if (needsLesson)
+    $("classroomFrame").src = "/manuals/learning/index.html?embedded=1";
+  else syncClassroom(topic);
+}
+$("classroomFrame").onload = () => syncClassroom(classroomTopic);
+$("closeClassroom").onclick = () => $("classroom").close();
+$("guide").onclick = () => openClassroom();
+$("libraryGuide").onclick = () => openClassroom();
+function changeLocale(locale, program = state.view.codeLanguage) {
+  if (!window.TRANSLATIONS.languages.some((l) => l.id === locale)) return;
+  try {
+    localStorage.setItem("simplemotocam-studio-locale", locale);
+  } catch {}
+  if (locale === state.view.locale && program === state.view.codeLanguage)
+    return;
+  commit(
+    () => {
+      state.view.locale = locale;
+      state.view.codeLanguage = program;
+    },
+    true,
+    false,
+  );
+}
+$("locale").onchange = () => changeLocale($("locale").value);
+window.addEventListener("message", (event) => {
+  if (
+    event.origin !== location.origin ||
+    event.source !== $("classroomFrame").contentWindow
+  )
+    return;
+  if (event.data?.type === "learning-close") $("classroom").close();
+  if (
+    event.data?.type === "learning-preference" &&
+    ["python", "cpp", "c", "java"].includes(event.data.program)
+  )
+    changeLocale(event.data.locale, event.data.program);
+});
 window.addEventListener("beforeunload", (e) => {
   if (dirty) {
     e.preventDefault();
@@ -715,6 +786,13 @@ async function start() {
     ],
     state.view.locale,
   );
+  try {
+    const preferred = localStorage.getItem("simplemotocam-studio-locale");
+    if (window.TRANSLATIONS.languages.some((l) => l.id === preferred))
+      state.view.locale = preferred;
+  } catch {}
+  const configured = await api("/api/config", state);
+  revision = configured.revision;
   render();
   await frame();
   await frame();

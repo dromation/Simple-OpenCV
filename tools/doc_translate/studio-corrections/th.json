@@ -1,0 +1,97 @@
+{
+  "status": "targeted interface terminology corrections; native technical review pending",
+  "entries": {
+    "save": {
+      "source": "Save state",
+      "translation": "บันทึกสถานะ"
+    },
+    "run": {
+      "source": "Run",
+      "translation": "เรียกใช้"
+    },
+    "pause": {
+      "source": "Pause",
+      "translation": "หยุดชั่วคราว"
+    },
+    "unsaved": {
+      "source": "Unsaved",
+      "translation": "ยังไม่บันทึก"
+    },
+    "saved": {
+      "source": "Saved",
+      "translation": "บันทึกแล้ว"
+    },
+    "undo": {
+      "source": "Undo",
+      "translation": "เลิกทำ"
+    },
+    "redo": {
+      "source": "Redo",
+      "translation": "ทำซ้ำ"
+    },
+    "close": {
+      "source": "Close",
+      "translation": "ปิด"
+    },
+    "closeBlock": {
+      "source": "Remove block",
+      "translation": "ลบบล็อก"
+    },
+    "gain": {
+      "source": "Display gain",
+      "translation": "อัตราขยายการแสดงผล"
+    },
+    "signed": {
+      "source": "Signed signal",
+      "translation": "สัญญาณที่มีเครื่องหมาย"
+    },
+    "confidenceBlock": {
+      "source": "Confidence A",
+      "translation": "ความเชื่อมั่น A"
+    },
+    "export": {
+      "source": "Export Python",
+      "translation": "ส่งออก Python"
+    },
+    "import": {
+      "source": "Import JSON",
+      "translation": "นำเข้า JSON"
+    },
+    "step": {
+      "source": "Single frame",
+      "translation": "หนึ่งเฟรม"
+    },
+    "channelsBlock": {
+      "source": "RGB channels",
+      "translation": "ช่องสัญญาณ RGB"
+    },
+    "differenceBlock": {
+      "source": "Frame difference",
+      "translation": "ผลต่างระหว่างเฟรม"
+    },
+    "algebraBlock": {
+      "source": "Channel algebra",
+      "translation": "พีชคณิตช่องสัญญาณ"
+    },
+    "gaussianBlock": {
+      "source": "Gaussian",
+      "translation": "ตัวกรองเกาส์เซียน"
+    },
+    "medianBlock": {
+      "source": "Median",
+      "translation": "ตัวกรองมัธยฐาน"
+    },
+    "kernelBlock": {
+      "source": "Custom kernel",
+      "translation": "เคอร์เนลกำหนดเอง"
+    },
+    "thresholdBlock": {
+      "source": "Threshold",
+      "translation": "ค่าเกณฑ์"
+    },
+    "threshold": {
+      "source": "Threshold",
+      "translation": "ค่าเกณฑ์"
+    }
+  }
+}

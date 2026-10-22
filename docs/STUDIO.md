@@ -25,7 +25,9 @@ Run `Start-SimpleMotocam.cmd` after `Install-SimpleMotocam.cmd`, or `python -m s
 
 ## Learning languages
 
-The studio controls are currently Slovenian. The inspector and standalone learning companion provide **21 explanation languages**, mathematical formulas and Python/C++/C/Java examples. English and Slovenian are authored; 19 translations are clearly marked machine drafts with an expanded English original. They need human technical review. This is an eight-topic learning companion, not a translation of every OpenCV manual. The original three OpenCV 2.4 PDFs remain English and unchanged.
+The application header selects one of **21 languages** for buttons, block names, parameters, status messages and the lesson inspector. The classroom opens as an in-app overlay from the header, library or full-lesson button. Its language and code-example selections stay synchronized with the studio. Close it with × or Escape; your graph and classroom exercise values remain in place. Language changes do not advance frames or reset numerical history. Raw diagnostic details from the numerical engine retain their original technical wording.
+
+Removable block cards have × at the top-right corner; the fixed source and RGB blocks remain required. Undo restores a removed block. The learning companion still works independently when opened directly and provides formulas and Python/C++/C/Java examples. English and Slovenian interface text and lessons are authored; 19 translations are clearly marked machine drafts with an expanded English original. They need human technical review. This is an eight-topic learning companion, not a translation of every OpenCV manual. The original three OpenCV 2.4 PDFs remain English and unchanged.
 
 ## Local files and reproducibility
 

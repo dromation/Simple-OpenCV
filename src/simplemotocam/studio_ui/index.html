@@ -10,54 +10,66 @@
     <header>
       <a class="brand" href="/" aria-label="SimpleMotocam"
         ><span class="mark">◉</span> SimpleMotocam <small>STUDIO</small></a
-      ><input id="name" aria-label="Project name" maxlength="100" /><span
+      ><input id="name" data-i18n-aria="projectName" maxlength="100" /><span
         class="spacer"
-      ></span
-      ><button id="guide">Navodila ↗</button><button id="open">Odpri</button
-      ><button id="save">Shrani stanje</button
-      ><button id="export">Izvozi Python ↗</button
-      ><button class="primary" id="run">▶ Zaženi</button>
+      ></span>
+      <label class="app-language"
+        ><span data-i18n="language"></span
+        ><select id="locale" data-i18n-aria="language"></select
+      ></label>
+      <button id="guide" data-i18n="guide"></button
+      ><button id="open" data-i18n="open"></button
+      ><button id="save" data-i18n="save"></button
+      ><button id="export" data-i18n="export"></button
+      ><button class="primary" id="run"></button>
     </header>
     <div class="toolbar">
-      <span class="tag">EXPERIMENTAL VISION LAB</span
-      ><span>01 / Sestavljalnik algoritma</span><span class="spacer"></span
-      ><button id="undo" title="Undo">↶</button
-      ><button id="redo" title="Redo">↷</button
-      ><button id="step">Ena sličica →</button
-      ><span id="dirty">Neshranjeno</span>
+      <span class="tag">SIMPLEMOTOCAM STUDIO</span
+      ><span data-i18n="builder"></span><span class="spacer"></span
+      ><button id="undo" data-i18n-title="undo">↶</button
+      ><button id="redo" data-i18n-title="redo">↷</button
+      ><button id="step" data-i18n="step"></button><span id="dirty"></span
+      ><span
+        id="interfaceDraft"
+        class="interface-draft"
+        data-i18n="draft"
+        hidden
+      ></span>
     </div>
     <main>
       <aside class="library">
-        <h2>Knjižnica blokov</h2>
-        <p>Povleci blok na platno ali ga dodaj s klikom.</p>
+        <h2 data-i18n="library"></h2>
+        <p data-i18n="libraryHint"></p>
         <input
           id="search"
-          placeholder="Poišči algoritem …"
-          aria-label="Search blocks"
+          data-i18n-placeholder="search"
+          data-i18n-aria="search"
         />
         <div id="library"></div>
         <div class="future">
-          <b>GEOMETRIJA & MERITVE</b>
-          <p>Kalibracija · homografija · merjenje</p>
-          <small>Načrtovani moduli</small>
+          <b data-i18n="geometry"></b>
+          <p data-i18n="geometryHint"></p>
+          <small data-i18n="planned"></small>
         </div>
-        <a href="/manuals/learning/index.html" target="_blank" rel="noopener"
-          >Učilnica · 21 jezikov ↗</a
-        >
+        <button
+          class="text-button"
+          id="libraryGuide"
+          data-i18n="guide"
+        ></button>
       </aside>
       <section class="workspace">
         <div class="canvas-heading">
           <div>
-            <h1>Sestavi svoj pogled.</h1>
-            <p>Kanali → matematika → filtri → rezultat</p>
+            <h1 data-i18n="headline"></h1>
+            <p data-i18n="flow"></p>
           </div>
-          <span class="badge">float32 · brez izgube predznaka</span>
+          <span class="badge" data-i18n="signedMath"></span>
         </div>
-        <div id="graph" aria-label="Algorithm blocks"></div>
+        <div id="graph" data-i18n-aria="blocks"></div>
         <div class="preview-heading">
-          <h2>Predogled v živo</h2>
+          <h2 data-i18n="preview"></h2>
           <label
-            >Prikaz ×
+            ><span data-i18n="gain"></span> ×
             <input
               id="gain"
               type="number"
@@ -65,54 +77,50 @@
               max="100"
               step="0.1" /></label
           ><label
-            ><input id="signed" type="checkbox" /> Predznačen signal</label
-          >
+            ><input id="signed" type="checkbox" />
+            <span data-i18n="signed"></span
+          ></label>
         </div>
         <div class="previews">
           <figure>
-            <figcaption>01 / Zajem <span id="dimensions"></span></figcaption>
-            <img id="camera" alt="Source preview" /><small
-              >Sintetični demo ali izbrani vir</small
-            >
+            <figcaption>
+              <span data-i18n="source"></span><span id="dimensions"></span>
+            </figcaption>
+            <img id="camera" data-i18n-alt="sourcePreview" /><small
+              data-i18n="sourceHint"
+            ></small>
           </figure>
           <figure>
             <figcaption>
-              02 / Signal
-              <select id="signal" aria-label="Signal preview channel"></select>
+              <span data-i18n="signal"></span
+              ><select id="signal" data-i18n-aria="signalPreview"></select>
             </figcaption>
-            <img id="signalImage" alt="Synthetic signal preview" /><small
+            <img id="signalImage" data-i18n-alt="signalPreview" /><small
               id="signalStats"
-              >Čakam na sličico</small
-            >
+            ></small>
           </figure>
           <figure>
             <figcaption>
-              03 / Rezultat
-              <select id="result" aria-label="Result preview channel"></select>
+              <span data-i18n="result"></span
+              ><select id="result" data-i18n-aria="resultPreview"></select>
             </figcaption>
-            <img id="resultImage" alt="Result preview" /><small id="resultStats"
-              >Čakam na sličico</small
-            >
+            <img id="resultImage" data-i18n-alt="resultPreview" /><small
+              id="resultStats"
+            ></small>
           </figure>
         </div>
-        <p class="hint">
-          Ojačenje in siva ničla spreminjata samo prikaz. Računanje ohrani
-          izvirne numerične vrednosti.
-        </p>
+        <p class="hint" data-i18n="previewHint"></p>
       </section>
       <aside class="inspector">
-        <div class="eyebrow">RAZIŠČI BLOK</div>
+        <div class="eyebrow" data-i18n="inspect"></div>
         <h2 id="selectedTitle"></h2>
         <div id="parameters"></div>
         <hr />
-        <div class="lesson-head">
-          <h2>Zakaj deluje?</h2>
-          <select id="locale" aria-label="Explanation language"></select>
-        </div>
+        <div class="lesson-head"><h2 data-i18n="why"></h2></div>
         <div id="lesson"></div>
         <label class="code-label"
-          >Primer / Example
-          <select id="codeLanguage" aria-label="Example programming language">
+          ><span data-i18n="example"></span
+          ><select id="codeLanguage" data-i18n-aria="programLanguage">
             <option value="python">Python</option>
             <option value="cpp">C++</option>
             <option value="c">C</option>
@@ -120,26 +128,38 @@
           </select></label
         >
         <pre id="example"></pre>
-        <p class="hint">
-          Učni primeri prikazujejo posamezno operacijo. »Izvozi Python« shrani
-          celoten trenutni algoritem.
-        </p>
+        <p class="hint" data-i18n="exampleHint"></p>
       </aside>
     </main>
     <footer>
       <span class="dot"></span
-      ><span id="status" role="status">Pripravljam studio …</span
-      ><span class="spacer"></span><span>OpenCV · lokalno računsko okolje</span>
+      ><span id="status" role="status" data-i18n="starting"></span
+      ><span class="spacer"></span
+      ><span>OpenCV · <span data-i18n="local"></span></span>
     </footer>
-    <dialog id="projects">
+    <dialog id="projects" aria-labelledby="projectsTitle">
       <div class="dialog-head">
-        <h2>Shranjeni projekti</h2>
-        <button id="closeProjects">✕</button>
+        <h2 id="projectsTitle" data-i18n="projects"></h2>
+        <button id="closeProjects" data-i18n-aria="close">×</button>
       </div>
       <label class="file-button"
-        >Uvozi JSON <input id="import" type="file" accept=".json"
+        ><span data-i18n="import"></span
+        ><input id="import" type="file" accept=".json"
       /></label>
       <div id="projectList"></div>
+    </dialog>
+    <dialog id="classroom" aria-labelledby="classroomTitle">
+      <div class="classroom-head">
+        <h2 id="classroomTitle" data-i18n="guide"></h2>
+        <button
+          id="closeClassroom"
+          data-i18n-aria="close"
+          data-i18n-title="close"
+        >
+          ×
+        </button>
+      </div>
+      <iframe id="classroomFrame" data-i18n-title="guide"></iframe>
     </dialog>
     <input
       id="media"
@@ -149,6 +169,7 @@
     />
     <script src="/manuals/learning/lessons.js"></script>
     <script src="/manuals/learning/translations.js"></script>
+    <script src="i18n.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

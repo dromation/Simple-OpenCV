@@ -1,0 +1,97 @@
+{
+  "status": "targeted interface terminology corrections; native technical review pending",
+  "entries": {
+    "save": {
+      "source": "Save state",
+      "translation": "保存状态"
+    },
+    "run": {
+      "source": "Run",
+      "translation": "运行"
+    },
+    "pause": {
+      "source": "Pause",
+      "translation": "暂停"
+    },
+    "unsaved": {
+      "source": "Unsaved",
+      "translation": "未保存"
+    },
+    "saved": {
+      "source": "Saved",
+      "translation": "已保存"
+    },
+    "undo": {
+      "source": "Undo",
+      "translation": "撤销"
+    },
+    "redo": {
+      "source": "Redo",
+      "translation": "重做"
+    },
+    "close": {
+      "source": "Close",
+      "translation": "关闭"
+    },
+    "closeBlock": {
+      "source": "Remove block",
+      "translation": "移除模块"
+    },
+    "gain": {
+      "source": "Display gain",
+      "translation": "显示增益"
+    },
+    "signed": {
+      "source": "Signed signal",
+      "translation": "有符号信号"
+    },
+    "confidenceBlock": {
+      "source": "Confidence A",
+      "translation": "置信度 A"
+    },
+    "export": {
+      "source": "Export Python",
+      "translation": "导出 Python"
+    },
+    "import": {
+      "source": "Import JSON",
+      "translation": "导入 JSON"
+    },
+    "step": {
+      "source": "Single frame",
+      "translation": "单帧"
+    },
+    "channelsBlock": {
+      "source": "RGB channels",
+      "translation": "RGB 通道"
+    },
+    "differenceBlock": {
+      "source": "Frame difference",
+      "translation": "帧差"
+    },
+    "algebraBlock": {
+      "source": "Channel algebra",
+      "translation": "通道代数"
+    },
+    "gaussianBlock": {
+      "source": "Gaussian",
+      "translation": "高斯滤波"
+    },
+    "medianBlock": {
+      "source": "Median",
+      "translation": "中值滤波"
+    },
+    "kernelBlock": {
+      "source": "Custom kernel",
+      "translation": "自定义卷积核"
+    },
+    "thresholdBlock": {
+      "source": "Threshold",
+      "translation": "阈值"
+    },
+    "threshold": {
+      "source": "Threshold",
+      "translation": "阈值"
+    }
+  }
+}

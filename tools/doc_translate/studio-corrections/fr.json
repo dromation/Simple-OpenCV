@@ -1,0 +1,97 @@
+{
+  "status": "targeted interface terminology corrections; native technical review pending",
+  "entries": {
+    "save": {
+      "source": "Save state",
+      "translation": "Enregistrer l’état"
+    },
+    "run": {
+      "source": "Run",
+      "translation": "Exécuter"
+    },
+    "pause": {
+      "source": "Pause",
+      "translation": "Pause"
+    },
+    "unsaved": {
+      "source": "Unsaved",
+      "translation": "Non enregistré"
+    },
+    "saved": {
+      "source": "Saved",
+      "translation": "Enregistré"
+    },
+    "undo": {
+      "source": "Undo",
+      "translation": "Annuler"
+    },
+    "redo": {
+      "source": "Redo",
+      "translation": "Rétablir"
+    },
+    "close": {
+      "source": "Close",
+      "translation": "Fermer"
+    },
+    "closeBlock": {
+      "source": "Remove block",
+      "translation": "Supprimer le bloc"
+    },
+    "gain": {
+      "source": "Display gain",
+      "translation": "Gain d’affichage"
+    },
+    "signed": {
+      "source": "Signed signal",
+      "translation": "Signal signé"
+    },
+    "confidenceBlock": {
+      "source": "Confidence A",
+      "translation": "Fiabilité A"
+    },
+    "export": {
+      "source": "Export Python",
+      "translation": "Exporter Python"
+    },
+    "import": {
+      "source": "Import JSON",
+      "translation": "Importer JSON"
+    },
+    "step": {
+      "source": "Single frame",
+      "translation": "Une image"
+    },
+    "channelsBlock": {
+      "source": "RGB channels",
+      "translation": "Canaux RGB"
+    },
+    "differenceBlock": {
+      "source": "Frame difference",
+      "translation": "Différence entre images"
+    },
+    "algebraBlock": {
+      "source": "Channel algebra",
+      "translation": "Algèbre des canaux"
+    },
+    "gaussianBlock": {
+      "source": "Gaussian",
+      "translation": "Filtre gaussien"
+    },
+    "medianBlock": {
+      "source": "Median",
+      "translation": "Filtre médian"
+    },
+    "kernelBlock": {
+      "source": "Custom kernel",
+      "translation": "Noyau personnalisé"
+    },
+    "thresholdBlock": {
+      "source": "Threshold",
+      "translation": "Seuil"
+    },
+    "threshold": {
+      "source": "Threshold",
+      "translation": "Seuil"
+    }
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "status": "targeted interface terminology corrections; native technical review pending",
+  "entries": {
+    "save": {
+      "source": "Save state",
+      "translation": "Simpan keadaan"
+    },
+    "run": {
+      "source": "Run",
+      "translation": "Jalankan"
+    },
+    "pause": {
+      "source": "Pause",
+      "translation": "Jeda"
+    },
+    "unsaved": {
+      "source": "Unsaved",
+      "translation": "Belum disimpan"
+    },
+    "saved": {
+      "source": "Saved",
+      "translation": "Tersimpan"
+    },
+    "undo": {
+      "source": "Undo",
+      "translation": "Urungkan"
+    },
+    "redo": {
+      "source": "Redo",
+      "translation": "Ulangi"
+    },
+    "close": {
+      "source": "Close",
+      "translation": "Tutup"
+    },
+    "closeBlock": {
+      "source": "Remove block",
+      "translation": "Hapus blok"
+    },
+    "gain": {
+      "source": "Display gain",
+      "translation": "Penguatan tampilan"
+    },
+    "signed": {
+      "source": "Signed signal",
+      "translation": "Sinyal bertanda"
+    },
+    "confidenceBlock": {
+      "source": "Confidence A",
+      "translation": "Keandalan A"
+    },
+    "export": {
+      "source": "Export Python",
+      "translation": "Ekspor Python"
+    },
+    "import": {
+      "source": "Import JSON",
+      "translation": "Impor JSON"
+    },
+    "step": {
+      "source": "Single frame",
+      "translation": "Satu bingkai"
+    },
+    "channelsBlock": {
+      "source": "RGB channels",
+      "translation": "Kanal RGB"
+    },
+    "differenceBlock": {
+      "source": "Frame difference",
+      "translation": "Selisih bingkai"
+    },
+    "algebraBlock": {
+      "source": "Channel algebra",
+      "translation": "Aljabar kanal"
+    },
+    "gaussianBlock": {
+      "source": "Gaussian",
+      "translation": "Filter Gaussian"
+    },
+    "medianBlock": {
+      "source": "Median",
+      "translation": "Filter median"
+    },
+    "kernelBlock": {
+      "source": "Custom kernel",
+      "translation": "Kernel kustom"
+    },
+    "thresholdBlock": {
+      "source": "Threshold",
+      "translation": "Ambang"
+    },
+    "threshold": {
+      "source": "Threshold",
+      "translation": "Ambang"
+    }
+  }
+}

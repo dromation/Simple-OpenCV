@@ -58,7 +58,7 @@ const python =
       await page.waitForFunction(
         () =>
           !document.body.classList.contains("error") &&
-          document.querySelector("#status").textContent.includes("Sličica"),
+          Boolean(document.querySelector("#status").dataset.frame),
       );
     };
     const edit = async (key, value, ok = true) => {
@@ -146,10 +146,10 @@ const python =
       media,
     ]);
     await page.locator("#media").setInputFiles(media);
-    await page.waitForFunction(() =>
-      document
-        .querySelector('[data-id="source"] .description')
-        .textContent.startsWith("image"),
+    await page.waitForFunction(
+      () =>
+        document.querySelector('[data-id="source"]').dataset.sourceType ===
+        "image",
     );
     await settled();
     assert.equal((await state()).source.type, "image");
@@ -158,7 +158,7 @@ const python =
     await settled();
     const added = (await state()).nodes.at(-1).id;
     await page
-      .locator(`[data-id="${added}"] button[title="Move earlier"]`)
+      .locator(`[data-id="${added}"] button[data-action="earlier"]`)
       .click();
     await settled();
     assert.equal((await state()).nodes.at(-2).id, added);

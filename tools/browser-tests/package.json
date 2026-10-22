@@ -1,6 +1,11 @@
 {
   "name": "simplemotocam-browser-checks",
   "private": true,
-  "scripts": {"test": "node verify.cjs"},
-  "devDependencies": {"playwright": "1.62.1"}
+  "scripts": {
+    "test": "node verify.cjs",
+    "test:interface": "node verify_interface.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
 }
