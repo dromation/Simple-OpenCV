@@ -108,6 +108,14 @@
     "saveBlock": {
       "source": "Save block with dependencies",
       "translation": "Zapisz blok z zależnościami"
+    },
+    "opencvEngine": {
+      "source": "OpenCV processing engine",
+      "translation": "Silnik przetwarzania OpenCV"
+    },
+    "engineCurrent": {
+      "source": "Current OpenCV",
+      "translation": "Bieżący OpenCV"
     }
   }
 }

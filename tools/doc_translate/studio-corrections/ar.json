@@ -112,6 +112,14 @@
     "codeContract": {
       "source": "Python: process(channels, params) → H × W array. JavaScript: process(channels, params, shape) → flat H × W values. All upstream channels are available; params.gain is adjustable.",
       "translation": "Python: process(channels, params) → مصفوفة H × W. JavaScript: process(channels, params, shape) → مصفوفة أحادية البعد تضم H × W قيمة. جميع القنوات السابقة متاحة؛ يمكن ضبط params.gain."
+    },
+    "opencvEngine": {
+      "source": "OpenCV processing engine",
+      "translation": "محرك معالجة OpenCV"
+    },
+    "engineCurrent": {
+      "source": "Current OpenCV",
+      "translation": "OpenCV الحالي"
     }
   }
 }

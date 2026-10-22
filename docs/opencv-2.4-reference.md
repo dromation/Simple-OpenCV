@@ -9,7 +9,7 @@ Prenesena je celotna izvorna koda uradne izdaje **2.4.13.7**:
 - Uvoz: 2026-10-21. Vse datoteke so preverjene proti izvornim objektom Git;
   seznam SHA-256 je v `docs/opencv-2.4.13.7-manifest.json`.
 - Ohranjeni so `LICENSE` ter licence priloženih knjižnic v izvornih mapah.
-- To je izvorna koda za pregled; knjižnica ni prevedena ali nameščena v `.venv`.
+- Iz te izvorne kode lahko zgradimo ločen pogon za dejansko obdelavo v OpenCV 2.4; ne zamenja paketa v `.venv`. Glej [namestitev pogonov](OPENCV_BACKENDS.md).
 
 ## Kje začeti
 

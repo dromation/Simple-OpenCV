@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "942b65d63f61c83d882a145989c4886a9589c40becc094250ca3a56ca82907e4",
+  "sourceDigest": "3f4d98ad71cad5fa7a9e3fdebc8f823dcfea24cbb440d911cd078c0664b4f814",
   "protectedFallbackKeys": [
     "export",
     "exampleHint",
@@ -14,7 +14,10 @@
     "confidenceBlock",
     "apiGroup",
     "otsuBlock",
-    "houghBlock"
+    "houghBlock",
+    "opencvEngine",
+    "engineCurrent",
+    "api24Hint"
   ],
   "strings": {
     "guide": "Klassrummet",
@@ -180,6 +183,12 @@
     "closingBlock": "Morfologisk stängning",
     "morph_gradientBlock": "Morfologisk gradient",
     "customGain": "Kod får parametrar",
-    "backgroundLesson": "Relaterad bakgrundsundervisning"
+    "backgroundLesson": "Relaterad bakgrundsundervisning",
+    "opencvEngine": "OpenCV bearbetningsmotor",
+    "engineCurrent": "nuvarande OpenCV",
+    "engineUnavailable": "Motorn är inte installerad",
+    "backendIncompatible": "Inkompatibel med den valda OpenCV",
+    "engineScope": "Den valda versionen utför stödda bearbetningsblock. Fotografering, visning och bildöverföring förblir delade av appen.",
+    "api24Hint": "OpenCV 2.4.13.7 Källor av referens. Biblioteksblock utför stödda operationer; anpassad kod för denna motor stöds inte ännu."
   }
 }

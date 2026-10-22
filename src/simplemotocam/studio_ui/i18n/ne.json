@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "942b65d63f61c83d882a145989c4886a9589c40becc094250ca3a56ca82907e4",
+  "sourceDigest": "3f4d98ad71cad5fa7a9e3fdebc8f823dcfea24cbb440d911cd078c0664b4f814",
   "protectedFallbackKeys": [
     "export",
     "signedMath",
@@ -28,7 +28,11 @@
     "green",
     "blue",
     "otsuBlock",
-    "houghBlock"
+    "houghBlock",
+    "opencvEngine",
+    "engineCurrent",
+    "backendIncompatible",
+    "api24Hint"
   ],
   "strings": {
     "guide": "कक्षाको",
@@ -194,6 +198,12 @@
     "closingBlock": "मोरफोलॉजिकको समापन",
     "morph_gradientBlock": "भौतिक ग्रेडिएन्ट",
     "customGain": "कोड कमाई पैरामीटर",
-    "backgroundLesson": "संबंधित पाठ्यक्रम"
+    "backgroundLesson": "संबंधित पाठ्यक्रम",
+    "opencvEngine": "OpenCV प्रसंस्करण मोटर",
+    "engineCurrent": "वर्तमान OpenCV",
+    "engineUnavailable": "इन्टरनेशनल इन्टरनेशनल इन्टरनेशनल",
+    "backendIncompatible": "मतगणनाको मतगणनाको मतगणनाको मतगणना OpenCV",
+    "engineScope": "यसका लागि चयनित संस्करण समर्थित प्रसंस्करण ब्लॉक चलाउने छ। पुस्तकालय हुनुभन्दा महत्त्वपूर्ण पक्ष हो– त्यहाँ उत्कृष्ट पुस्तक उपलब्ध हुनु ।",
+    "api24Hint": "OpenCV 2.4.13.7 स्रोतको संदर्भ पुस्तकालय ब्लक समर्थित संचालन गर्न सक्छन्; यस मोटरको लागि कस्टम कोड अब समर्थित हुन नसक्ने।"
   }
 }

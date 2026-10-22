@@ -8,6 +8,7 @@ from urllib.parse import quote
 import cv2
 from .studio_engine import KINDS, default_state, validate_state
 from .studio_runtime import runtime_catalog, STARTERS
+from .studio_backend import backend_catalog
 
 CATALOG_API = 1
 
@@ -30,6 +31,7 @@ def recipe(identifier, title, specs, source=None):
     return {
         "id": "example:" + identifier,
         "type": "example",
+        "template": True,
         "group": "exampleGroup",
         "label": title,
         "state": validate_state(state),
@@ -154,6 +156,7 @@ def library_catalog(storage):
                 entries.append(
                     {
                         "id": prefix + path.stem,
+                        "template": prefix == "preset:",
                         "type": "example",
                         "group": group,
                         "label": state["name"],
@@ -191,6 +194,7 @@ def library_catalog(storage):
             entries.append(
                 {
                     "id": "api:" + name,
+                    "backends": ["current"],
                     "type": "api",
                     "group": "apiGroup",
                     "label": "cv2." + name,
@@ -202,9 +206,45 @@ def library_catalog(storage):
                     "note": "apiHint",
                 }
             )
+    for function in (
+        "GaussianBlur",
+        "medianBlur",
+        "blur",
+        "bilateralFilter",
+        "filter2D",
+        "Laplacian",
+        "threshold",
+        "getDerivKernels",
+        "sepFilter2D",
+        "Scharr",
+        "magnitude",
+        "morphologyEx",
+        "Canny",
+        "adaptiveThreshold",
+        "HoughLinesP",
+        "line",
+    ):
+        entries.append(
+            {
+                "id": "api24:" + function,
+                "type": "api",
+                "backends": ["opencv24"],
+                "group": "apiGroup",
+                "label": "cv::" + function,
+                "signature": "OpenCV 2.4.13.7 · " + function,
+                "source": "https://github.com/opencv/opencv/blob/2.4.13.7/modules/"
+                + (
+                    "core/include/opencv2/core/core.hpp"
+                    if function in ("magnitude", "line")
+                    else "imgproc/include/opencv2/imgproc/imgproc.hpp"
+                ),
+                "note": "api24Hint",
+            }
+        )
     return {
         "api": CATALOG_API,
         "opencv": cv2.__version__,
+        "backends": backend_catalog(),
         "runtimes": runtime_catalog(),
         "starters": STARTERS,
         "entries": entries,

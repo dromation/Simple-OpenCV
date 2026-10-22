@@ -186,3 +186,5 @@ uncommitted for review. Nothing has been pushed.
 
 The D: filesystem does not record Git ownership, so a Git safe-directory
 exception was added for this exact project path only.
+
+The visual studio now supports an explicit choice of OpenCV 2.4.13.7 or the installed current OpenCV processing engine. See [setup, supported blocks and exports](docs/OPENCV_BACKENDS.md). The earlier command-line viewer still uses the host OpenCV.

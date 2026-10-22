@@ -88,7 +88,7 @@ One language selector in the application header updates the studio controls, blo
 
 English and Slovenian interface text and lessons are authored; **the other 19 languages are machine drafts**, visibly labelled and accompanied by the English original. Optional open-source [M2M100/CTranslate2 tooling](tools/doc_translate/README.md) generates the local catalogs. Equations and code remain protected. This is an eight-topic companion, not a translation of the entire OpenCV documentation.
 
-Three unchanged [official OpenCV 2.4 PDF manuals](docs/opencv-2.4-manuals/README.md) are included for offline study. The application runs on **OpenCV 4**; the archived OpenCV 2.4 source and old examples are historical references.
+Three unchanged [official OpenCV 2.4 PDF manuals](docs/opencv-2.4-manuals/README.md) are included for offline study. Choose **OpenCV 2.4.13.7** or the **installed current OpenCV** in the application header. The optional 2.4 worker runs actual legacy core/imgproc operations; [installation and compatibility](docs/OPENCV_BACKENDS.md) explain supported blocks and portable exports. The selected version is saved with the algorithm.
 
 ## Know what the numbers mean
 
@@ -124,3 +124,9 @@ New application code and project-authored material use the **MIT license**, reta
 ## Slovensko
 
 SimpleMotocam je lokalni laboratorij za sestavljanje algoritmov računalniškega vida. Zaženi namestitev, nato `Start-SimpleMotocam.cmd`. Bloke dodajaš iz leve knjižnice, spreminjaš enačbe in drsnike, spremljaš dejanske rezultate ter shraniš stanje ali izvoziš samostojno Python datoteko. [Navodila za studio](docs/STUDIO.md) opisujejo delovanje in omejitve; [slovenski učni vodič](docs/opencv-2.4-manuals/learning/README.sl.md) vključuje matematične razlage. Kamera se vključi šele ob izrecno izbranem zajemu. Meroslovje in geometrija ostajata naslednja razvojna modula.
+
+### OpenCV 2.4 processing in the same studio
+
+![OpenCV 2.4 running the LinesScan3 adaptation](docs/images/studio-opencv24.png)
+
+The header selects the processing version. This screenshot uses actual OpenCV 2.4 Canny and Hough operations; the graph, language selector and classroom remain in the same application.

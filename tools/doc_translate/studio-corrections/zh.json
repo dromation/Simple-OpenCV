@@ -116,6 +116,14 @@
     "backgroundLesson": {
       "source": "Related background lesson",
       "translation": "相关基础知识"
+    },
+    "opencvEngine": {
+      "source": "OpenCV processing engine",
+      "translation": "OpenCV 处理引擎"
+    },
+    "engineCurrent": {
+      "source": "Current OpenCV",
+      "translation": "当前 OpenCV"
     }
   }
 }

@@ -108,6 +108,14 @@
     "saveBlock": {
       "source": "Save block with dependencies",
       "translation": "Spara block med beroenden"
+    },
+    "opencvEngine": {
+      "source": "OpenCV processing engine",
+      "translation": "OpenCV för bildbehandling"
+    },
+    "engineCurrent": {
+      "source": "Current OpenCV",
+      "translation": "Aktuell OpenCV"
     }
   }
 }

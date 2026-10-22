@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "942b65d63f61c83d882a145989c4886a9589c40becc094250ca3a56ca82907e4",
+  "sourceDigest": "3f4d98ad71cad5fa7a9e3fdebc8f823dcfea24cbb440d911cd078c0664b4f814",
   "protectedFallbackKeys": [
     "export",
     "signedMath",
@@ -22,7 +22,10 @@
     "red",
     "blue",
     "otsuBlock",
-    "houghBlock"
+    "houghBlock",
+    "opencvEngine",
+    "engineCurrent",
+    "api24Hint"
   ],
   "strings": {
     "guide": "クラス",
@@ -188,6 +191,12 @@
     "closingBlock": "モルフォロジー閉鎖",
     "morph_gradientBlock": "モルフォロジーグラディエント",
     "customGain": "コード パラメーター",
-    "backgroundLesson": "関連する背景レッスン"
+    "backgroundLesson": "関連する背景レッスン",
+    "opencvEngine": "OpenCV 加工エンジン",
+    "engineCurrent": "現在 OpenCV",
+    "engineUnavailable": "エンジンが設置されていない。",
+    "backendIncompatible": "選択した OpenCVと互換性がない",
+    "engineScope": "選択したバージョンは、サポートされた処理ブロックを実行します。 撮影、表示、画像転送はアプリケーションによって共有されます。",
+    "api24Hint": "OpenCV 2.4.13.7 情報源参照 図書館ブロックはサポートされた操作を実行し、このエンジンのカスタマイズコードはまだサポートされていません。"
   }
 }

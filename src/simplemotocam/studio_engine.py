@@ -18,6 +18,13 @@ from .studio_runtime import (
     STARTERS,
 )  # EXPORT_RUNTIME
 
+from .studio_backend import (
+    validate_backend,
+    CV24_NATIVE,
+    CV24_INDEPENDENT,
+    run_opencv24,
+)  # EXPORT_BACKEND
+
 SCHEMA_VERSION = 1
 BASE = {"R", "G", "B", "A"}
 FUNCTIONS = {
@@ -316,6 +323,7 @@ def evaluate(tree, values):
 def validate_state(state):
     if not isinstance(state, dict) or state.get("schema") != SCHEMA_VERSION:
         raise ValueError("Unsupported project schema")
+    backend = validate_backend(state.get("backend"))
     name = state.get("name")
     if not isinstance(name, str) or not name.strip() or len(name) > 100:
         raise ValueError("Project name: 1–100 characters")
@@ -352,6 +360,10 @@ def validate_state(state):
         kind, identifier = n["kind"], n.get("id")
         language = n.get("runtime", "python")
         check_runtime(language, kind)
+        if backend["id"] == "opencv24" and kind not in CV24_NATIVE | CV24_INDEPENDENT:
+            raise ValueError(
+                f"{kind}: no compatible OpenCV 2.4 adapter; choose the current engine or remove the block"
+            )
         if (
             not isinstance(identifier, str)
             or not re.fullmatch(r"[a-zA-Z][a-zA-Z0-9_-]{0,39}", identifier)
@@ -480,6 +492,7 @@ def validate_state(state):
     return {
         "schema": SCHEMA_VERSION,
         "name": name.strip(),
+        "backend": backend,
         "source": {"type": source["type"], "camera": camera, "asset": asset},
         "nodes": result,
         "view": normalized_view,
@@ -552,6 +565,12 @@ class StudioPipeline:
                 continue
             if not node["enabled"]:
                 output = values[p["input"]].copy()
+            elif (
+                self.state["backend"]["id"] == "opencv24"
+                and kind in CV24_NATIVE
+                and node.get("runtime") != "javascript"
+            ):
+                output = run_opencv24(kind, values[p["input"]], p)
             elif kind == "custom":
                 output = (
                     run_worker(

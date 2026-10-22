@@ -13,6 +13,7 @@
       ><input id="name" data-i18n-aria="projectName" maxlength="100" /><span
         class="spacer"
       ></span>
+      <label class="app-language engine-choice"><span data-i18n="opencvEngine"></span><select id="opencvBackend" data-i18n-aria="opencvEngine"></select></label>
       <label class="app-language"
         ><span data-i18n="language"></span
         ><select id="locale" data-i18n-aria="language"></select
@@ -24,7 +25,7 @@
       ><button class="primary" id="run"></button>
     </header>
     <div class="toolbar">
-      <span class="tag">SIMPLEMOTOCAM STUDIO</span
+      <span id="backendBadge" class="tag"></span
       ><span data-i18n="builder"></span><span class="spacer"></span
       ><button id="undo" data-i18n-title="undo">↶</button
       ><button id="redo" data-i18n-title="redo">↷</button

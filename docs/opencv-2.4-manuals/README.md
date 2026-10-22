@@ -26,8 +26,9 @@ vsak piksel vsebuje vrednosti, barvna slika pa ima več kanalov. Funkcije knjiž
 omogočajo zajem, računanje s kanali, filtriranje, zaznavanje robov, sledenje in
 kalibracijo kamer.
 
-V projektu hranimo staro različico 2.4 kot izvorno gradivo. Novo jedro
-SimpleMotocam uporablja OpenCV 4.14.0. Primeri iz dokumentacije 2.4 zato niso
+V projektu hranimo različico 2.4 kot izvorno gradivo in omogočamo izbiro
+pravega pogona OpenCV 2.4.13.7 ali nameščenega sodobnega OpenCV.
+Glej [namestitev in omejitve](../OPENCV_BACKENDS.md). Primeri iz dokumentacije 2.4 zato niso
 nujno neposredno izvedljivi v novem okolju. Ime Python modula `cv2` samo po sebi
 ne pove, katera različica OpenCV je nameščena.
 

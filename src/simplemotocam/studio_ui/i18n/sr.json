@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "942b65d63f61c83d882a145989c4886a9589c40becc094250ca3a56ca82907e4",
+  "sourceDigest": "3f4d98ad71cad5fa7a9e3fdebc8f823dcfea24cbb440d911cd078c0664b4f814",
   "protectedFallbackKeys": [
     "export",
     "exampleHint",
@@ -15,7 +15,10 @@
     "apiGroup",
     "codeContract",
     "otsuBlock",
-    "houghBlock"
+    "houghBlock",
+    "opencvEngine",
+    "engineCurrent",
+    "api24Hint"
   ],
   "strings": {
     "guide": "Класарија",
@@ -181,6 +184,12 @@
     "closingBlock": "Морфолошко затварање",
     "morph_gradientBlock": "Morfološki gradient",
     "customGain": "Код добија параметар",
-    "backgroundLesson": "Релевантне позадине лекције"
+    "backgroundLesson": "Релевантне позадине лекције",
+    "opencvEngine": "OpenCV Мотор за обраду",
+    "engineCurrent": "Тренутно OpenCV",
+    "engineUnavailable": "Мотор није инсталиран",
+    "backendIncompatible": "Некомпатибилна са одабраним OpenCV",
+    "engineScope": "Изабрана верзија извршава подржане блокове обраде. Снимање, приказивање и пренос слике остају подељени апликацијом.",
+    "api24Hint": "OpenCV 2.4.13.7 Извор референце . Блокови библиотеке обављају подржане операције; прилагођени код за овај мотор још није подржана."
   }
 }

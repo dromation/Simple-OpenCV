@@ -165,6 +165,12 @@
     "closingBlock": "Morfološko zapiranje",
     "morph_gradientBlock": "Morfološki gradient",
     "customGain": "Parameter ojačenja v kodi",
-    "backgroundLesson": "Povezana osnovna razlaga"
+    "backgroundLesson": "Povezana osnovna razlaga",
+    "opencvEngine": "OpenCV za obdelavo",
+    "engineCurrent": "Trenutni OpenCV",
+    "engineUnavailable": "Izvajalnik ni nameščen",
+    "backendIncompatible": "Ni združljivo z izbranim OpenCV",
+    "engineScope": "Izbrana različica izvaja podprte bloke obdelave. Zajem, prikaz in prenos slik ostajajo skupni aplikaciji.",
+    "api24Hint": "Izvorna referenca OpenCV 2.4.13.7. Podprte operacije izvajajo bloki iz knjižnice; lastna koda za ta izvajalnik še ni podprta."
   }
 }

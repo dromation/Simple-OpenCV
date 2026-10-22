@@ -11,7 +11,7 @@ Run `Start-SimpleMotocam.cmd` after `Install-SimpleMotocam.cmd`, or `python -m s
 5. Add Gaussian/median filters, a custom 3×3 correlation kernel, Sobel/Scharr edge magnitude or a threshold. Turn off an operator to pass its input through unchanged. Algebra, channel extraction and temporal difference are structural blocks and cannot be bypassed.
 6. Select any output channel in the signal/result previews. Display gain changes only image rendering, never the numerical arrays. Signed signal display maps zero to mid-grey. Unsigned result display clips negative values to black; min/max/mean below the image still report the raw values.
 7. **Shrani stanje** creates a new timestamped local JSON record and downloads a portable JSON configuration. **Odpri** loads a saved record or imports JSON. Saving never overwrites an earlier record. Undo/Redo applies to graph and parameter edits during this session.
-8. **Izvozi Python** downloads a standalone script with the exact engine and current state embedded. It requires NumPy and OpenCV but no SimpleMotocam installation. Run `python simplemotocam_algorithm.py --frames 120 --show`, or supply `--camera 0`, `--video clip.mp4` or `--image sample.png`. The exported orchestrator is Python. Blocks marked JavaScript execute using Node.js, which must also be installed. The lesson C/C++/Java selections remain educational snippets.
+8. **Izvozi Python** downloads a standalone script with the exact engine and current state embedded. It requires NumPy and OpenCV but no SimpleMotocam installation. An OpenCV 2.4 export additionally requires the native worker; see [portable exports](OPENCV_BACKENDS.md). Run `python simplemotocam_algorithm.py --frames 120 --show`, or supply `--camera 0`, `--video clip.mp4` or `--image sample.png`. The exported orchestrator is Python. Blocks marked JavaScript execute using Node.js, which must also be installed. The lesson C/C++/Java selections remain educational snippets.
 
 ## Numeric contract
 
@@ -33,7 +33,7 @@ Removable block cards have × at the top-right corner; the fixed source and RGB 
 
 `.motocam/projects/` stores configurations; `.motocam/uploads/` stores imported media under content-derived names. Both are ignored by Git. JSON state refers to an uploaded asset by ID and does not embed the image/video. On another computer, select the media again; the export requires an explicit input path for non-demo sources. Camera indices and available codecs depend on the machine.
 
-The executable application uses OpenCV 4, while OpenCV 2.4 source and manuals remain historical references. The legacy Kivy application and its samples are preserved separately. Geometry and metrology are reserved extension modules, not implemented calibrated measurements.
+The header selects the installed current OpenCV or the optional genuine OpenCV 2.4.13.7 processing worker. See [backend setup and compatibility](OPENCV_BACKENDS.md). Source capture and preview rendering remain shared host services. The legacy Kivy application and its samples are preserved separately. Geometry and metrology are reserved extension modules, not implemented calibrated measurements.
 
 
 ## Expanded block library

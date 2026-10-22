@@ -108,6 +108,14 @@
     "saveBlock": {
       "source": "Save block with dependencies",
       "translation": "Spremi blok s ovisnostima"
+    },
+    "opencvEngine": {
+      "source": "OpenCV processing engine",
+      "translation": "OpenCV za obradu"
+    },
+    "engineCurrent": {
+      "source": "Current OpenCV",
+      "translation": "Trenutni OpenCV"
     }
   }
 }

@@ -45,3 +45,5 @@ The library is derived from the executable `KINDS` registry plus `studio_catalog
 Runtime compatibility is declared in `studio_runtime.py` (contract version 1). A new adapter needs an availability check, explicit supported block kinds, worker implementation, finite H × W output validation and standalone-export parity tests. The UI must disable unavailable/incompatible choices. Native compiler installation alone is not sufficient. Preserve legacy state files where an absent runtime means Python.
 
 Run `tools/browser-tests/verify_library.cjs` against a disposable studio session for code editing, language switching, saved recipes and numeric output checks. Also run the original workflow and global-language/classroom tests. See [the runtime extension guide](docs/STUDIO.md#updating-execution-backends).
+
+For OpenCV engine adapters, follow [backend compatibility and verification](docs/OPENCV_BACKENDS.md). Keep version selection explicit and test real worker results; never silently substitute the host OpenCV.

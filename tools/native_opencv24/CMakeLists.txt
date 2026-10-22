@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.20)
+project(SimpleMotocamOpenCV24 LANGUAGES CXX)
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded")
+add_executable(simplemotocam_opencv24 worker.cpp)
+target_include_directories(simplemotocam_opencv24 PRIVATE "${OPENCV24_SOURCE}/modules/core/include" "${OPENCV24_SOURCE}/modules/imgproc/include" "${OPENCV24_BUILD}")
+target_link_libraries(simplemotocam_opencv24 PRIVATE "${OPENCV24_BUILD}/lib/opencv_imgproc2413.lib" "${OPENCV24_BUILD}/lib/opencv_core2413.lib" "${OPENCV24_BUILD}/3rdparty/lib/zlib.lib")
+target_compile_definitions(simplemotocam_opencv24 PRIVATE _CRT_SECURE_NO_WARNINGS)

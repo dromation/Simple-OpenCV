@@ -4,7 +4,8 @@
   "scripts": {
     "test": "node verify.cjs",
     "test:interface": "node verify_interface.cjs",
-    "test:library": "node verify_library.cjs"
+    "test:library": "node verify_library.cjs",
+    "test:backends": "node verify_backends.cjs"
   },
   "devDependencies": {
     "playwright": "1.62.1"

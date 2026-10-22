@@ -171,6 +171,35 @@ function slider(node, key, container) {
   box.append(label, input);
   container.append(box);
 }
+function activeBackend() { return catalog.backends[state.backend?.id || "current"]; }
+function backendSupports(kind) { const b=activeBackend(); return b.kinds === "*" || b.kinds.includes(kind); }
+function entryCompatible(entry) {
+  if (entry.type === "block") return backendSupports(entry.kind);
+  if (entry.type === "example" && entry.template) return entry.state.nodes.every(n=>backendSupports(n.kind));
+  return true;
+}
+function renderBackend() {
+  const select=$("opencvBackend");select.replaceChildren();
+  for(const [id, backend] of Object.entries(catalog.backends)) {
+    const option=new Option((id==="opencv24" ? "OpenCV 2.4.13.7" : t("engineCurrent")+" · "+backend.version)+(backend.available?"":" · "+t("engineUnavailable")),id);
+    option.disabled=!backend.available;select.append(option);
+  }
+  select.value=state.backend?.id || "current";
+  $("backendBadge").textContent="OpenCV "+activeBackend().version;
+  $("backendBadge").title=t("engineScope");
+}
+$("opencvBackend").onchange=()=>{
+  running=false;
+  const choice=$("opencvBackend").value;
+  serial(async()=>{
+    try {
+      requireAppliedCode();
+      const next=clone(state);next.backend={id:choice,version:catalog.backends[choice].version};
+      const r=await api("/api/config",next);
+      remember();state=r.state;revision=r.revision;valid=true;render();await frame();
+    } finally {renderBackend();$("run").textContent="▶ "+t("run");}
+  });
+};
 function libraryLabel(entry) {
   return entry.type === "block" ? blockLabel(entry.kind) : entry.label;
 }
@@ -181,14 +210,14 @@ function renderLibrary() {
   const groups = [...new Set(catalog.entries.map(e => e.group))];
   selectOptions($("libraryCategory"), [{id:"all",name:t("allGroups")}, ...groups.map(id=>({id,name:t(id)}))], category);
   const query = $("search").value.toLowerCase();
-  const entries = catalog.entries.filter(e => (category === "all" || e.group === category) && `${libraryLabel(e)} ${e.id} ${e.expression || ""}`.toLowerCase().includes(query));
+  const entries = catalog.entries.filter(e => (!e.backends || e.backends.includes(state.backend?.id || "current")) && (category === "all" || e.group === category) && `${libraryLabel(e)} ${e.id} ${e.expression || ""}`.toLowerCase().includes(query));
   const dropdown = $("librarySelect");
   dropdown.replaceChildren(new Option(t("chooseEntry") + ` (${entries.length})`, ""));
   for (const group of groups) {
     const options = entries.filter(e => e.group === group);
     if (!options.length) continue;
     const optgroup = el("optgroup"); optgroup.label = t(group);
-    options.forEach(e => optgroup.append(new Option(libraryLabel(e), e.id)));
+    options.forEach(e => { const option=new Option(libraryLabel(e)+(entryCompatible(e)?"":" · "+t("backendIncompatible")), e.id);option.disabled=!entryCompatible(e);optgroup.append(option); });
     dropdown.append(optgroup);
   }
   let previous;
@@ -197,9 +226,11 @@ function renderLibrary() {
     const button = el("button", undefined, "library-card");
     button.dataset.entry = entry.id;
     if (entry.kind) button.dataset.kind = entry.kind;
+    button.disabled=!entryCompatible(entry);
+    if(button.disabled)button.title=t("backendIncompatible");
     button.append(el("b", (entry.type === "block" || entry.type === "function" ? "＋ " : "↗ ") + libraryLabel(entry)),el("small",entry.expression || (entry.note ? t(entry.note) : entry.kind === "custom" ? "Python · JavaScript" : `OpenCV / ${entry.kind}`)));
     button.onclick = () => activateEntry(entry);
-    button.draggable = ["block","function"].includes(entry.type);
+    button.draggable = !button.disabled && ["block","function"].includes(entry.type);
     button.ondragstart = e => e.dataTransfer.setData("text/plain",JSON.stringify({entry:entry.id}));
     list.append(button);
   }
@@ -207,6 +238,7 @@ function renderLibrary() {
   if (entries.length > 45) list.append(el("p",t("moreCatalog")));
 }
 function activateEntry(entry, index) {
+  if(!entryCompatible(entry)){status(t("backendIncompatible"),true);return;}
   if (entry.type === "block") return add(entry.kind, index);
   if (entry.type === "function") return add("algebra", index, {expression:entry.expression});
   const body=$("catalogBody"); body.replaceChildren(el("h2",entry.label),el("p",t(entry.note)));
@@ -217,7 +249,7 @@ function activateEntry(entry, index) {
     const button=el("button",t("loadExample"),"primary");
     button.onclick=()=>{
       if (dirty && !confirm(t("confirmOpen"))) return;
-      const next=clone(entry.state); next.view.locale=state.view.locale; next.view.codeLanguage=state.view.codeLanguage;
+      const next=clone(entry.state); if(entry.template)next.backend=clone(state.backend); next.view.locale=state.view.locale; next.view.codeLanguage=state.view.codeLanguage;
       $("catalogDetail").close();serial(()=>load(next));
     };body.append(button);
   }
@@ -233,6 +265,7 @@ function pendingCode() {
 function requireAppliedCode() { if (pendingCode()) throw Error(t("applyCode")); }
 
 function add(kind, index = state.nodes.length, overrides = {}) {
+  if(!backendSupports(kind)){status(t("backendIncompatible"),true);return;}
   if (kind === "difference" && state.nodes.some((n) => n.kind === kind)) {
     status(t("exists"));
     return;
@@ -601,6 +634,7 @@ function render() {
     localStorage.setItem("simplemotocam-studio-locale", state.view.locale);
   } catch {}
   translateInterface();
+  renderBackend();
   $("name").value = state.name;
   renderLibrary();
   renderGraph();
@@ -869,6 +903,7 @@ async function start() {
   } catch {}
   const configured = await api("/api/config", state);
   revision = configured.revision;
+  state = configured.state;
   render();
   await frame();
   await frame();

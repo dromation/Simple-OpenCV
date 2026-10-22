@@ -196,6 +196,14 @@
     "backgroundLesson": {
       "source": "Related background lesson",
       "translation": "Verwandte Grundlagen"
+    },
+    "opencvEngine": {
+      "source": "OpenCV processing engine",
+      "translation": "OpenCV-Verarbeitung"
+    },
+    "engineCurrent": {
+      "source": "Current OpenCV",
+      "translation": "Aktuelles OpenCV"
     }
   }
 }

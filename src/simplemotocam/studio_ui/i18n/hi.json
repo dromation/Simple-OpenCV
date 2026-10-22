@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "942b65d63f61c83d882a145989c4886a9589c40becc094250ca3a56ca82907e4",
+  "sourceDigest": "3f4d98ad71cad5fa7a9e3fdebc8f823dcfea24cbb440d911cd078c0664b4f814",
   "protectedFallbackKeys": [
     "export",
     "signedMath",
@@ -18,7 +18,10 @@
     "codeContract",
     "apiHint",
     "otsuBlock",
-    "houghBlock"
+    "houghBlock",
+    "opencvEngine",
+    "engineCurrent",
+    "api24Hint"
   ],
   "strings": {
     "guide": "कक्षाएं",
@@ -184,6 +187,12 @@
     "closingBlock": "Morphological बंद",
     "morph_gradientBlock": "Morphological ग्रेडिएंट",
     "customGain": "पैरामीटर कोड प्राप्त करें",
-    "backgroundLesson": "संबंधित पृष्ठभूमि सबक"
+    "backgroundLesson": "संबंधित पृष्ठभूमि सबक",
+    "opencvEngine": "OpenCV प्रसंस्करण इंजन",
+    "engineCurrent": "वर्तमान OpenCV",
+    "engineUnavailable": "इंजन स्थापित नहीं है",
+    "backendIncompatible": "चयनित OpenCV के साथ असंगत",
+    "engineScope": "चयनित संस्करण समर्थित प्रसंस्करण ब्लॉकों को निष्पादित करता है। रिकॉर्डिंग, डिस्प्ले और छवि स्थानांतरण अनुप्रयोग द्वारा साझा किया जाता है।",
+    "api24Hint": "OpenCV 2.4.13.7 स्रोत संदर्भ लाइब्रेरी ब्लॉक समर्थित ऑपरेशन चलाते हैं; इस इंजन के लिए कस्टम कोड अभी तक समर्थित नहीं है।"
   }
 }

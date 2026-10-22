@@ -16,7 +16,7 @@ from pathlib import Path
 from urllib.parse import urlparse, unquote
 import cv2
 import numpy as np
-from . import studio_engine, studio_runtime
+from . import studio_engine, studio_runtime, studio_backend
 from .studio_catalog import library_catalog, save_library_block
 from .studio_engine import (
     StudioPipeline,
@@ -41,6 +41,19 @@ def export_python(state):
         + "\n"
         + re.sub(
             r"from \.studio_runtime import [\s\S]*?# EXPORT_RUNTIME",
+            "",
+            source,
+            count=1,
+        )
+    )
+    source = (
+        "OPENCV24_EXPORT_HINT = "
+        + repr(str(studio_backend.opencv24_worker()))
+        + "\n"
+        + Path(studio_backend.__file__).read_text(encoding="utf-8")
+        + "\n"
+        + re.sub(
+            r"from \.studio_backend import [\s\S]*?# EXPORT_BACKEND",
             "",
             source,
             count=1,
@@ -122,7 +135,7 @@ class StudioSession:
         (self.storage / "projects").mkdir(exist_ok=True)
         (self.storage / "uploads").mkdir(exist_ok=True)
         self.lock = threading.RLock()
-        self.state = default_state()
+        self.state = validate_state(default_state())
         self.pipeline = StudioPipeline(self.state)
         self.revision = 0
         self.index = 0
@@ -151,7 +164,9 @@ class StudioSession:
         if not any(n["kind"] == "custom" for n in valid["nodes"]):
             pipeline.process(demo_frame(0, 160, 120))
             pipeline.process(demo_frame(1, 160, 120))
-        if valid["nodes"] != self.state["nodes"]:
+        if valid["nodes"] != self.state["nodes"] or valid.get(
+            "backend"
+        ) != self.state.get("backend"):
             self.code_authorized = False
         pipeline.previous = None
         if valid["source"] != self.state["source"]:
@@ -160,6 +175,7 @@ class StudioSession:
         if (
             valid["source"] == self.state["source"]
             and valid["nodes"] == self.state["nodes"]
+            and valid.get("backend") == self.state.get("backend")
         ):
             self.pipeline.state = valid
         else:
@@ -247,6 +263,7 @@ class StudioSession:
         }
         return {
             "images": images,
+            "backend": self.state["backend"],
             "stats": stats,
             "ready": ready,
             "frame": self.index,

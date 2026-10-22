@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "942b65d63f61c83d882a145989c4886a9589c40becc094250ca3a56ca82907e4",
+  "sourceDigest": "3f4d98ad71cad5fa7a9e3fdebc8f823dcfea24cbb440d911cd078c0664b4f814",
   "protectedFallbackKeys": [
     "export",
     "signedMath",
@@ -23,7 +23,10 @@
     "blue",
     "low",
     "otsuBlock",
-    "houghBlock"
+    "houghBlock",
+    "opencvEngine",
+    "engineCurrent",
+    "api24Hint"
   ],
   "strings": {
     "guide": "শ্রেণী",
@@ -189,6 +192,12 @@
     "closingBlock": "Morphological বন্ধ",
     "morph_gradientBlock": "Morphological Gradient মরফোলিক গ্রীষ্ম",
     "customGain": "কোড পেতে প্যারামিটার",
-    "backgroundLesson": "সম্পর্কিত পরবর্তী শিক্ষা"
+    "backgroundLesson": "সম্পর্কিত পরবর্তী শিক্ষা",
+    "opencvEngine": "OpenCV প্রক্রিয়া মেশিন",
+    "engineCurrent": "চলতি OpenCV",
+    "engineUnavailable": "ইঞ্জিন ইনস্টল করা হয় না",
+    "backendIncompatible": "নির্বাচিত OpenCV এর সাথে সংযুক্ত নয়",
+    "engineScope": "নির্বাচিত সংস্করণ সমর্থিত প্রক্রিয়াকরণ ব্লক executes। ফটোগ্রাফি, প্রদর্শন এবং ইমেজ প্রদর্শন অ্যাপ্লিকেশন দ্বারা শেয়ার করা হয়।",
+    "api24Hint": "OpenCV 2.4.13.7 উৎস Reference লাইব্রেরি ব্লক সমর্থিত অপারেশনগুলি পরিচালনা করে; এই মেশিনের জন্য কাস্টম কোড এখনো সমর্থিত হয় না।"
   }
 }

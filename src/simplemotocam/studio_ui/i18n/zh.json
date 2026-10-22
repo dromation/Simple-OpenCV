@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "942b65d63f61c83d882a145989c4886a9589c40becc094250ca3a56ca82907e4",
+  "sourceDigest": "3f4d98ad71cad5fa7a9e3fdebc8f823dcfea24cbb440d911cd078c0664b4f814",
   "protectedFallbackKeys": [
     "export",
     "exampleHint",
@@ -18,7 +18,10 @@
     "red",
     "blue",
     "otsuBlock",
-    "houghBlock"
+    "houghBlock",
+    "opencvEngine",
+    "engineCurrent",
+    "api24Hint"
   ],
   "strings": {
     "guide": "教室",
@@ -184,6 +187,12 @@
     "closingBlock": "道德关闭",
     "morph_gradientBlock": "道德格拉迪特",
     "customGain": "代码获取参数",
-    "backgroundLesson": "相关背景教训"
+    "backgroundLesson": "相关背景教训",
+    "opencvEngine": "OpenCV 加工引擎",
+    "engineCurrent": "目前 OpenCV",
+    "engineUnavailable": "发动机不安装",
+    "backendIncompatible": "不符合所选择的 OpenCV",
+    "engineScope": "选择的版本执行支持的处理区块。 拍摄、显示和图像传输仍然由应用程序共享。",
+    "api24Hint": "OpenCV 2.4.13.7 来源参考。 图书馆区块执行支持的操作;此引擎的自定义代码尚未支持。"
   }
 }

@@ -13,3 +13,5 @@ The new SimpleMotocam application, project-authored lessons and supporting code 
 The `external/README.md` and source manifests record optional local reference snapshots. Large source trees and translation models are excluded from Git. Contributors must check licenses before porting or redistributing external examples.
 
 The studio has no external frontend CDN, analytics or remote translation dependency at runtime. Its screenshots use the project's synthetic demo, not camera recordings.
+
+The optional Windows OpenCV 2.4 worker statically links upstream `core`, `imgproc` and bundled zlib 1.2.7. Its build output includes OpenCV BSD-style, zlib and SimpleMotocam MIT notices plus source revision and binary hash. These dependencies retain their own licenses.

@@ -829,3 +829,7 @@ html[dir="rtl"] #name {
 .catalog-close { position:absolute; right:10px; top:10px; }
 
 .block-formula { direction:ltr; text-align:left; white-space:pre-wrap; overflow-wrap:anywhere; }
+
+.engine-choice select { max-width:200px; }
+.library-card:disabled { opacity:.5; cursor:not-allowed; }
+#backendBadge { white-space:nowrap; }
