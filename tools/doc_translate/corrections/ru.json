@@ -1,0 +1,13 @@
+{
+  "status": "assistant-corrected; native-language review pending",
+  "entries": {
+    "ui.left": {
+      "source": "Left value",
+      "translation": "Значение слева"
+    },
+    "ui.right": {
+      "source": "Right value",
+      "translation": "Значение справа"
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "downloaded": "2026-10-21",
+  "release": "2.4.13.7",
+  "language": "en",
+  "documents": [
+    {
+      "file": "opencv_tutorials.pdf",
+      "source": "https://docs.opencv.org/2.4/opencv_tutorials.pdf",
+      "resolved_url": "https://docs.opencv.org/2.4.13.7/opencv_tutorials.pdf",
+      "bytes": 12159127,
+      "pages": 447,
+      "sha256": "cb81d218e0df129cbc3f87d9edb95ace11a3a101c68d58483408ac8bcbdd7808",
+      "cover_text": "The OpenCV Tutorials\nRelease 2.4.13.7\nJuly 12, 2018"
+    },
+    {
+      "file": "opencv_user.pdf",
+      "source": "https://docs.opencv.org/2.4/opencv_user.pdf",
+      "resolved_url": "https://docs.opencv.org/2.4.13.7/opencv_user.pdf",
+      "bytes": 138033,
+      "pages": 25,
+      "sha256": "2218723239bed59fec2480ecd32748ae7906f6321a515f9e5b4e2608240e8bbc",
+      "cover_text": "The OpenCV User Guide\nRelease 2.4.13.7\nJuly 12, 2018"
+    },
+    {
+      "file": "opencv2refman.pdf",
+      "source": "https://docs.opencv.org/2.4/opencv2refman.pdf",
+      "resolved_url": "https://docs.opencv.org/2.4.13.7/opencv2refman.pdf",
+      "bytes": 5442161,
+      "pages": 931,
+      "sha256": "8ff92937940dd22b96e00c3e442eb9a67e8ada6fcb850fb155dffd5252e96da3",
+      "cover_text": "The OpenCV Reference Manual\nRelease 2.4.13.7\nJuly 12, 2018"
+    }
+  ]
+}

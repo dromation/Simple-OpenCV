@@ -1,0 +1,29 @@
+{
+  "status": "assistant-corrected; native-language review pending",
+  "entries": {
+    "ui.left": {
+      "source": "Left value",
+      "translation": "左侧数值"
+    },
+    "ui.right": {
+      "source": "Right value",
+      "translation": "右侧数值"
+    },
+    "ui.title": {
+      "source": "From equation to image",
+      "translation": "从方程到图像"
+    },
+    "ui.worked": {
+      "source": "Worked example",
+      "translation": "计算示例"
+    },
+    "ui.reset": {
+      "source": "Reset example",
+      "translation": "重置示例"
+    },
+    "ui.original": {
+      "source": "Show English original",
+      "translation": "显示英语原文"
+    }
+  }
+}

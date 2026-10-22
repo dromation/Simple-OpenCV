@@ -1,2 +1,109 @@
-# Simple-OpenCV
-A Kivy GUI interface for OpenCV library in Python
+# SimpleMotocam · Simple OpenCV
+
+**Build a vision algorithm. Inspect the mathematics. Save what works.**
+
+[![Tests](https://github.com/dromation/Simple-OpenCV/actions/workflows/tests.yml/badge.svg)](https://github.com/dromation/Simple-OpenCV/actions/workflows/tests.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-087e75.svg)](LICENSE)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-203735.svg)](pyproject.toml)
+
+A local visual laboratory for experimental computer vision, built on the original Simple-OpenCV repository. Arrange processing blocks, change equations and parameters, inspect live channel data, then export a standalone Python algorithm.
+
+![Actual SimpleMotocam studio: channel blocks, editable mathematics and live previews](docs/images/studio-builder.png)
+
+[Start here](#run-locally) · [Studio guide](docs/STUDIO.md) · [Learning companion](docs/opencv-2.4-manuals/learning/README.en.md) · [Contribute](CONTRIBUTING.md) · [Slovensko](#slovensko)
+
+## From pixels to an experiment
+
+| Build | Explore | Keep |
+| --- | --- | --- |
+| Drag blocks from a searchable library; reorder with drag or buttons | RGB float channels, exposure confidence, signed temporal differences | Versioned JSON configurations and portable downloads |
+| Combine any earlier channels with editable mathematical expressions | Gaussian, median, editable 3×3 kernels, Sobel, Scharr and threshold | Standalone Python export with the same numerical engine |
+| Choose demo, image, video or an explicit camera input | Live previews, raw min/max/mean and display-only gain | Undo/redo and saved-project loading |
+
+```text
+Source → RGB + A → Δ channels → Channel algebra → Gaussian → Sobel
+                              S = wR·ΔR + wG·ΔG + wB·ΔB
+```
+
+The default moving part is synthetic. No camera is opened automatically. Images and computations stay on the local Python server; the frontend has no CDN or online translation requirement.
+
+## Run locally
+
+Requires Python 3.10+ and a modern browser. On Windows, double-click **Install-SimpleMotocam.cmd**, then **Start-SimpleMotocam.cmd**. The installer uses the project's isolated `.venv` environment.
+
+Or install from source:
+
+```sh
+git clone --branch experimental/simplemotocam https://github.com/dromation/Simple-OpenCV.git
+cd Simple-OpenCV
+python -m venv .venv
+# Windows: .venv\Scripts\activate
+# macOS/Linux: source .venv/bin/activate
+python -m pip install -e ".[dev]"
+python -m simplemotocam.studio
+```
+
+The studio opens at **http://127.0.0.1:8765**. Use `--no-browser` or `--port 8766` if needed. Stop the local server with Ctrl+C. Any legacy `requirements.txt` in an existing checkout is an archival environment snapshot; use `pyproject.toml` for the new application.
+
+## Your first saved algorithm
+
+1. Press **Zaženi** to run the demo; select **Algebra kanalov** to edit the expression and weights.
+2. Try `sqrt(dR**2 + dG**2 + dB**2)` for colour-change magnitude, or import [a colour-contrast preset](contrib/presets/color-contrast.json).
+3. Add a filter or threshold and select its output in the preview. Use the explanation language and Python/C++/C/Java example selectors to inspect the underlying operation.
+4. **Shrani stanje** saves a new local version and downloads JSON. **Odpri** restores it. Uploaded media stays in `.motocam/uploads` and must be selected again on another computer.
+5. **Izvozi Python** downloads your complete runnable algorithm:
+
+```sh
+python simplemotocam_algorithm.py --frames 120 --show
+python simplemotocam_algorithm.py --video sample.mp4 --show
+python simplemotocam_algorithm.py --camera 0 --show
+```
+
+Export needs only NumPy and OpenCV. Python is the full-pipeline export language; C, C++ and Java in the inspector are learning examples.
+
+## Mathematics, in 21 explanation languages
+
+The integrated learning companion covers channels, differences, algebra, confidence, filtering, gradients, thresholds and scale. It includes formulas, numerical examples and code in four programming languages.
+
+Slovenščina · English · 日本語 · 中文 · Deutsch · Hrvatski · Српски · Русский · हिन्दी · Español · العربية · 한국어 · Italiano · Français · Polski · Svenska · Português · Bahasa Indonesia · ไทย · বাংলা · नेपाली
+
+![Japanese explanation in the actual studio, with the English original available for comparison](docs/images/studio-japanese.png)
+
+The studio controls are currently Slovenian. English and Slovenian lessons are authored; **the other 19 explanation languages are machine drafts**, visibly labelled and accompanied by the English original. Optional open-source [M2M100/CTranslate2 tooling](tools/doc_translate/README.md) generates the local catalogs. Equations and code remain protected. This is an eight-topic companion, not a translation of the entire OpenCV documentation.
+
+Three unchanged [official OpenCV 2.4 PDF manuals](docs/opencv-2.4-manuals/README.md) are included for offline study. The application runs on **OpenCV 4**; the archived OpenCV 2.4 source and old examples are historical references.
+
+## Know what the numbers mean
+
+- Signed float32 data is preserved throughout processing. Clipping and grey-zero mapping belong only to the preview.
+- `A` is an exposure-margin heuristic, not a measured transparency channel or probability.
+- Temporal differences start at zero after an algorithm/source change. A single still image produces no ongoing temporal motion.
+- Live previews are processed at a maximum side length of 960 pixels. Export processes the original size; match resolution when comparing spatial-filter results.
+- The workspace is an ordered dataflow: inputs must exist earlier in the sequence. Invalid edits stop execution until repaired. Arbitrary Python expressions and uploaded Python plugins are not executed.
+- Geometry and metrology directories are extension points. Calibrated physical measurements are **not implemented yet**.
+
+See [the full numerical contract and operating guide](docs/STUDIO.md).
+
+## Project map
+
+```text
+src/simplemotocam/     Numerical core, local server and browser studio
+tests_core/           Mathematical, state, HTTP and standalone-export checks
+contrib/presets/      Ready-to-import experiment configurations
+docs/                Studio guide, screenshots, licenses and source manifests
+tools/doc_translate/ Optional offline translation workflow
+external/README.md   Pinned historical source references (large trees ignored)
+smoto.py + screens/  Preserved original Kivy GUI
+```
+
+The original Kivy application, examples and Git history remain the base. New work is isolated in the experimental package; legacy scripts are not silently rewritten or run. The reference collections are [ComputerVision-MachineVision](https://github.com/mech-id-x/ComputerVision-MachineVision/tree/master/samples_code) and [SI_Eksperimenti_Strojnega_Vida](https://github.com/mech-id-x/SI_Eksperimenti_Strojnega_Vida).
+
+Run `python -m pytest` for the numerical/API/export suite. Development and extension guidance: [CONTRIBUTING.md](CONTRIBUTING.md), [contrib/](contrib/README.md), [Code of Conduct](CODE_OF_CONDUCT.md).
+
+## License
+
+New application code and project-authored material use the **MIT license**, retaining Dromation's original copyright and adding mech-id-x/contributor attribution. Use, modification and commercial redistribution are permitted under its notice and warranty terms. External libraries, official manuals, translation models and historical examples retain their own terms; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+## Slovensko
+
+SimpleMotocam je lokalni laboratorij za sestavljanje algoritmov računalniškega vida. Zaženi namestitev, nato `Start-SimpleMotocam.cmd`. Bloke dodajaš iz leve knjižnice, spreminjaš enačbe in drsnike, spremljaš dejanske rezultate ter shraniš stanje ali izvoziš samostojno Python datoteko. [Navodila za studio](docs/STUDIO.md) opisujejo delovanje in omejitve; [slovenski učni vodič](docs/opencv-2.4-manuals/learning/README.sl.md) vključuje matematične razlage. Kamera se vključi šele ob izrecno izbranem zajemu. Meroslovje in geometrija ostajata naslednja razvojna modula.

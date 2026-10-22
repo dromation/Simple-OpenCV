@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="sl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>OpenCV · Učni vodič / Learning guide</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="lessons.js"></script>
+  <script defer src="translations.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+<a href="#content" class="skip" data-i18n="skip">Preskoči na vsebino</a>
+<header>
+  <div><span class="eyebrow">SIMPLEMOTOCAM / OPENCV 2.4</span><h1 data-i18n="title">Od enačbe do slike</h1><p data-i18n="subtitle">Razlaga, matematika in programski primeri.</p></div>
+  <div class="selectors">
+    <label for="locale"><span data-i18n="explanationLanguage">Jezik razlage</span><select id="locale"><option value="sl">Slovenščina</option><option value="en">English</option></select></label>
+    <label for="program"><span data-i18n="programLanguage">Programski jezik</span><select id="program"><option value="python">Python</option><option value="cpp">C++</option><option value="c">C · legacy API</option><option value="java">Java</option></select></label>
+  </div>
+</header>
+<div class="scope" data-i18n="scope"></div>
+<div id="translationNotice" class="translation-notice" data-i18n="machineNotice" hidden></div>
+<div class="layout">
+ <aside><h2 data-i18n="topics">Učne teme</h2><nav id="topics" aria-label="Učne teme"></nav><a href="../README.md" data-i18n="intro">Uvod in priročniki</a></aside>
+ <main id="content">
+  <div class="topic-heading"><span id="number" class="eyebrow"></span><h2 id="lessonTitle"></h2><p id="summary"></p></div>
+  <details id="original" class="original"><summary data-i18n="original">Show English original</summary><div id="originalContent" lang="en" dir="ltr"></div></details>
+  <div class="columns">
+   <section class="math"><h3 data-i18n="equation">Matematični zapis</h3><pre id="formula"></pre><p id="variables"></p><h3 data-i18n="worked">Številčni primer</h3><p id="example"></p><p class="note" id="caution"></p></section>
+   <section class="code-panel"><div class="code-heading"><h3 data-i18n="code">Programski zapis</h3><button id="download" type="button" data-i18n="download">Shrani primer</button></div><p id="contract"></p><pre><code id="code"></code></pre><p id="compatibility" class="note"></p></section>
+  </div>
+  <section class="lab"><h3 data-i18n="try">Preizkusi številke</h3><p data-i18n="labNote"></p><div id="parameters" class="parameters"></div><output id="result" aria-live="polite"></output><button id="reset" type="button" data-i18n="reset">Ponastavi primer</button></section>
+  <section class="sources"><h3 data-i18n="reading">Nadaljnje branje</h3><a id="source" target="_blank" rel="noopener" data-i18n="source">Izvor funkcije ali modela</a><div class="pdfs"><a href="../opencv_tutorials.pdf" data-i18n="tutorials">Vaje · uradni PDF (EN)</a><a href="../opencv_user.pdf" data-i18n="userGuide">Uporabniški vodič · PDF (EN)</a><a href="../opencv2refman.pdf" data-i18n="reference">Referenčni priročnik · PDF (EN)</a></div></section>
+ </main>
+</div>
+<footer data-i18n="footer"></footer>
+<noscript>Za izbiro učnih tem omogočite JavaScript. / Enable JavaScript to select lessons. <a href="../README.md">Slovenščina</a> · <a href="README.en.md">English</a></noscript>
+</body>
+</html>

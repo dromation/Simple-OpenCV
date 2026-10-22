@@ -1,0 +1,292 @@
+{
+  "checked_date": "2026-10-21",
+  "sources": [
+    {
+      "repository": "https://github.com/mech-id-x/ComputerVision-MachineVision",
+      "requested_path": "samples_code",
+      "branch": "master",
+      "commit": "2054108d00b46f3ee3070ed733d67a016b1ed918",
+      "local_directory": "external/ComputerVision-MachineVision",
+      "status": "imported",
+      "format": "exact Git blob snapshots; no nested .git",
+      "license": "No license file found in repository tree at this commit.",
+      "files": [
+        {
+          "path": "README.md",
+          "bytes": 366,
+          "sha256": "5d55a3751ce0f9e083a303c8b102609a3f5609d1c9aa6bff362861feac66005d"
+        },
+        {
+          "path": "samples_code/Blob_Match",
+          "bytes": 814,
+          "sha256": "d8b9f89cb912f674503ebe7a4d3dc783e7cfd4af0bd39c0db300d110a336f29a"
+        },
+        {
+          "path": "samples_code/Blob_detect",
+          "bytes": 529,
+          "sha256": "6e7e4d65cb1646c0782290e517eae8ba1ba2bdd61786e230199beb40745d8b41"
+        },
+        {
+          "path": "samples_code/Blob_normal",
+          "bytes": 274,
+          "sha256": "68038925e14d326231a4aacf91d1d6e07fb074c4cda121a9599d6a78940a63ce"
+        },
+        {
+          "path": "samples_code/CamSHIFT",
+          "bytes": 1603,
+          "sha256": "ffa2b5181f93d358c1da69192d0c2107b27fe716996ce3bbb99138ab060b2ee5"
+        },
+        {
+          "path": "samples_code/Camera_sets",
+          "bytes": 337,
+          "sha256": "e4678e95a9e4306b1c2b1c181b29a322cc16e44b797a57daef6a9d8c67586101"
+        },
+        {
+          "path": "samples_code/Echo_Server",
+          "bytes": 506,
+          "sha256": "36582097468e02bfd4d4cad633a4fcf81152dfabb71d502019d2a8a1b5c875a2"
+        },
+        {
+          "path": "samples_code/Input_sample",
+          "bytes": 226,
+          "sha256": "9e4a51a17cdb73ea153385d195fbfc3701c20ec65aeba8d7c12001604cffe89c"
+        },
+        {
+          "path": "samples_code/Input_test",
+          "bytes": 418,
+          "sha256": "a5be9d0fd902024a6a0400b1f345d3055aeb9354574cb690d7672e83015479ed"
+        },
+        {
+          "path": "samples_code/Line_Drawer",
+          "bytes": 1368,
+          "sha256": "aeba40908a6be598e956a0a3c1b36a86876aa4bd9bc2a4a8da80718b8041f5cc"
+        },
+        {
+          "path": "samples_code/Line_allocation",
+          "bytes": 5602,
+          "sha256": "add9c336060a66573098ee04742c38b0b93872636dec921f9e3f31d8d6a1b653"
+        },
+        {
+          "path": "samples_code/Line_position",
+          "bytes": 2721,
+          "sha256": "71dbb5bab8dd1d55b9143e534be0b19ad72cc1ff9fbce3a9a0da92ea6c873232"
+        },
+        {
+          "path": "samples_code/Positioning_sample",
+          "bytes": 322,
+          "sha256": "f8f858d8d5ef9529441c183aabb101bcb01fd843e9b6f11a3c1dbda6d37a6f8f"
+        },
+        {
+          "path": "samples_code/Process_main",
+          "bytes": 241,
+          "sha256": "f7fe7f9a16a99bc630498cfba43f15bbba0bfb5ff46b4c5ce7102c383c081f3f"
+        },
+        {
+          "path": "samples_code/SM_Bollocks_1",
+          "bytes": 9473,
+          "sha256": "0d18851a3aafb9a3713cbffe4a71656c56018d1d59c502c9c225a31bbb3d4779"
+        },
+        {
+          "path": "samples_code/SM_Bollocks_2",
+          "bytes": 6083,
+          "sha256": "efc9b0c6ab1264e87669bfb3a8a5c3cdc43626057dbbb4d48904956f9bbcf32c"
+        },
+        {
+          "path": "samples_code/Simple_run",
+          "bytes": 412,
+          "sha256": "4f4b177c634407254dc09e0b17bf5ee43e3e18b8b451518b7e6c333fac64919f"
+        },
+        {
+          "path": "samples_code/Whitescreen",
+          "bytes": 396,
+          "sha256": "b69fdd9bfa67386a80912d4bc8764d9393bf2b692b90e3761aa56710f0daf162"
+        },
+        {
+          "path": "samples_code/color_distance",
+          "bytes": 616,
+          "sha256": "cc544cf05e3de376a8f267a2462ffb411a99f3ef778590d3a259f236fae62ef7"
+        },
+        {
+          "path": "samples_code/color_distance_2",
+          "bytes": 683,
+          "sha256": "32022db4f4965d58484429c53cf9901809470c31fb2486fcc784673bb97685e8"
+        },
+        {
+          "path": "samples_code/distance_calculation",
+          "bytes": 239,
+          "sha256": "529f8fe6dc4ee4166e60f805681e0ec111ce73acbebd9dd29741e6726239c51f"
+        },
+        {
+          "path": "samples_code/distance_measurment.py",
+          "bytes": 2038,
+          "sha256": "ed7ae4e29fcae4370057b525a482fd3bf83e3ddd7950b70edb0232b989377216"
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/mech-id-x/SI_Eksperimenti_Strojnega_Vida",
+      "requested_path": ".",
+      "branch": "master",
+      "commit": "33ac150c0cf2205313dd91ce3eab511e12c38fe7",
+      "local_directory": "external/SI_Eksperimenti_Strojnega_Vida",
+      "status": "imported",
+      "format": "exact Git blob snapshots; no nested .git",
+      "license": "No license file found in repository tree at this commit.",
+      "files": [
+        {
+          "path": "Blob",
+          "bytes": 274,
+          "sha256": "68038925e14d326231a4aacf91d1d6e07fb074c4cda121a9599d6a78940a63ce"
+        },
+        {
+          "path": "BlobsMatch",
+          "bytes": 814,
+          "sha256": "d8b9f89cb912f674503ebe7a4d3dc783e7cfd4af0bd39c0db300d110a336f29a"
+        },
+        {
+          "path": "BlobstoDetect",
+          "bytes": 529,
+          "sha256": "6e7e4d65cb1646c0782290e517eae8ba1ba2bdd61786e230199beb40745d8b41"
+        },
+        {
+          "path": "Diploma_experiments",
+          "bytes": 68,
+          "sha256": "28bde5abc084333bddad98343b8c62204a31232a1516c5b132c468fcba824e9a"
+        },
+        {
+          "path": "Image_select",
+          "bytes": 887,
+          "sha256": "16573973ef104a8db5019b79a41564bf170e6a3c1b347ec06b04208d4d46d82a"
+        },
+        {
+          "path": "Input_test",
+          "bytes": 418,
+          "sha256": "a5be9d0fd902024a6a0400b1f345d3055aeb9354574cb690d7672e83015479ed"
+        },
+        {
+          "path": "LinesScan3",
+          "bytes": 5602,
+          "sha256": "add9c336060a66573098ee04742c38b0b93872636dec921f9e3f31d8d6a1b653"
+        },
+        {
+          "path": "Pozicioniranje",
+          "bytes": 322,
+          "sha256": "f8f858d8d5ef9529441c183aabb101bcb01fd843e9b6f11a3c1dbda6d37a6f8f"
+        },
+        {
+          "path": "Processing",
+          "bytes": 241,
+          "sha256": "f7fe7f9a16a99bc630498cfba43f15bbba0bfb5ff46b4c5ce7102c383c081f3f"
+        },
+        {
+          "path": "SM_Static",
+          "bytes": 6083,
+          "sha256": "efc9b0c6ab1264e87669bfb3a8a5c3cdc43626057dbbb4d48904956f9bbcf32c"
+        },
+        {
+          "path": "SimpleMcam",
+          "bytes": 11051,
+          "sha256": "48a8b54784d6569f5099ec5ebd87ed0dfa29fa0ffc9a65eea18c6c9c10859f88"
+        },
+        {
+          "path": "Slike_v_listo",
+          "bytes": 412,
+          "sha256": "3bb5864d89e2062f321661dde306a5180c84f72f709900545cfa42c7bf44ec00"
+        },
+        {
+          "path": "Test_za_podatke_While_Loop",
+          "bytes": 1575,
+          "sha256": "5ee099f6ee73b88a22e6ab9817eb1a73b9eec57351bb1aa78a67d90816caa9ba"
+        },
+        {
+          "path": "bcoca.png",
+          "bytes": 12067,
+          "sha256": "f6638c506dbacc4c386292e866069097b0cab8e2b86333025541aa4dd8185867"
+        },
+        {
+          "path": "blasko.png",
+          "bytes": 11800,
+          "sha256": "d72f9d632c2a517a6d84145ba33f5118133b9c81f5baf3bd44a68974e4048625"
+        },
+        {
+          "path": "bmulti.png",
+          "bytes": 12067,
+          "sha256": "fd62ead0dd81839f24e74408456c8ae8be9ac2979860ded8529eb0fbf2eb7c7d"
+        },
+        {
+          "path": "bunion.png",
+          "bytes": 11958,
+          "sha256": "8d5ee26c992345c524b75407206a62f63950a138d9b65d33edbec0c0a30b8645"
+        },
+        {
+          "path": "cocacola1.png",
+          "bytes": 3871889,
+          "sha256": "2f3bd789f7cc9bd6a28e375e9b41f12146649785869c765333d3fba2e7c3ab4c"
+        },
+        {
+          "path": "cocacola2.png",
+          "bytes": 4295863,
+          "sha256": "ef1f1c2527ac5d10cb976df7b6396b7b3c09938479a3a3aa55816e1c7d543a6b"
+        },
+        {
+          "path": "colaBlogo.png",
+          "bytes": 6078,
+          "sha256": "1efc0cbf9f8599a116a393878e7c6400414f335d7e358211fe9e9b2bbc07c054"
+        },
+        {
+          "path": "distance_measurment.py",
+          "bytes": 2038,
+          "sha256": "ed7ae4e29fcae4370057b525a482fd3bf83e3ddd7950b70edb0232b989377216"
+        },
+        {
+          "path": "drinks.png",
+          "bytes": 1099706,
+          "sha256": "36bcfe6a61999ee25cda196a0425078b947742efa7bb87bd7fd2b91b79260646"
+        },
+        {
+          "path": "krneki2",
+          "bytes": 683,
+          "sha256": "32022db4f4965d58484429c53cf9901809470c31fb2486fcc784673bb97685e8"
+        },
+        {
+          "path": "krneki3",
+          "bytes": 1603,
+          "sha256": "ffa2b5181f93d358c1da69192d0c2107b27fe716996ce3bbb99138ab060b2ee5"
+        },
+        {
+          "path": "lasko1.png",
+          "bytes": 4022479,
+          "sha256": "b4dde6010971db23d6c05a73ee578847cdb1cd3ba4b7f23d238fe9a0f946bfcf"
+        },
+        {
+          "path": "lasko2.png",
+          "bytes": 4524574,
+          "sha256": "91e0fc3da9ef7aaa9b1faf37d1b9f0eefb8f3d3a100d55b5cad77bbeba82d898"
+        },
+        {
+          "path": "lasko3.png",
+          "bytes": 2934562,
+          "sha256": "23e7ff8a4341517b97122c043a3a6dcac2f22f0e2b7e3d27fd62cf3553e6dcff"
+        },
+        {
+          "path": "laskoBlogo.png",
+          "bytes": 5270,
+          "sha256": "787aeb5feabe2b087d3172012028592a9b28d4e3b7a85506a31b07d22255892e"
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/opencv/opencv",
+      "tag": "2.4.13.7",
+      "commit": "51cfa519249c89d24035b3f96315ad997deb300f",
+      "requested_path": ".",
+      "local_directory": "external/opencv-2.4.13.7",
+      "status": "imported",
+      "format": "exact Git blob snapshots; no nested .git; not built or installed",
+      "license": "Upstream LICENSE and bundled third-party license files preserved.",
+      "file_count": 4209,
+      "total_bytes": 201195756,
+      "file_manifest": "docs/opencv-2.4.13.7-manifest.json"
+    }
+  ]
+}

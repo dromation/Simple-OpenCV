@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "name": "Red–green contrast",
+  "source": {
+    "type": "synthetic",
+    "camera": 0,
+    "asset": ""
+  },
+  "nodes": [
+    {
+      "id": "source",
+      "kind": "source",
+      "enabled": true,
+      "params": {}
+    },
+    {
+      "id": "channels",
+      "kind": "channels",
+      "enabled": true,
+      "params": {}
+    },
+    {
+      "id": "algebra",
+      "kind": "algebra",
+      "enabled": true,
+      "params": {
+        "expression": "wR*R + wG*G + wB*B",
+        "wR": 1,
+        "wG": -1,
+        "wB": 0,
+        "output": "S"
+      }
+    },
+    {
+      "id": "gaussian",
+      "kind": "gaussian",
+      "enabled": true,
+      "params": {
+        "input": "S",
+        "sigma": 1.2,
+        "size": 5,
+        "output": "smooth"
+      }
+    },
+    {
+      "id": "sobel",
+      "kind": "sobel",
+      "enabled": true,
+      "params": {
+        "input": "smooth",
+        "size": 3,
+        "output": "edges"
+      }
+    }
+  ],
+  "view": {
+    "signal": "S",
+    "result": "edges",
+    "signed": true,
+    "gain": 4.0,
+    "locale": "sl",
+    "codeLanguage": "python"
+  }
+}

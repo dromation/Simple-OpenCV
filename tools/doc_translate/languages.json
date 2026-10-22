@@ -1,0 +1,23 @@
+[
+  {"id":"sl","name":"Slovenščina","tag":"sl-SI","dir":"ltr"},
+  {"id":"en","name":"English","tag":"en-GB","dir":"ltr"},
+  {"id":"ja","name":"日本語","tag":"ja-JP","dir":"ltr"},
+  {"id":"zh","name":"中文 · 简体","tag":"zh-Hans","dir":"ltr"},
+  {"id":"de","name":"Deutsch","tag":"de-DE","dir":"ltr"},
+  {"id":"hr","name":"Hrvatski","tag":"hr-HR","dir":"ltr"},
+  {"id":"sr","name":"Српски","tag":"sr-RS","dir":"ltr"},
+  {"id":"ru","name":"Русский","tag":"ru-RU","dir":"ltr"},
+  {"id":"hi","name":"हिन्दी","tag":"hi-IN","dir":"ltr"},
+  {"id":"es","name":"Español","tag":"es-ES","dir":"ltr"},
+  {"id":"ar","name":"العربية","tag":"ar","dir":"rtl"},
+  {"id":"ko","name":"한국어","tag":"ko-KR","dir":"ltr"},
+  {"id":"it","name":"Italiano","tag":"it-IT","dir":"ltr"},
+  {"id":"fr","name":"Français","tag":"fr-FR","dir":"ltr"},
+  {"id":"pl","name":"Polski","tag":"pl-PL","dir":"ltr"},
+  {"id":"sv","name":"Svenska","tag":"sv-SE","dir":"ltr"},
+  {"id":"pt","name":"Português","tag":"pt","dir":"ltr"},
+  {"id":"id","name":"Bahasa Indonesia","tag":"id-ID","dir":"ltr"},
+  {"id":"th","name":"ไทย","tag":"th-TH","dir":"ltr"},
+  {"id":"bn","name":"বাংলা","tag":"bn-BD","dir":"ltr"},
+  {"id":"ne","name":"नेपाली","tag":"ne-NP","dir":"ltr"}
+]

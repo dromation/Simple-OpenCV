@@ -1,0 +1,14 @@
+.venv/
+.venv-translation/
+.translation-models/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+work/
+runs/
+.motocam/
+external/*/
+node_modules/

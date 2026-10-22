@@ -1,0 +1,165 @@
+{
+  "status": "assistant-corrected; native-language review pending",
+  "entries": {
+    "ui.machineNotice": {
+      "source": "Machine translation — technical and language review is pending. Equations and code are preserved; compare the English original when in doubt.",
+      "translation": "Maschineller Übersetzungsentwurf; die fachliche und sprachliche Prüfung steht noch aus. Gleichungen und Code bleiben erhalten. Vergleiche die Erklärungen mit dem englischen Original."
+    },
+    "ui.original": {
+      "source": "Show English original",
+      "translation": "Englisches Original anzeigen"
+    },
+    "ui.skip": {
+      "source": "Skip to content",
+      "translation": "Zum Inhalt springen"
+    },
+    "ui.title": {
+      "source": "From equation to image",
+      "translation": "Von der Gleichung zum Bild"
+    },
+    "ui.subtitle": {
+      "source": "Explanations, mathematics and code examples.",
+      "translation": "Erklärungen, Mathematik und Programmierbeispiele."
+    },
+    "ui.topics": {
+      "source": "Learning topics",
+      "translation": "Lernthemen"
+    },
+    "ui.intro": {
+      "source": "Introduction and manuals",
+      "translation": "Einführung und Handbücher"
+    },
+    "ui.worked": {
+      "source": "Worked example",
+      "translation": "Rechenbeispiel"
+    },
+    "ui.download": {
+      "source": "Save example",
+      "translation": "Beispiel speichern"
+    },
+    "ui.try": {
+      "source": "Try the numbers",
+      "translation": "Werte ausprobieren"
+    },
+    "ui.reset": {
+      "source": "Reset example",
+      "translation": "Beispiel zurücksetzen"
+    },
+    "ui.reading": {
+      "source": "Further reading",
+      "translation": "Weiterführende Informationen"
+    },
+    "ui.saved": {
+      "source": "Example saved",
+      "translation": "Beispiel gespeichert"
+    },
+    "ui.old": {
+      "source": "Previous",
+      "translation": "Vorheriger Wert"
+    },
+    "ui.current": {
+      "source": "Current",
+      "translation": "Aktueller Wert"
+    },
+    "ui.left": {
+      "source": "Left value",
+      "translation": "Linker Wert"
+    },
+    "ui.right": {
+      "source": "Right value",
+      "translation": "Rechter Wert"
+    },
+    "ui.margin": {
+      "source": "Margin m",
+      "translation": "Abstand m"
+    },
+    "ui.fragmentStatus": {
+      "source": "OpenCV 2.4 learning fragment; not a standalone program and not compiled. Supply the documented inputs, imports/headers and library initialisation. See README.en.md.",
+      "translation": "Lernausschnitt für OpenCV 2.4; kein eigenständiges Programm und nicht kompiliert. Die beschriebenen Eingaben, Importe beziehungsweise Header und die Initialisierung der Bibliothek müssen ergänzt werden. Siehe README.en.md."
+    },
+    "lesson.channels.variables": {
+      "source": "x is the column and y the row; C is one selected channel. C₈ is an 8-bit value from 0 to 255; Cₙ is its normalised value from 0 to 1.",
+      "translation": "x bezeichnet die Spalte, y die Zeile; C steht für einen ausgewählten Kanal. C₈ ist ein 8-Bit-Wert zwischen 0 und 255; Cₙ ist der auf den Bereich von 0 bis 1 normierte Wert."
+    },
+    "lesson.channels.summary": {
+      "source": "A colour pixel contains three numbers. Normal OpenCV capture uses B, G, R order. Splitting channels changes their organisation, not their values.",
+      "translation": "Ein Farbpixel enthält drei Zahlen. Bei einer üblichen Aufnahme mit OpenCV ist die Reihenfolge B, G, R. Das Aufteilen der Kanäle verändert ihre Anordnung, nicht ihre Werte."
+    },
+    "lesson.channels.caution": {
+      "source": "Division by 255 applies to 8-bit data. It does not undo gamma encoding or produce a physical radiance measurement.",
+      "translation": "Die Division durch 255 gilt für 8-Bit-Daten. Sie macht die Gammakodierung nicht rückgängig und liefert keine Messung der physikalischen Strahldichte."
+    },
+    "lesson.difference.title": {
+      "source": "Signed frame difference",
+      "translation": "Bilddifferenz mit Vorzeichen"
+    },
+    "lesson.difference.summary": {
+      "source": "Subtract the previous frame from the current one. Positive values mean a channel increased; negative values mean it decreased. Absolute difference discards the sign.",
+      "translation": "Subtrahiere das vorherige Bild vom aktuellen Bild. Positive Werte bedeuten, dass der Kanalwert gestiegen ist; negative Werte bedeuten, dass er gesunken ist. Bei der absoluten Differenz geht das Vorzeichen verloren."
+    },
+    "lesson.difference.variables": {
+      "source": "C is the same channel at the same coordinate in two equally sized frames; t is the frame index. ΔC is a per-frame difference, not a derivative per second. Divide by the time interval Δt to estimate a time derivative.",
+      "translation": "C ist derselbe Kanal an derselben Koordinate in zwei gleich großen Bildern; t ist der Bildindex. ΔC ist eine Differenz pro Bild, keine Ableitung pro Sekunde. Teile zusätzlich durch das Zeitintervall Δt, um eine zeitliche Ableitung abzuschätzen."
+    },
+    "lesson.difference.caution": {
+      "source": "Convert to float first. uint8 arithmetic can clip negative results or wrap around. Lighting changes also change pixels; a difference alone does not prove motion.",
+      "translation": "Wandle die Daten zunächst in float um. Bei uint8 können negative Ergebnisse abgeschnitten werden oder Überläufe auftreten. Auch Änderungen der Beleuchtung verändern Pixelwerte; eine Differenz allein beweist keine Bewegung."
+    },
+    "lesson.algebra.title": {
+      "source": "Channel algebra and weights",
+      "translation": "Kanalalgebra und Gewichtung"
+    },
+    "lesson.algebra.summary": {
+      "source": "Build a new signal from channels. A linear combination retains direction, but channels can cancel each other. Euclidean magnitude measures total change size.",
+      "translation": "Aus den Kanälen entsteht ein neues Signal. Eine lineare Kombination erhält die Richtung der Änderung, jedoch können sich Kanalbeiträge gegenseitig aufheben. Der euklidische Betrag beschreibt die gesamte Größe der Änderung."
+    },
+    "lesson.algebra.caution": {
+      "source": "S may exceed [0,1]. Clip only for display, not during calculation. This example uses dR − dG + 0.5·dB.",
+      "translation": "S kann außerhalb von [0,1] liegen. Begrenze Werte nur für die Darstellung, nicht während der Berechnung. Dieses Beispiel verwendet dR − dG + 0.5·dB."
+    },
+    "lesson.confidence.title": {
+      "source": "Derived confidence A",
+      "translation": "Abgeleitete Zuverlässigkeitsgewichtung A"
+    },
+    "lesson.confidence.summary": {
+      "source": "In SimpleMotocam, A is a derived quality weight. The initial model reduces confidence near black and clipped channels. This is our heuristic, not a built-in OpenCV confidence estimate.",
+      "translation": "In SimpleMotocam ist A ein abgeleitetes Qualitätsgewicht. Das Ausgangsmodell verringert dieses Gewicht bei nahezu schwarzen oder abgeschnittenen Kanalwerten. Dies ist unsere Heuristik, keine eingebaute Zuverlässigkeitsschätzung von OpenCV."
+    },
+    "lesson.confidence.caution": {
+      "source": "A is neither a probability of correctness nor RGBA opacity. A saturated colour can receive A = 0 even when an object is clearly visible. The model is replaceable.",
+      "translation": "A ist weder die Wahrscheinlichkeit eines korrekten Ergebnisses noch die Deckkraft von RGBA. Eine gesättigte Farbe kann A = 0 erhalten, obwohl das Objekt deutlich sichtbar ist. Das Modell lässt sich austauschen."
+    },
+    "lesson.filter.title": {
+      "source": "A filter kernel",
+      "translation": "Ein Filterkern"
+    },
+    "lesson.filter.caution": {
+      "source": "filter2D computes correlation: it does not flip the kernel. For convolution, flip both kernel axes. This symmetric kernel gives the same result either way. Border extension affects image-edge results.",
+      "translation": "filter2D berechnet eine Korrelation: Der Filterkern wird nicht gespiegelt. Für eine Faltung müssen beide Achsen des Kerns gespiegelt werden. Bei diesem symmetrischen Kern liefern beide Verfahren dasselbe Ergebnis. Die Fortsetzung am Bildrand beeinflusst die Ergebnisse in Randnähe."
+    },
+    "lesson.gradient.title": {
+      "source": "Edges and spatial derivatives",
+      "translation": "Kanten und räumliche Ableitungen"
+    },
+    "lesson.gradient.summary": {
+      "source": "Sobel estimates how quickly intensity changes along x and y. Combining the responses gives local change magnitude. This is not automatically an object outline.",
+      "translation": "Sobel schätzt, wie schnell sich die Intensität entlang x und y ändert. Die Kombination der Antworten ergibt den lokalen Änderungsbetrag. Daraus entsteht nicht automatisch eine Objektkontur."
+    },
+    "lesson.gradient.caution": {
+      "source": "Compute derivatives in float because they are signed. Noise also produces edges; smoothing before differentiation changes the response.",
+      "translation": "Berechne Ableitungen mit float, da sie ein Vorzeichen besitzen. Auch Rauschen erzeugt Kanten; eine Glättung vor der Ableitung verändert die Antwort."
+    },
+    "lesson.threshold.title": {
+      "source": "Thresholds and binary masks",
+      "translation": "Schwellenwerte und binäre Masken"
+    },
+    "lesson.threshold.variables": {
+      "source": "M is the input signal and τ the threshold. B here denotes a binary mask, not the blue channel; the code uses the name mask.",
+      "translation": "M ist das Eingangssignal, τ der Schwellenwert. B bezeichnet hier eine binäre Maske und nicht den blauen Kanal; im Code heißt die Maske mask."
+    },
+    "lesson.scale.summary": {
+      "source": "A reference of known length in the same plane and capture geometry lets us estimate local scale. This is a simple model, not general 3D calibration.",
+      "translation": "Eine Referenz bekannter Länge in derselben Ebene und Aufnahmegeometrie ermöglicht die Schätzung eines lokalen Maßstabs. Dies ist ein einfaches Modell, keine allgemeine 3D-Kalibrierung."
+    }
+  }
+}

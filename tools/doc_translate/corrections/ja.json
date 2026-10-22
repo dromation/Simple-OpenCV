@@ -1,0 +1,13 @@
+{
+  "status": "assistant-corrected; native-language review pending",
+  "entries": {
+    "ui.left": {
+      "source": "Left value",
+      "translation": "左側の値"
+    },
+    "ui.right": {
+      "source": "Right value",
+      "translation": "右側の値"
+    }
+  }
+}

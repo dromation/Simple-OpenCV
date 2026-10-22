@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "name": "Zaznavanje sprememb",
+  "source": {
+    "type": "synthetic",
+    "camera": 0,
+    "asset": ""
+  },
+  "nodes": [
+    {
+      "id": "source",
+      "kind": "source",
+      "enabled": true,
+      "params": {}
+    },
+    {
+      "id": "channels",
+      "kind": "channels",
+      "enabled": true,
+      "params": {}
+    },
+    {
+      "id": "difference",
+      "kind": "difference",
+      "enabled": true,
+      "params": {}
+    },
+    {
+      "id": "algebra",
+      "kind": "algebra",
+      "enabled": true,
+      "params": {
+        "expression": "wR*dR + wG*dG + wB*dB",
+        "wR": 1.0,
+        "wG": -1.0,
+        "wB": 0.5,
+        "output": "S"
+      }
+    },
+    {
+      "id": "gaussian",
+      "kind": "gaussian",
+      "enabled": true,
+      "params": {
+        "input": "S",
+        "sigma": 1.2,
+        "size": 5,
+        "output": "smooth"
+      }
+    },
+    {
+      "id": "sobel",
+      "kind": "sobel",
+      "enabled": true,
+      "params": {
+        "input": "smooth",
+        "size": 3,
+        "output": "edges"
+      }
+    }
+  ],
+  "view": {
+    "signal": "S",
+    "result": "edges",
+    "signed": true,
+    "gain": 4.0,
+    "locale": "sl",
+    "codeLanguage": "python"
+  }
+}

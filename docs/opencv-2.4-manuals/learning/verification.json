@@ -1,0 +1,94 @@
+{
+  "date": "2026-10-21",
+  "explanation_languages": [
+    "sl",
+    "en",
+    "ja",
+    "zh",
+    "de",
+    "hr",
+    "sr",
+    "ru",
+    "hi",
+    "es",
+    "ar",
+    "ko",
+    "it",
+    "fr",
+    "pl",
+    "sv",
+    "pt",
+    "id",
+    "th",
+    "bn",
+    "ne"
+  ],
+  "code_languages": [
+    "python",
+    "cpp",
+    "c",
+    "java"
+  ],
+  "topics": 8,
+  "scope": "Eight-topic learning companion; authored Slovenian/English plus 19 machine-draft languages. Official PDFs unchanged in English.",
+  "browser": {
+    "engine": "installed Google Chrome, headless Playwright",
+    "lesson_language_code_combinations_checked": 672,
+    "runtime_errors": 0,
+    "math_expectations": 10,
+    "viewport_widths": [
+      1440,
+      390,
+      320
+    ],
+    "screenshots_reviewed": [
+      "Arabic desktop",
+      "Japanese desktop",
+      "Nepali mobile"
+    ],
+    "checks": [
+      "topic selection",
+      "explanation language",
+      "code language",
+      "slider updates",
+      "reset",
+      "remembered language selections",
+      "example download",
+      "local links",
+      "no page-level horizontal overflow"
+    ],
+    "translated_prose_fields_checked": 1008,
+    "all_topics_checked_on_mobile": true,
+    "network_requests": 0,
+    "rtl_math_code_isolation": "verified",
+    "english_original_expanded_for_machine_drafts": "verified"
+  },
+  "python": {
+    "version": "3.10.11",
+    "numpy": "2.2.6",
+    "opencv": "4.14.0",
+    "standalone_examples_executed": 8,
+    "numerical_expectations_passed": 14,
+    "tested_with_opencv_2_4": false
+  },
+  "cpp_c_java": {
+    "type": "Educational fragments targeting OpenCV 2.4 or standard scalar mathematics",
+    "compiled": false,
+    "executed": false
+  },
+  "translation": {
+    "engine": "CTranslate2 4.8.3, CPU int8",
+    "model": "facebook/m2m100_418M",
+    "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
+    "pipeline_version": "protected-sentences-v2-beam4",
+    "catalog_entries_per_language": 83,
+    "machine_languages": 19,
+    "machine_catalog_entries": 1577,
+    "protected_span_checks": 3116,
+    "guard_unit_tests_passed": 5,
+    "cache_reuse": "Full regeneration: zero new inference requests",
+    "lesson_source_sha256": "b2a16663af80f36cf84a6f313ceb0cb887f3233b17a4499e818b09b4be7a8c9d",
+    "official_pdf_hashes": "unchanged",
+    "language_quality": "Machine drafts; native-speaker and technical review pending. Partial assistant corrections retained separately."
+  }
+}

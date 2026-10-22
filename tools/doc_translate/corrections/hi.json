@@ -1,0 +1,13 @@
+{
+  "status": "assistant-corrected; native-language review pending",
+  "entries": {
+    "ui.left": {
+      "source": "Left value",
+      "translation": "बाईं ओर का मान"
+    },
+    "ui.right": {
+      "source": "Right value",
+      "translation": "दाईं ओर का मान"
+    }
+  }
+}

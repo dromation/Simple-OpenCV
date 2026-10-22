@@ -1,0 +1,13 @@
+{
+  "status": "assistant-corrected; native-language review pending",
+  "entries": {
+    "ui.left": {
+      "source": "Left value",
+      "translation": "Lijeva vrijednost"
+    },
+    "ui.right": {
+      "source": "Right value",
+      "translation": "Desna vrijednost"
+    }
+  }
+}
