@@ -1,6 +1,7 @@
 """Loopback-only visual studio. Run python -m simplemotocam.studio."""
 
 import argparse
+import re
 import base64
 import hashlib
 import json
@@ -15,7 +16,8 @@ from pathlib import Path
 from urllib.parse import urlparse, unquote
 import cv2
 import numpy as np
-from . import studio_engine
+from . import studio_engine, studio_runtime
+from .studio_catalog import library_catalog, save_library_block
 from .studio_engine import (
     StudioPipeline,
     KINDS,
@@ -34,6 +36,16 @@ def export_python(state):
     """Embed the same validated numerical implementation, not a different approximation."""
     state = validate_state(state)
     source = Path(studio_engine.__file__).read_text(encoding="utf-8")
+    source = (
+        Path(studio_runtime.__file__).read_text(encoding="utf-8")
+        + "\n"
+        + re.sub(
+            r"from \.studio_runtime import [\s\S]*?# EXPORT_RUNTIME",
+            "",
+            source,
+            count=1,
+        )
+    )
     license_text = (ROOT / "LICENSE").read_text(encoding="utf-8")
     runner = """
 
@@ -116,6 +128,7 @@ class StudioSession:
         self.index = 0
         self.capture = None
         self.still = None
+        self.code_authorized = False
 
     def close(self):
         if self.capture is not None:
@@ -135,8 +148,11 @@ class StudioSession:
             )
         # Validate and exercise the graph before replacing the last working state.
         pipeline = StudioPipeline(valid)
-        pipeline.process(demo_frame(0, 160, 120))
-        pipeline.process(demo_frame(1, 160, 120))
+        if not any(n["kind"] == "custom" for n in valid["nodes"]):
+            pipeline.process(demo_frame(0, 160, 120))
+            pipeline.process(demo_frame(1, 160, 120))
+        if valid["nodes"] != self.state["nodes"]:
+            self.code_authorized = False
         pipeline.previous = None
         if valid["source"] != self.state["source"]:
             self.close()
@@ -152,7 +168,15 @@ class StudioSession:
         self.revision += 1
         return {"state": self.state, "revision": self.revision}
 
-    def frame(self):
+    def frame(self, run_code=False):
+        has_code = any(
+            n["kind"] == "custom" and n["enabled"] and n["params"]["code"].strip()
+            for n in self.state["nodes"]
+        )
+        if has_code and not self.code_authorized:
+            if run_code is not True:
+                return {"needsCodeRun": True, "revision": self.revision}
+            self.code_authorized = True
         start = time.perf_counter()
         source = self.state["source"]
         if source["type"] == "synthetic":
@@ -331,9 +355,13 @@ class StudioHandler(BaseHTTPRequestHandler):
                             "state": session.state,
                             "revision": session.revision,
                             "blocks": KINDS,
+                            "catalog": library_catalog(session.storage),
                             "projects": session.projects(),
                         },
                     )
+            if path == "/api/library":
+                with session.lock:
+                    return self.send(200, library_catalog(session.storage))
             if path == "/api/projects":
                 with session.lock:
                     return self.send(200, session.projects())
@@ -411,10 +439,12 @@ class StudioHandler(BaseHTTPRequestHandler):
                 if path == "/api/config":
                     return self.send(200, session.configure(data))
                 if path == "/api/frame":
-                    return self.send(200, session.frame())
+                    return self.send(200, session.frame(data.get("runCode", False)))
                 if path == "/api/stop":
                     session.close()
                     return self.send(200, {"stopped": True})
+                if path == "/api/library/save":
+                    return self.send(200, save_library_block(session.storage, data))
                 if path == "/api/save":
                     return self.send(200, session.save(data))
                 if path == "/api/export":

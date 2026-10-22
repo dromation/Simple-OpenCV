@@ -172,6 +172,30 @@
     "projectName": {
       "source": "Project name",
       "translation": "Projektname"
+    },
+    "customBlock": {
+      "source": "Empty block · custom code",
+      "translation": "Leerer Block · eigener Code"
+    },
+    "applyCode": {
+      "source": "Apply and run code",
+      "translation": "Code übernehmen und ausführen"
+    },
+    "runtime": {
+      "source": "Block execution language",
+      "translation": "Ausführungssprache des Blocks"
+    },
+    "saveBlock": {
+      "source": "Save block with dependencies",
+      "translation": "Block mit Abhängigkeiten speichern"
+    },
+    "codeContract": {
+      "source": "Python: process(channels, params) → H × W array. JavaScript: process(channels, params, shape) → flat H × W values. All upstream channels are available; params.gain is adjustable.",
+      "translation": "Python: process(channels, params) → H × W-Array. JavaScript: process(channels, params, shape) → flaches Array mit H × W Werten. Alle vorgelagerten Kanäle sind verfügbar; params.gain ist einstellbar."
+    },
+    "backgroundLesson": {
+      "source": "Related background lesson",
+      "translation": "Verwandte Grundlagen"
     }
   }
 }

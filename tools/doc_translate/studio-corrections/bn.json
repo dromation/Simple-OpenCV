@@ -92,6 +92,22 @@
     "threshold": {
       "source": "Threshold",
       "translation": "সীমামান"
+    },
+    "customBlock": {
+      "source": "Empty block · custom code",
+      "translation": "খালি ব্লক · নিজের কোড"
+    },
+    "applyCode": {
+      "source": "Apply and run code",
+      "translation": "কোড প্রয়োগ করে চালান"
+    },
+    "runtime": {
+      "source": "Block execution language",
+      "translation": "ব্লক চালানোর ভাষা"
+    },
+    "saveBlock": {
+      "source": "Save block with dependencies",
+      "translation": "ব্লক ও তার নির্ভরতাগুলি সংরক্ষণ করুন"
     }
   }
 }

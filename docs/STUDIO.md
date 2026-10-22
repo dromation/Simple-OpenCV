@@ -11,14 +11,14 @@ Run `Start-SimpleMotocam.cmd` after `Install-SimpleMotocam.cmd`, or `python -m s
 5. Add Gaussian/median filters, a custom 3×3 correlation kernel, Sobel/Scharr edge magnitude or a threshold. Turn off an operator to pass its input through unchanged. Algebra, channel extraction and temporal difference are structural blocks and cannot be bypassed.
 6. Select any output channel in the signal/result previews. Display gain changes only image rendering, never the numerical arrays. Signed signal display maps zero to mid-grey. Unsigned result display clips negative values to black; min/max/mean below the image still report the raw values.
 7. **Shrani stanje** creates a new timestamped local JSON record and downloads a portable JSON configuration. **Odpri** loads a saved record or imports JSON. Saving never overwrites an earlier record. Undo/Redo applies to graph and parameter edits during this session.
-8. **Izvozi Python** downloads a standalone script with the exact engine and current state embedded. It requires NumPy and OpenCV but no SimpleMotocam installation. Run `python simplemotocam_algorithm.py --frames 120 --show`, or supply `--camera 0`, `--video clip.mp4` or `--image sample.png`. Export execution is Python; the inspector's C/C++/Java selections are educational snippets, not full pipeline exporters.
+8. **Izvozi Python** downloads a standalone script with the exact engine and current state embedded. It requires NumPy and OpenCV but no SimpleMotocam installation. Run `python simplemotocam_algorithm.py --frames 120 --show`, or supply `--camera 0`, `--video clip.mp4` or `--image sample.png`. The exported orchestrator is Python. Blocks marked JavaScript execute using Node.js, which must also be installed. The lesson C/C++/Java selections remain educational snippets.
 
 ## Numeric contract
 
 - OpenCV BGR uint8 is converted to RGB float32 in [0,1]; uint16 and normalized float input are supported by the engine.
 - `A = clip(min(R,G,B,1-R,1-G,1-B) / 0.05, 0, 1)` is an exposure-margin heuristic. It is not a measured alpha channel or a calibrated probability. The confidence block computes a separately named channel with an editable margin.
 - `dC = C(t) - C(t−1)` retains sign. The first frame, a changed frame size or an algorithm/source change yields zero differences. Display/language changes preserve temporal history.
-- No per-frame min/max normalization is applied. Filters operate on float32. Gaussian and custom kernels use reflected borders. The custom kernel is **correlation**, matching `filter2D`, rather than a mathematically flipped convolution.
+- No per-frame min/max normalization is applied. Most filters operate on float32; the 8-bit algorithms described below explicitly quantize their inputs. Gaussian and custom kernels use reflected borders. The custom kernel is **correlation**, matching `filter2D`, rather than a mathematically flipped convolution.
 - Sobel kernels are normalized to a unit response on a unit linear ramp; Scharr uses scale 1/32. Gradient magnitude is `sqrt(dx²+dy²)`. The UI size choices are 3/5/7 for Sobel and 3/5 for float median.
 - Threshold returns 1 only when input is strictly greater than the threshold. Division by zero, invalid square roots and other nonfinite results fail visibly. The restricted expression language cannot access Python objects, files or imports.
 - Live processing downsizes sources larger than 960 pixels on their longest side. Exported scripts process the original input size. Consequently spatial filters on large sources will differ between the resized preview and a full-resolution export; use matching resolutions when comparing results.
@@ -34,3 +34,57 @@ Removable block cards have × at the top-right corner; the fixed source and RGB 
 `.motocam/projects/` stores configurations; `.motocam/uploads/` stores imported media under content-derived names. Both are ignored by Git. JSON state refers to an uploaded asset by ID and does not embed the image/video. On another computer, select the media again; the export requires an explicit input path for non-demo sources. Camera indices and available codecs depend on the machine.
 
 The executable application uses OpenCV 4, while OpenCV 2.4 source and manuals remain historical references. The legacy Kivy application and its samples are preserved separately. Geometry and metrology are reserved extension modules, not implemented calibrated measurements.
+
+
+## Expanded block library
+
+Search remains available above a category filter and a grouped dropdown containing **all registered blocks, mathematical functions, recipes, source references, and the installed OpenCV top-level API**. Cards show the first 45 matches; the dropdown includes every match. API entries display the installed function signature/documentation or constant value. They are reference entries, not automatically executable blocks: functions with incompatible input/output shapes need an explicit adapter or a custom block.
+
+The library has **28 block kinds** (including the fixed source and RGB blocks): the original 11 plus luma, RGB color distance, inversion, box/bilateral filters, Laplacian, Canny, Otsu/adaptive thresholding, connected-component filtering, Hough line masks, custom code, and five morphological operations. The mathematical functions `abs`, `sqrt`, `minimum`, `maximum`, and `clip` insert editable algebra blocks. Names and formulas are preserved when the interface language changes.
+
+**Your adapted examples** includes four modern, runnable adaptations from mech-id-x's collections and a simple RGB contrast recipe, plus the repository presets. The adaptations cover color distance with segmentation, blob filtering, line detection, and temporal-change segmentation. Their detail panels link to pinned original source files. They are partial adaptations: legacy template matching, robotics, missing camera/template assets and calibrated distance calculations are not reproduced. All 37 original scripts from the two collections are also browsable as references; opening one never executes it.
+
+Select an algorithm and choose **Save block with dependencies**. It saves the selected block and all upstream blocks as a new reusable recipe under `.motocam/blocks/`. Saved projects also appear in the library. Loading a recipe replaces the current graph after the existing unsaved-changes confirmation; it keeps the interface language. Recipes are deliberately complete dependency chains, not silently rewired fragments. Existing files are never overwritten.
+
+## Write and run a custom block
+
+Add **Empty block · custom code**. An empty editor passes the selected input through unchanged. Select **Python** or **JavaScript**, enter a function, then choose **Apply and run code**. Code is saved in the project and embedded in exports. Apply pending editor changes before saving or exporting. The output selector switches to the custom result after Apply.
+
+Python receives a dictionary of all upstream two-dimensional float32 channels and the block's parameter dictionary. NumPy is available as `np`, OpenCV as `cv2`:
+
+```python
+def process(channels, params):
+    return (channels["R"] - channels["G"]) * params["gain"]
+```
+
+JavaScript receives flat row-major Float32Array channels, parameters and `[height, width]`. Node.js must be installed and available on PATH:
+
+```javascript
+function process(channels, params, shape) {
+  return channels.R.map((r, i) => (r - channels.G[i]) * params.gain);
+}
+```
+
+Return exactly one finite H × W channel (flat H*W values for JavaScript). The `gain` parameter is passed to your function; it is separate from display gain. Select earlier channel names from the input dropdown or access them directly in `channels`. A fresh process executes each custom block for each frame; globals do not persist between frames. Worker startup and binary transfers make custom code slower than native blocks. Time limit defaults to 5 seconds (0.1–30 seconds allowed). Exceptions, timeouts, wrong shapes and nonfinite outputs become visible errors and do not advance temporal history.
+
+**Custom code runs with your local user permissions.** A worker process and timeout are reliability controls, not a security sandbox or a memory/process-tree limit. Run only code you trust. Importing/configuring a custom-code recipe does not execute it; Run, Single frame or Apply starts execution. External Python 2 scripts and API reference entries are never automatically executed. The restricted algebra block continues to reject arbitrary Python access.
+
+Language changes preserve the current editor draft for each language during the editing session; they do not translate code. Only the currently selected implementation is saved/exported. C, C++ and Java remain disabled for execution until compatible adapters are implemented and installed. Installing a compiler alone does not supply an adapter.
+
+## Additional numerical contracts
+
+- **Luma:** `0.299 R + 0.587 G + 0.114 B` on the captured RGB samples; no gamma linearization or physical radiometric calibration.
+- **Color distance:** Euclidean distance from the target RGB triple, divided by `sqrt(3)`. Targets are normalized [0,1]. Inversion is exactly `1 - input`, with no clipping.
+- **Canny/Otsu/adaptive threshold:** explicitly map `round(255 * clip(input,0,1))` to uint8. Results are binary float32 {0,1}. Canny uses 3×3 derivatives and L2 gradient, thresholds in [0,255], with low ≤ high. Adaptive threshold uses the Gaussian neighborhood mean minus the signed offset in 8-bit intensity units. Display gain has no effect.
+- **Morphology:** rectangular all-ones kernels, editable odd size 3–15 and 1–10 iterations, OpenCV default morphology borders. Opening/closing use the corresponding OpenCV composite operations; the gradient is dilation minus erosion.
+- **Laplacian:** signed four-neighbor discrete Laplacian (`ksize=1`). Box filtering uses a normalized neighborhood average. Bilateral color sigma is measured in normalized channel units, spatial sigma in pixels.
+- **Components:** foreground is `input > 0`, connectivity is 8. Returns a binary mask retaining components with area ≥ minArea; the background is always excluded.
+- **Hough:** positive input pixels become a binary edge map. Probabilistic Hough uses rho=1 px and theta=π/180, then draws detected segments with thickness 1 into a binary mask. Use Canny upstream. This is not calibrated metrology.
+
+Primary API references: [OpenCV thresholding](https://docs.opencv.org/4.x/d7/d4d/tutorial_py_thresholding.html), [OpenCV image filtering](https://docs.opencv.org/4.x/d4/d86/group__imgproc__filter.html), and [OpenCV feature detection](https://docs.opencv.org/4.x/dd/d1a/group__imgproc__feature.html).
+
+## Updating execution backends
+
+`studio_runtime.py` defines runtime contract version 1, capability metadata, availability checks, starter code and worker adapters. `/api/library` and bootstrap publish the installed capabilities; the UI derives enabled language choices from this response. Restart the local server and reload the page after updating an adapter. Project nodes store `runtime`; omitted means Python for backwards compatibility. Unknown/unavailable/incompatible runtimes are rejected rather than silently falling back to another language.
+
+To extend a runtime, implement its availability probe and worker command/serialization, declare supported block kinds, validate code without executing it during import, and add numerical parity/timeout/export tests. Keep the finite float32 H × W contract. `export_python` embeds the complete runtime module and engine; avoid package-only dependencies or add explicit export support. The full Python application remains the orchestrator for mixed-language graphs.

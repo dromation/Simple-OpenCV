@@ -92,6 +92,22 @@
     "threshold": {
       "source": "Threshold",
       "translation": "Праг"
+    },
+    "customBlock": {
+      "source": "Empty block · custom code",
+      "translation": "Празан блок · сопствени код"
+    },
+    "applyCode": {
+      "source": "Apply and run code",
+      "translation": "Примени и покрени код"
+    },
+    "runtime": {
+      "source": "Block execution language",
+      "translation": "Језик извршавања блока"
+    },
+    "saveBlock": {
+      "source": "Save block with dependencies",
+      "translation": "Сачувај блок са зависностима"
     }
   }
 }

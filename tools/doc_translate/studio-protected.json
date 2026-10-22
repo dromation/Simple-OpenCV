@@ -9,10 +9,23 @@
     "OpenCV",
     "Sobel",
     "Scharr",
-    "3 \u00d7 3",
+    "3 × 3",
     "[0, 1]",
     "KB",
     "MB",
-    "px"
+    "px",
+    "JavaScript",
+    "Node.js",
+    "C++",
+    "Canny",
+    "Otsu",
+    "Laplacian",
+    "Hough",
+    "process(channels, params, shape)",
+    "process(channels, params)",
+    "params.gain",
+    "H × W",
+    "H × W values",
+    "SimpleCV"
   ]
 }

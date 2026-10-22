@@ -92,6 +92,26 @@
     "threshold": {
       "source": "Threshold",
       "translation": "Umbral"
+    },
+    "customBlock": {
+      "source": "Empty block · custom code",
+      "translation": "Bloque vacío · código propio"
+    },
+    "applyCode": {
+      "source": "Apply and run code",
+      "translation": "Aplicar y ejecutar código"
+    },
+    "runtime": {
+      "source": "Block execution language",
+      "translation": "Lenguaje de ejecución del bloque"
+    },
+    "saveBlock": {
+      "source": "Save block with dependencies",
+      "translation": "Guardar bloque con dependencias"
+    },
+    "codeContract": {
+      "source": "Python: process(channels, params) → H × W array. JavaScript: process(channels, params, shape) → flat H × W values. All upstream channels are available; params.gain is adjustable.",
+      "translation": "Python: process(channels, params) → matriz H × W. JavaScript: process(channels, params, shape) → arreglo plano de H × W valores. Están disponibles todos los canales anteriores; params.gain es ajustable."
     }
   }
 }

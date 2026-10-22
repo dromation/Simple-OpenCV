@@ -33,6 +33,14 @@ class IntegrityTests(unittest.TestCase):
         self.assertEqual(result['example'],'Prej R = 0.8; zdaj R = 0.2.')
         self.assertEqual(fallback,['example'])
 
+    def test_empty_masked_translation_uses_protected_fallback(self):
+        class EmptyMaskedEngine(FakeEngine):
+            def batch(self, texts, language):
+                return ['__translation_failed__' if '__0__' in text else text.replace('Threshold offset','Odmik praga') for text in texts]
+        result, fallback = translate_catalog({'offset':'Threshold offset [0-255]'},'sl',EmptyMaskedEngine(),protector(['[0-255]']))
+        self.assertEqual(result['offset'],'Odmik praga [0-255]')
+        self.assertEqual(fallback,['offset'])
+
     def test_terms_do_not_match_inside_words(self):
         parts=segments('S is signed; A threshold. A is a weight.',protector(['S','A']))
         self.assertEqual([text for keep,text in parts if keep],['S','A'])

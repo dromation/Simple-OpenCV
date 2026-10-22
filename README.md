@@ -59,7 +59,20 @@ python simplemotocam_algorithm.py --video sample.mp4 --show
 python simplemotocam_algorithm.py --camera 0 --show
 ```
 
-Export needs only NumPy and OpenCV. Python is the full-pipeline export language; C, C++ and Java in the inspector are learning examples.
+Export uses NumPy and OpenCV; graphs containing JavaScript blocks also require Node.js. The orchestrator is Python, with each block using its selected compatible runtime. C, C++ and Java remain available as learning examples; execution adapters for these languages are not yet installed.
+
+## A library you can extend
+
+![Expanded block library in the running application](docs/images/studio-library.png)
+
+- **28 block kinds:** channel mathematics, filters, morphology, Canny/Laplacian, automatic thresholds, component filtering, line detection and custom code.
+- **Search + category filter + complete dropdown:** browse executable blocks, five math functions, your adapted examples, saved recipes, 37 original source references and the installed OpenCV API.
+- **Your own code:** write a Python or JavaScript function in an empty block, adjust parameters and inspect its numerical output. Save the block together with its dependencies for reuse.
+- **Compatible language choices:** Python handles native OpenCV operations; JavaScript executes custom code and four compatible built-ins through Node.js. Disabled languages are not presented as working implementations. The backend exposes a versioned runtime registry for future adapters.
+
+![Custom Python block running in the same studio](docs/images/studio-custom-code.png)
+
+Imported custom code waits for explicit execution. Workers enforce a time limit and output-shape/finite-value checks, but run with your user permissions and are not security sandboxes. Only run code you trust. See [code examples, numerical contracts and adapter extension instructions](docs/STUDIO.md#write-and-run-a-custom-block).
 
 ## Mathematics, in 21 explanation languages
 
@@ -79,11 +92,11 @@ Three unchanged [official OpenCV 2.4 PDF manuals](docs/opencv-2.4-manuals/README
 
 ## Know what the numbers mean
 
-- Signed float32 data is preserved throughout processing. Clipping and grey-zero mapping belong only to the preview.
+- Most operations preserve signed float32 data. Canny and automatic thresholds explicitly quantize normalized input to 8-bit; display gain never changes the computation.
 - `A` is an exposure-margin heuristic, not a measured transparency channel or probability.
 - Temporal differences start at zero after an algorithm/source change. A single still image produces no ongoing temporal motion.
 - Live previews are processed at a maximum side length of 960 pixels. Export processes the original size; match resolution when comparing spatial-filter results.
-- The workspace is an ordered dataflow: inputs must exist earlier in the sequence. Invalid edits stop execution until repaired. Arbitrary Python expressions and uploaded Python plugins are not executed.
+- The workspace is an ordered dataflow: inputs must exist earlier in the sequence. Invalid edits stop execution until repaired. The algebra expression parser remains restricted. Explicit custom-code blocks run trusted Python or JavaScript after Apply/Run, with local user permissions.
 - Geometry and metrology directories are extension points. Calibrated physical measurements are **not implemented yet**.
 
 See [the full numerical contract and operating guide](docs/STUDIO.md).

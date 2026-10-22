@@ -92,6 +92,26 @@
     "threshold": {
       "source": "Threshold",
       "translation": "しきい値"
+    },
+    "customBlock": {
+      "source": "Empty block · custom code",
+      "translation": "空のブロック · カスタムコード"
+    },
+    "applyCode": {
+      "source": "Apply and run code",
+      "translation": "コードを適用して実行"
+    },
+    "runtime": {
+      "source": "Block execution language",
+      "translation": "ブロックの実行言語"
+    },
+    "saveBlock": {
+      "source": "Save block with dependencies",
+      "translation": "依存ブロックと一緒に保存"
+    },
+    "codeContract": {
+      "source": "Python: process(channels, params) → H × W array. JavaScript: process(channels, params, shape) → flat H × W values. All upstream channels are available; params.gain is adjustable.",
+      "translation": "Python: process(channels, params) → H × W の配列。JavaScript: process(channels, params, shape) → H × W 個の値を持つ一次元配列。前段のすべてのチャンネルを利用でき、params.gain を調整できます。"
     }
   }
 }

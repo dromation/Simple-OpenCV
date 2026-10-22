@@ -92,6 +92,22 @@
     "threshold": {
       "source": "Threshold",
       "translation": "ค่าเกณฑ์"
+    },
+    "customBlock": {
+      "source": "Empty block · custom code",
+      "translation": "บล็อกว่าง · โค้ดที่เขียนเอง"
+    },
+    "applyCode": {
+      "source": "Apply and run code",
+      "translation": "นำโค้ดไปใช้และเรียกใช้"
+    },
+    "runtime": {
+      "source": "Block execution language",
+      "translation": "ภาษาสำหรับเรียกใช้บล็อก"
+    },
+    "saveBlock": {
+      "source": "Save block with dependencies",
+      "translation": "บันทึกบล็อกพร้อมส่วนที่ต้องใช้ร่วมกัน"
     }
   }
 }

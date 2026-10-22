@@ -92,6 +92,22 @@
     "threshold": {
       "source": "Threshold",
       "translation": "Tröskelvärde"
+    },
+    "customBlock": {
+      "source": "Empty block · custom code",
+      "translation": "Tomt block · egen kod"
+    },
+    "applyCode": {
+      "source": "Apply and run code",
+      "translation": "Tillämpa och kör koden"
+    },
+    "runtime": {
+      "source": "Block execution language",
+      "translation": "Blockets körningsspråk"
+    },
+    "saveBlock": {
+      "source": "Save block with dependencies",
+      "translation": "Spara block med beroenden"
     }
   }
 }

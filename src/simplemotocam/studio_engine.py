@@ -11,6 +11,12 @@ import math
 import re
 import cv2
 import numpy as np
+from .studio_runtime import (
+    check_runtime,
+    run_worker,
+    run_javascript_builtin,
+    STARTERS,
+)  # EXPORT_RUNTIME
 
 SCHEMA_VERSION = 1
 BASE = {"R", "G", "B", "A"}
@@ -76,6 +82,104 @@ KINDS = {
         "params": {"input": "edges", "threshold": 0.05, "output": "mask"},
     },
 }
+
+
+# Public catalog of executable blocks; UI derives its library from this registry.
+for kind, label, lesson, params in [
+    ("luminance", "Sivinska svetlost", "channels", {"output": "gray"}),
+    (
+        "color_distance",
+        "Barvna razdalja",
+        "channels",
+        {"red": 0.0, "green": 0.0, "blue": 0.0, "output": "distance"},
+    ),
+    ("invert", "Obrat signala", "algebra", {"input": "R", "output": "inverted"}),
+    ("box", "Povprečenje", "filter", {"input": "R", "size": 3, "output": "average"}),
+    (
+        "bilateral",
+        "Bilateralni filter",
+        "filter",
+        {
+            "input": "R",
+            "size": 5,
+            "sigma": 1.2,
+            "colorSigma": 0.1,
+            "output": "bilateral",
+        },
+    ),
+    ("laplacian", "Laplace", "gradient", {"input": "R", "output": "laplace"}),
+    (
+        "canny",
+        "Canny",
+        "gradient",
+        {"input": "R", "low": 50, "high": 100, "output": "canny"},
+    ),
+    ("otsu", "Otsujev prag", "threshold", {"input": "R", "output": "otsu"}),
+    (
+        "adaptive",
+        "Prilagodljivi prag",
+        "threshold",
+        {"input": "R", "size": 11, "offset": 2.0, "output": "adaptive"},
+    ),
+    (
+        "components",
+        "Povezana območja",
+        "threshold",
+        {"input": "R", "minArea": 20, "output": "blobs"},
+    ),
+    (
+        "hough",
+        "Houghove daljice",
+        "gradient",
+        {"input": "R", "votes": 30, "minLength": 30, "maxGap": 5, "output": "lines"},
+    ),
+    (
+        "custom",
+        "Lastna koda",
+        "algebra",
+        {"input": "R", "code": "", "gain": 1.0, "timeout": 5.0, "output": "custom"},
+    ),
+]:
+    KINDS[kind] = {"label": label, "lesson": lesson, "params": params}
+for kind in ("erode", "dilate", "opening", "closing", "morph_gradient"):
+    KINDS[kind] = {
+        "label": kind,
+        "lesson": "filter",
+        "params": {"input": "R", "size": 3, "iterations": 1, "output": kind},
+    }
+for kind, descriptor in KINDS.items():
+    descriptor["category"] = (
+        "customGroup"
+        if kind == "custom"
+        else (
+            "mathGroup"
+            if descriptor["lesson"]
+            in ("channels", "algebra", "difference", "confidence")
+            else "filterGroup"
+        )
+    )
+
+
+BLOCK_FORMULAS = {
+    "luminance": "Y = 0.299 R + 0.587 G + 0.114 B",
+    "color_distance": "D = sqrt((R-r)² + (G-g)² + (B-b)²) / sqrt(3)",
+    "invert": "O = 1 - I",
+    "box": "O(x,y) = sum(I(x+i,y+j)) / size²",
+    "bilateral": "O(p) = sum(w(p,q) I(q)) / sum(w(p,q))\nw = exp(-||p-q||²/(2σs²) - (I(p)-I(q))²/(2σc²))",
+    "laplacian": "O = I(x-1,y) + I(x+1,y) + I(x,y-1) + I(x,y+1) - 4 I(x,y)",
+    "canny": "I8 = round(255 clip(I,0,1))\nCanny(I8, low, high, L2=true) / 255",
+    "otsu": "t* = argmax_t [ω0(t) ω1(t) (μ0(t)-μ1(t))²]\nO = 1[I8 > t*]; I8 = round(255 clip(I,0,1))",
+    "adaptive": "I8 = round(255 clip(I,0,1))\nO = 1[I8 > GaussianMean(I8, size) - offset]",
+    "components": "M = 1[I > 0]; connectivity = 8\nO(p) = 1[p ∈ foreground component C ∧ area(C) ≥ minArea]",
+    "hough": "ρ = x cos(θ) + y sin(θ)\nΔρ = 1 px; Δθ = π/180; HoughLinesP(1[I>0])",
+    "erode": "O(p) = min_{q ∈ K} I(p+q)",
+    "dilate": "O(p) = max_{q ∈ K} I(p+q)",
+    "opening": "O = dilate(erode(I,K),K)",
+    "closing": "O = erode(dilate(I,K),K)",
+    "morph_gradient": "O = dilate(I,K) - erode(I,K)",
+}
+for kind, formula in BLOCK_FORMULAS.items():
+    KINDS[kind]["formula"] = formula
 
 
 def default_state():
@@ -246,6 +350,8 @@ def validate_state(state):
         if not isinstance(n, dict) or n.get("kind") not in KINDS:
             raise ValueError("Unknown block")
         kind, identifier = n["kind"], n.get("id")
+        language = n.get("runtime", "python")
+        check_runtime(language, kind)
         if (
             not isinstance(identifier, str)
             or not re.fullmatch(r"[a-zA-Z][a-zA-Z0-9_-]{0,39}", identifier)
@@ -259,10 +365,7 @@ def validate_state(state):
         enabled = n.get("enabled", True)
         if not isinstance(enabled, bool):
             raise ValueError("Enabled must be boolean")
-        if (
-            kind in ("source", "channels", "difference", "algebra", "confidence")
-            and not enabled
-        ):
+        if "input" not in KINDS[kind]["params"] and not enabled:
             raise ValueError("Only filters and edge estimators support bypass")
         supplied = n.get("params", {})
         if not isinstance(supplied, dict) or set(supplied) - set(KINDS[kind]["params"]):
@@ -293,6 +396,45 @@ def validate_state(state):
             p["threshold"] = number(p["threshold"], -10, 10, "Threshold")
         if "margin" in p:
             p["margin"] = number(p["margin"], 0.001, 0.5, "Confidence margin")
+        for key, bounds in {
+            "red": (0, 1),
+            "green": (0, 1),
+            "blue": (0, 1),
+            "colorSigma": (0.001, 10),
+            "low": (0, 255),
+            "high": (0, 255),
+            "offset": (-255, 255),
+            "minArea": (1, 1000000),
+            "votes": (1, 10000),
+            "minLength": (1, 10000),
+            "maxGap": (0, 10000),
+            "iterations": (1, 10),
+            "timeout": (0.1, 30),
+            "gain": (-100, 100),
+        }.items():
+            if key in p:
+                p[key] = number(
+                    p[key],
+                    *bounds,
+                    key,
+                    integer=key
+                    in ("minArea", "votes", "minLength", "maxGap", "iterations"),
+                )
+        if kind == "canny" and p["low"] > p["high"]:
+            raise ValueError("Canny: low must not exceed high")
+        if kind == "custom":
+            if not isinstance(p["code"], str) or len(p["code"]) > 20000:
+                raise ValueError("Custom code: maximum 20000 characters")
+            if p["code"].strip() and language == "python":
+                try:
+                    tree = ast.parse(p["code"])
+                except (SyntaxError, RecursionError) as exc:
+                    raise ValueError(f"Custom Python syntax: {exc}") from exc
+                if not any(
+                    isinstance(item, ast.FunctionDef) and item.name == "process"
+                    for item in tree.body
+                ):
+                    raise ValueError("Define process(channels, params)")
         if kind == "kernel":
             try:
                 kernel = np.asarray(p["kernel"], dtype=np.float32)
@@ -315,6 +457,8 @@ def validate_state(state):
                 raise ValueError("Output name must be a unique channel identifier")
             names.add(output)
         result.append({"id": identifier, "kind": kind, "enabled": enabled, "params": p})
+        if language != "python":
+            result[-1]["runtime"] = language
     view = state.get("view", {})
     if not isinstance(view, dict):
         raise ValueError("Invalid view")
@@ -408,6 +552,29 @@ class StudioPipeline:
                 continue
             if not node["enabled"]:
                 output = values[p["input"]].copy()
+            elif kind == "custom":
+                output = (
+                    run_worker(
+                        node.get("runtime", "python"),
+                        p["code"],
+                        values,
+                        p,
+                        p["timeout"],
+                    )
+                    if p["code"].strip()
+                    else values[p["input"]].copy()
+                )
+            elif node.get("runtime") == "javascript":
+                output = run_javascript_builtin(kind, values, p)
+            elif kind == "luminance":
+                output = 0.299 * values["R"] + 0.587 * values["G"] + 0.114 * values["B"]
+            elif kind == "color_distance":
+                output = np.sqrt(
+                    sum(
+                        (values[c] - p[key]) ** 2
+                        for c, key in zip("RGB", ("red", "green", "blue"))
+                    )
+                ) / np.sqrt(3)
             elif kind == "algebra":
                 output = evaluate(
                     self.trees[node["id"]],
@@ -435,6 +602,85 @@ class StudioPipeline:
                         np.asarray(p["kernel"], np.float32),
                         borderType=cv2.BORDER_REFLECT_101,
                     )
+                elif kind == "invert":
+                    output = 1 - plane
+                elif kind == "box":
+                    output = cv2.blur(plane, (p["size"], p["size"]))
+                elif kind == "bilateral":
+                    output = cv2.bilateralFilter(
+                        plane, p["size"], p["colorSigma"], p["sigma"]
+                    )
+                elif kind == "laplacian":
+                    output = cv2.Laplacian(plane, cv2.CV_32F, ksize=1)
+                elif kind in (
+                    "erode",
+                    "dilate",
+                    "opening",
+                    "closing",
+                    "morph_gradient",
+                ):
+                    operation = {
+                        "erode": cv2.MORPH_ERODE,
+                        "dilate": cv2.MORPH_DILATE,
+                        "opening": cv2.MORPH_OPEN,
+                        "closing": cv2.MORPH_CLOSE,
+                        "morph_gradient": cv2.MORPH_GRADIENT,
+                    }[kind]
+                    output = cv2.morphologyEx(
+                        plane,
+                        operation,
+                        np.ones((p["size"], p["size"]), np.uint8),
+                        iterations=p["iterations"],
+                    )
+                elif kind in ("canny", "otsu", "adaptive"):
+                    # Explicit 8-bit intensity contract, independent of display gain.
+                    byte = np.rint(np.clip(plane, 0, 1) * 255).astype(np.uint8)
+                    if kind == "canny":
+                        output = (
+                            cv2.Canny(byte, p["low"], p["high"], L2gradient=True)
+                            / 255.0
+                        )
+                    elif kind == "otsu":
+                        output = (
+                            cv2.threshold(
+                                byte, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU
+                            )[1]
+                            / 255.0
+                        )
+                    else:
+                        output = (
+                            cv2.adaptiveThreshold(
+                                byte,
+                                255,
+                                cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+                                cv2.THRESH_BINARY,
+                                p["size"],
+                                p["offset"],
+                            )
+                            / 255.0
+                        )
+                elif kind == "components":
+                    count, labels, stats, centers = cv2.connectedComponentsWithStats(
+                        (plane > 0).astype(np.uint8), connectivity=8
+                    )
+                    keep = stats[:, cv2.CC_STAT_AREA] >= p["minArea"]
+                    keep[0] = False
+                    output = keep[labels].astype(np.float32)
+                elif kind == "hough":
+                    lines = cv2.HoughLinesP(
+                        (plane > 0).astype(np.uint8) * 255,
+                        1,
+                        np.pi / 180,
+                        p["votes"],
+                        minLineLength=p["minLength"],
+                        maxLineGap=p["maxGap"],
+                    )
+                    output = np.zeros(shape, np.float32)
+                    if lines is not None:
+                        for x1, y1, x2, y2 in lines[:, 0]:
+                            cv2.line(
+                                output, (int(x1), int(y1)), (int(x2), int(y2)), 1, 1
+                            )
                 elif kind == "threshold":
                     output = (plane > p["threshold"]).astype(np.float32)
                 else:

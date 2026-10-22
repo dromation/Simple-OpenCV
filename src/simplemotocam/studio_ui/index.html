@@ -36,6 +36,7 @@
         hidden
       ></span>
     </div>
+    <dialog id="catalogDetail"><button id="closeCatalog" class="catalog-close" aria-label="Close">×</button><div id="catalogBody"></div></dialog>
     <main>
       <aside class="library">
         <h2 data-i18n="library"></h2>
@@ -45,6 +46,8 @@
           data-i18n-placeholder="search"
           data-i18n-aria="search"
         />
+        <label class="field"><span data-i18n="catalogChoice"></span><select id="libraryCategory" data-i18n-aria="catalogChoice"></select></label>
+        <select id="librarySelect" data-i18n-aria="chooseEntry"></select>
         <div id="library"></div>
         <div class="future">
           <b data-i18n="geometry"></b>

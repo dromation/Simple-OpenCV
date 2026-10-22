@@ -92,6 +92,22 @@
     "threshold": {
       "source": "Threshold",
       "translation": "Ambang"
+    },
+    "customBlock": {
+      "source": "Empty block · custom code",
+      "translation": "Blok kosong · kode sendiri"
+    },
+    "applyCode": {
+      "source": "Apply and run code",
+      "translation": "Terapkan dan jalankan kode"
+    },
+    "runtime": {
+      "source": "Block execution language",
+      "translation": "Bahasa eksekusi blok"
+    },
+    "saveBlock": {
+      "source": "Save block with dependencies",
+      "translation": "Simpan blok beserta dependensinya"
     }
   }
 }

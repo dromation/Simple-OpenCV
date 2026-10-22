@@ -89,7 +89,13 @@ class Engine:
                         raise RuntimeError(f'Translation hit decoding limit; split this entry: {text!r}')
                 translated = self.tokenizer.decode(self.tokenizer.convert_tokens_to_ids(tokens), skip_special_tokens=True).strip()
                 if not translated:
-                    raise RuntimeError('Empty translation; refusing to publish incomplete output.')
+                    retry = self.translator.translate_batch([source[index]], target_prefix=[[target]], beam_size=1, min_decoding_length=2, max_decoding_length=256)
+                    translated = self.tokenizer.decode(self.tokenizer.convert_tokens_to_ids(retry[0].hypotheses[0]), skip_special_tokens=True).strip()
+                    if not translated and re.search(r'__\d+__', text):
+                        # Force the protected-span fallback instead of publishing empty text.
+                        translated = '__translation_failed__'
+                    elif not translated:
+                        raise RuntimeError(f'Empty translation; refusing incomplete output: {language}/{text!r}')
                 self.cache[key(text)] = translated
             self.calls += len(batch)
             write(self.cache_path, self.cache)

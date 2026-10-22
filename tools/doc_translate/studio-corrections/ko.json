@@ -92,6 +92,22 @@
     "threshold": {
       "source": "Threshold",
       "translation": "임계값"
+    },
+    "customBlock": {
+      "source": "Empty block · custom code",
+      "translation": "빈 블록 · 사용자 코드"
+    },
+    "applyCode": {
+      "source": "Apply and run code",
+      "translation": "코드 적용 및 실행"
+    },
+    "runtime": {
+      "source": "Block execution language",
+      "translation": "블록 실행 언어"
+    },
+    "saveBlock": {
+      "source": "Save block with dependencies",
+      "translation": "종속 블록과 함께 저장"
     }
   }
 }

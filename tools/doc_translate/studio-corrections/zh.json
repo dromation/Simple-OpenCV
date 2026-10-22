@@ -92,6 +92,30 @@
     "threshold": {
       "source": "Threshold",
       "translation": "阈值"
+    },
+    "customBlock": {
+      "source": "Empty block · custom code",
+      "translation": "空白模块 · 自定义代码"
+    },
+    "applyCode": {
+      "source": "Apply and run code",
+      "translation": "应用并运行代码"
+    },
+    "runtime": {
+      "source": "Block execution language",
+      "translation": "模块执行语言"
+    },
+    "saveBlock": {
+      "source": "Save block with dependencies",
+      "translation": "保存模块及其依赖项"
+    },
+    "codeContract": {
+      "source": "Python: process(channels, params) → H × W array. JavaScript: process(channels, params, shape) → flat H × W values. All upstream channels are available; params.gain is adjustable.",
+      "translation": "Python: process(channels, params) → H × W 数组。JavaScript: process(channels, params, shape) → 包含 H × W 个值的一维数组。可使用所有上游通道；params.gain 可调。"
+    },
+    "backgroundLesson": {
+      "source": "Related background lesson",
+      "translation": "相关基础知识"
     }
   }
 }

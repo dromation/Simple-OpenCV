@@ -3,6 +3,7 @@ const $ = (id) => document.getElementById(id),
   clone = (x) => structuredClone(x);
 let state,
   blocks,
+  catalog,
   token,
   selected = "algebra",
   running = false,
@@ -56,6 +57,7 @@ function translateInterface() {
   $("run").textContent =
     (running ? "Ⅱ " : "▶ ") + t(running ? "pause" : "run");
   $("interfaceDraft").hidden = ["sl", "en"].includes(state.view.locale);
+  $("closeCatalog").setAttribute("aria-label", t("closeBlock"));
   syncClassroom();
 }
 
@@ -107,7 +109,7 @@ function channels(before = state.nodes.length) {
   return names;
 }
 function mark() {
-  dirty = JSON.stringify(state) !== saved;
+  dirty = JSON.stringify(state) !== saved || pendingCode();
   $("dirty").textContent = dirty ? "● " + t("unsaved") : "✓ " + t("saved");
   $("undo").disabled = !history.length;
   $("redo").disabled = !future.length;
@@ -169,57 +171,78 @@ function slider(node, key, container) {
   box.append(label, input);
   container.append(box);
 }
-function renderLibrary() {
-  const list = $("library");
-  list.replaceChildren();
-  const groups = [
-    [t("mathGroup"), ["difference", "algebra", "confidence"]],
-    [
-      t("filterGroup"),
-      ["gaussian", "median", "kernel", "sobel", "scharr", "threshold"],
-    ],
-  ];
-  for (const [name, kinds] of groups) {
-    list.append(el("h3", name));
-    for (const kind of kinds) {
-      if (
-        !`${kind} ${blockLabel(kind)}`
-          .toLowerCase()
-          .includes($("search").value.toLowerCase())
-      )
-        continue;
-      const b = el("button", undefined, "library-card");
-      b.dataset.kind = kind;
-      b.draggable = true;
-      b.append(
-        el("b", `＋ ${blockLabel(kind)}`),
-        el(
-          "small",
-          kind === "algebra"
-            ? "f(R, G, B, ΔR, …)"
-            : kind === "kernel"
-              ? t("coefficients")
-              : `OpenCV / ${kind}`,
-        ),
-      );
-      b.onclick = () => add(kind);
-      b.ondragstart = (e) =>
-        e.dataTransfer.setData("text/plain", JSON.stringify({ kind }));
-      list.append(b);
-    }
-  }
+function libraryLabel(entry) {
+  return entry.type === "block" ? blockLabel(entry.kind) : entry.label;
 }
-function add(kind, index = state.nodes.length) {
+function renderLibrary() {
+  if (!catalog) return;
+  const list = $("library"), category = $("libraryCategory").value || "all";
+  list.replaceChildren();
+  const groups = [...new Set(catalog.entries.map(e => e.group))];
+  selectOptions($("libraryCategory"), [{id:"all",name:t("allGroups")}, ...groups.map(id=>({id,name:t(id)}))], category);
+  const query = $("search").value.toLowerCase();
+  const entries = catalog.entries.filter(e => (category === "all" || e.group === category) && `${libraryLabel(e)} ${e.id} ${e.expression || ""}`.toLowerCase().includes(query));
+  const dropdown = $("librarySelect");
+  dropdown.replaceChildren(new Option(t("chooseEntry") + ` (${entries.length})`, ""));
+  for (const group of groups) {
+    const options = entries.filter(e => e.group === group);
+    if (!options.length) continue;
+    const optgroup = el("optgroup"); optgroup.label = t(group);
+    options.forEach(e => optgroup.append(new Option(libraryLabel(e), e.id)));
+    dropdown.append(optgroup);
+  }
+  let previous;
+  for (const entry of entries.slice(0, 45)) {
+    if (previous !== entry.group) { list.append(el("h3",t(entry.group))); previous=entry.group; }
+    const button = el("button", undefined, "library-card");
+    button.dataset.entry = entry.id;
+    if (entry.kind) button.dataset.kind = entry.kind;
+    button.append(el("b", (entry.type === "block" || entry.type === "function" ? "＋ " : "↗ ") + libraryLabel(entry)),el("small",entry.expression || (entry.note ? t(entry.note) : entry.kind === "custom" ? "Python · JavaScript" : `OpenCV / ${entry.kind}`)));
+    button.onclick = () => activateEntry(entry);
+    button.draggable = ["block","function"].includes(entry.type);
+    button.ondragstart = e => e.dataTransfer.setData("text/plain",JSON.stringify({entry:entry.id}));
+    list.append(button);
+  }
+  if (!entries.length) list.append(el("p",t("noMatches")));
+  if (entries.length > 45) list.append(el("p",t("moreCatalog")));
+}
+function activateEntry(entry, index) {
+  if (entry.type === "block") return add(entry.kind, index);
+  if (entry.type === "function") return add("algebra", index, {expression:entry.expression});
+  const body=$("catalogBody"); body.replaceChildren(el("h2",entry.label),el("p",t(entry.note)));
+  if (entry.signature) { const pre=el("pre",entry.signature);pre.dir="ltr";body.append(pre); }
+  if (entry.source) {const a=el("a",t("sourceLink"));a.href=entry.source;a.target="_blank";a.rel="noopener";body.append(a);}
+  if (entry.type === "example") {
+    body.append(el("p",entry.state.nodes.map(n=>blockLabel(n.kind)).join(" → ")));
+    const button=el("button",t("loadExample"),"primary");
+    button.onclick=()=>{
+      if (dirty && !confirm(t("confirmOpen"))) return;
+      const next=clone(entry.state); next.view.locale=state.view.locale; next.view.codeLanguage=state.view.codeLanguage;
+      $("catalogDetail").close();serial(()=>load(next));
+    };body.append(button);
+  }
+  $("catalogDetail").showModal();
+}
+$("libraryCategory").onchange=renderLibrary;
+$("librarySelect").onchange=()=>{ const entry=catalog.entries.find(e=>e.id===$("librarySelect").value);if(entry) activateEntry(entry);$("librarySelect").value=""; };
+$("closeCatalog").onclick=()=>$("catalogDetail").close();
+const codeDrafts = new Map();
+function pendingCode() {
+  return state?.nodes.some(n => n.kind === "custom" && codeDrafts.has(n.id+":"+(n.runtime || "python")) && codeDrafts.get(n.id+":"+(n.runtime || "python")) !== n.params.code);
+}
+function requireAppliedCode() { if (pendingCode()) throw Error(t("applyCode")); }
+
+function add(kind, index = state.nodes.length, overrides = {}) {
   if (kind === "difference" && state.nodes.some((n) => n.kind === kind)) {
     status(t("exists"));
     return;
   }
   commit(() => {
     index = Math.max(2, index);
-    const p = clone(blocks[kind].params),
+    const p = {...clone(blocks[kind].params), ...overrides},
       names = channels(index);
     if (p.input && !names.includes(p.input)) p.input = names.at(-1);
-    if (p.expression && !names.includes("dR"))
+    if (p.expression && /\bdR\b/.test(p.expression) && !names.includes("dR"))
       p.expression = "wR*R + wG*G + wB*B";
     if (p.output) {
       const base = p.output;
@@ -367,7 +390,8 @@ function removeNode(id) {
 function drop(e, index) {
   try {
     const data = JSON.parse(e.dataTransfer.getData("text/plain"));
-    if (data.kind && blocks[data.kind]) add(data.kind, index);
+    if (data.entry) { const entry=catalog.entries.find(e=>e.id===data.entry);if(entry)activateEntry(entry,index); }
+    else if (data.kind && blocks[data.kind]) add(data.kind, index);
     else if (data.id) reorder(data.id, index);
   } catch {}
 }
@@ -426,7 +450,27 @@ function renderInspector() {
       ),
     );
   }
+  if (!["source","channels","difference"].includes(node.kind)) {
+    const language=el("select");language.id="blockRuntime";
+    const current=node.runtime || "python";
+    for (const [id, adapter] of Object.entries(catalog.runtimes)) {
+      const compatible=adapter.available && (adapter.kinds==="*" || adapter.kinds.includes(node.kind));
+      const option=new Option(adapter.name + (compatible ? "" : " · " + t(adapter.reason || "incompatible")),id);
+      option.disabled=!compatible;language.append(option);
+    }
+    language.value=current;
+    language.onchange=()=>{ running=false; return commit(()=>{
+      if (node.kind==="custom") {
+        codeDrafts.set(node.id+":"+current,$("customCode")?.value ?? node.params.code);
+        node.params.code=codeDrafts.get(node.id+":"+language.value) || "";
+      }
+      node.runtime=language.value;
+    },true,false); };
+    field(t("runtime"),language);
+    $("parameters").append(el("small",t("runtimeHint")));
+  }
   for (const [key, value] of Object.entries(node.params)) {
+    if (key === "code") continue;
     let input;
     if (key === "input" || key === "size") {
       input = el("select");
@@ -473,7 +517,31 @@ function renderInspector() {
         status(t("error") + ": " + e.message, true);
       }
     };
-    field(paramLabel(key), input);
+    field(key === "gain" && node.kind === "custom" ? t("customGain") : paramLabel(key), input);
+  }
+  if (node.kind === "custom") {
+    const editor=el("textarea");editor.id="customCode";editor.rows=12;editor.spellcheck=false;editor.dir="ltr";
+    const draftKey=node.id+":"+(node.runtime || "python");
+    editor.value=codeDrafts.get(draftKey) ?? node.params.code;
+    editor.placeholder=catalog.starters[node.runtime || "python"];
+    editor.oninput=()=>{codeDrafts.set(draftKey,editor.value);mark();};
+    field(t("code"),editor);
+    $("parameters").append(el("p",t("codeContract")),el("small",t("codeHint")));
+    const apply=el("button",t("applyCode"),"primary");apply.id="applyCode";
+    apply.onclick=async()=>{
+      running=false;
+      try {await commit(()=>{node.params.code=editor.value;state.view.result=node.params.output;},true,false);await serial(()=>frame(true));} catch {}
+    };
+    $("parameters").append(apply);
+  }
+  if (state.nodes.indexOf(node)>=2) {
+    const name=el("input");name.id="blockName";name.value=blockLabel(node.kind);name.maxLength=100;field(t("blockName"),name);
+    const save=el("button",t("saveBlock"));save.id="saveBlock";
+    save.onclick=()=>serial(async()=>{
+      if (!valid) throw Error(t("fix"));
+      requireAppliedCode();
+      catalog=await api("/api/library/save",{state,selected:node.id,name:name.value});renderLibrary();status(t("blockSaved"));
+    });$("parameters").append(save);
   }
   if ("input" in node.params) {
     const enabled = el("input");
@@ -488,6 +556,9 @@ function renderLesson(node) {
   const lesson = window.LESSONS?.find((l) => l.id === blocks[node.kind].lesson);
   const area = $("lesson");
   area.replaceChildren();
+  if (blocks[node.kind].formula) {
+    area.append(el("h3",blockLabel(node.kind)),el("div",blocks[node.kind].formula,"formula block-formula"),el("h3",t("backgroundLesson")));
+  }
   if (!lesson) {
     area.append(el("p", t("missingLesson")));
     return;
@@ -542,9 +613,10 @@ function render() {
   $("codeLanguage").value = state.view.codeLanguage;
   mark();
 }
-async function frame() {
+async function frame(runCode = false) {
   if (!valid) return;
-  const data = await api("/api/frame", {});
+  const data = await api("/api/frame", {runCode:runCode === true});
+  if (data.needsCodeRun) {running=false;$("run").textContent="▶ "+t("run");status(t("needsCodeRun"));return;}
   if (data.ended) {
     running = false;
     $("run").textContent = "▶ " + t("run");
@@ -573,7 +645,7 @@ async function frame() {
 async function loop() {
   if (!running) return;
   try {
-    await serial(frame);
+    await serial(()=>frame(true));
   } catch {}
   if (running) setTimeout(loop, 70);
 }
@@ -587,7 +659,7 @@ $("run").onclick = () => {
   if (running) loop();
   else if (state.source.type === "camera") serial(() => api("/api/stop", {}));
 };
-$("step").onclick = () => serial(frame);
+$("step").onclick = () => serial(()=>frame(true));
 $("name").onchange = () => commit(() => (state.name = $("name").value), false);
 $("search").oninput = renderLibrary;
 for (const key of ["signal", "result", "codeLanguage"])
@@ -604,6 +676,7 @@ for (const [id, from, to] of [
     if (!from().length) return;
     to().push(clone(state));
     state = from().pop();
+    codeDrafts.clear();
     render();
     const snapshot = clone(state);
     valid = false;
@@ -617,6 +690,7 @@ for (const [id, from, to] of [
 $("save").onclick = () =>
   serial(async () => {
     if (!valid) throw Error(t("fix"));
+    requireAppliedCode();
     const record = await api("/api/save", state);
     saved = JSON.stringify(state);
     mark();
@@ -626,6 +700,7 @@ $("save").onclick = () =>
 $("export").onclick = () =>
   serial(async () => {
     if (!valid) throw Error(t("fix"));
+    requireAppliedCode();
     download(
       await api("/api/export", state, true),
       "simplemotocam_algorithm.py",
@@ -639,6 +714,7 @@ async function load(newState) {
   const r = await api("/api/config", newState);
   remember();
   state = r.state;
+  codeDrafts.clear();
   revision = r.revision;
   valid = true;
   saved = JSON.stringify(state);
@@ -777,7 +853,7 @@ window.addEventListener("beforeunload", (e) => {
 });
 async function start() {
   const data = await api("/api/bootstrap");
-  ({ state, blocks, token, revision } = data);
+  ({ state, blocks, token, revision, catalog } = data);
   selectOptions(
     $("locale"),
     window.TRANSLATIONS?.languages || [

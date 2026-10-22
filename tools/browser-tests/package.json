@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "test": "node verify.cjs",
-    "test:interface": "node verify_interface.cjs"
+    "test:interface": "node verify_interface.cjs",
+    "test:library": "node verify_library.cjs"
   },
   "devDependencies": {
     "playwright": "1.62.1"

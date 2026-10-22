@@ -92,6 +92,22 @@
     "threshold": {
       "source": "Threshold",
       "translation": "Limiar"
+    },
+    "customBlock": {
+      "source": "Empty block · custom code",
+      "translation": "Bloco vazio · código personalizado"
+    },
+    "applyCode": {
+      "source": "Apply and run code",
+      "translation": "Aplicar e executar código"
+    },
+    "runtime": {
+      "source": "Block execution language",
+      "translation": "Linguagem de execução do bloco"
+    },
+    "saveBlock": {
+      "source": "Save block with dependencies",
+      "translation": "Guardar bloco com dependências"
     }
   }
 }
