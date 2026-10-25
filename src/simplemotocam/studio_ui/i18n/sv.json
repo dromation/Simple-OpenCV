@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "3f4d98ad71cad5fa7a9e3fdebc8f823dcfea24cbb440d911cd078c0664b4f814",
+  "sourceDigest": "a16dae2c267467310195588c26755d6ae848a4c657ef3e5c86c9205a2006864c",
   "protectedFallbackKeys": [
     "export",
     "exampleHint",
@@ -189,6 +189,7 @@
     "engineUnavailable": "Motorn är inte installerad",
     "backendIncompatible": "Inkompatibel med den valda OpenCV",
     "engineScope": "Den valda versionen utför stödda bearbetningsblock. Fotografering, visning och bildöverföring förblir delade av appen.",
-    "api24Hint": "OpenCV 2.4.13.7 Källor av referens. Biblioteksblock utför stödda operationer; anpassad kod för denna motor stöds inte ännu."
+    "api24Hint": "OpenCV 2.4.13.7 Källor av referens. Biblioteksblock kör inhemska operationer; anpassad Python Använd den begränsade cv24.run broen.",
+    "additionalAlgorithms": "Ytterligare algoritmer"
   }
 }

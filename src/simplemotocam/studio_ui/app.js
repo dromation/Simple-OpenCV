@@ -187,6 +187,7 @@ function renderBackend() {
   select.value=state.backend?.id || "current";
   $("backendBadge").textContent="OpenCV "+activeBackend().version;
   $("backendBadge").title=t("engineScope");
+  if(state.backend?.id==="opencv24")$("backendBadge").title=sequenceText("ui.primary")+" · "+t("engineScope");
 }
 $("opencvBackend").onchange=()=>{
   running=false;
@@ -200,7 +201,9 @@ $("opencvBackend").onchange=()=>{
     } finally {renderBackend();$("run").textContent="▶ "+t("run");}
   });
 };
+function sequenceText(key) {return window.SEQUENCE_DATA?.catalogs[state?.view.locale]?.strings[key] || window.SEQUENCE_DATA?.catalogs.en.strings[key] || key;}
 function libraryLabel(entry) {
+  if(entry.sequence)return sequenceText(entry.sequence+".title");
   return entry.type === "block" ? blockLabel(entry.kind) : entry.label;
 }
 function renderLibrary() {
@@ -220,34 +223,54 @@ function renderLibrary() {
     options.forEach(e => { const option=new Option(libraryLabel(e)+(entryCompatible(e)?"":" · "+t("backendIncompatible")), e.id);option.disabled=!entryCompatible(e);optgroup.append(option); });
     dropdown.append(optgroup);
   }
+  const visible=entries.filter(e=>!e.additional);
   let previous;
-  for (const entry of entries.slice(0, 45)) {
+  for (const entry of visible.slice(0, 45)) {
     if (previous !== entry.group) { list.append(el("h3",t(entry.group))); previous=entry.group; }
     const button = el("button", undefined, "library-card");
     button.dataset.entry = entry.id;
     if (entry.kind) button.dataset.kind = entry.kind;
     button.disabled=!entryCompatible(entry);
     if(button.disabled)button.title=t("backendIncompatible");
-    button.append(el("b", (entry.type === "block" || entry.type === "function" ? "＋ " : "↗ ") + libraryLabel(entry)),el("small",entry.expression || (entry.note ? t(entry.note) : entry.kind === "custom" ? "Python · JavaScript" : `OpenCV / ${entry.kind}`)));
+    button.append(el("b", (entry.type === "block" || entry.type === "function" ? "＋ " : "↗ ") + libraryLabel(entry)),el("small",entry.expression || (entry.note ? (entry.note==="legacyCode" ? sequenceText("ui.legacyCode") : t(entry.note)) : entry.kind === "custom" ? "Python · JavaScript" : `OpenCV / ${entry.kind}`)));
     button.onclick = () => activateEntry(entry);
     button.draggable = !button.disabled && ["block","function"].includes(entry.type);
     button.ondragstart = e => e.dataTransfer.setData("text/plain",JSON.stringify({entry:entry.id}));
     list.append(button);
   }
-  if (!entries.length) list.append(el("p",t("noMatches")));
-  if (entries.length > 45) list.append(el("p",t("moreCatalog")));
+  if (!visible.length) list.append(el("p",t("noMatches")));
+  if (visible.length > 45) list.append(el("p",t("moreCatalog")));
+  $("openAdditional").textContent=t("additionalAlgorithms")+" ("+catalog.entries.filter(e=>e.additional).length+")";
+  if($("additionalAlgorithms").open)renderAdditional();
 }
+function renderAdditional() {
+  const query=$("additionalSearch").value.trim().toLowerCase();
+  const entries=catalog.entries.filter(e=>e.additional && `${libraryLabel(e)} ${e.id}`.toLowerCase().includes(query));
+  const list=$("additionalList"), select=$("additionalSelect");list.replaceChildren();
+  select.replaceChildren(new Option(t("chooseEntry")+` (${entries.length})`,""));
+  for(const entry of entries){
+    const option=new Option(libraryLabel(entry),entry.id);option.disabled=!entryCompatible(entry);select.append(option);
+    const card=el("button",libraryLabel(entry),"library-card");card.type="button";card.dataset.entry=entry.id;card.disabled=!entryCompatible(entry);
+    card.onclick=()=>{$("additionalAlgorithms").close();activateEntry(entry);};list.append(card);
+  }
+  if(!entries.length)list.append(el("p",t("noMatches")));
+}
+$("openAdditional").onclick=()=>{$("additionalSearch").value=$("search").value;renderAdditional();$("additionalAlgorithms").showModal();$("additionalSearch").focus();};
+$("closeAdditional").onclick=()=>$("additionalAlgorithms").close();
+$("additionalSearch").oninput=renderAdditional;
+$("additionalSelect").onchange=()=>{const entry=catalog.entries.find(e=>e.id===$("additionalSelect").value&&e.additional);if(entry){$("additionalAlgorithms").close();activateEntry(entry);}};
 function activateEntry(entry, index) {
   if(!entryCompatible(entry)){status(t("backendIncompatible"),true);return;}
   if (entry.type === "block") return add(entry.kind, index);
   if (entry.type === "function") return add("algebra", index, {expression:entry.expression});
-  const body=$("catalogBody"); body.replaceChildren(el("h2",entry.label),el("p",t(entry.note)));
+  const body=$("catalogBody"); body.replaceChildren(el("h2",entry.label),el("p",(entry.note==="legacyCode" ? sequenceText("ui.legacyCode") : t(entry.note))));
   if (entry.signature) { const pre=el("pre",entry.signature);pre.dir="ltr";body.append(pre); }
   if (entry.source) {const a=el("a",t("sourceLink"));a.href=entry.source;a.target="_blank";a.rel="noopener";body.append(a);}
   if (entry.type === "example") {
     body.append(el("p",entry.state.nodes.map(n=>blockLabel(n.kind)).join(" → ")));
     const button=el("button",t("loadExample"),"primary");
     button.onclick=()=>{
+      if(entry.sequence){$("catalogDetail").close();return loadDetectionSequence(entry.sequence);}
       if (dirty && !confirm(t("confirmOpen"))) return;
       const next=clone(entry.state); if(entry.template)next.backend=clone(state.backend); next.view.locale=state.view.locale; next.view.codeLanguage=state.view.codeLanguage;
       $("catalogDetail").close();serial(()=>load(next));
@@ -501,6 +524,7 @@ function renderInspector() {
     },true,false); };
     field(t("runtime"),language);
     $("parameters").append(el("small",t("runtimeHint")));
+    if(node.kind==="custom" && state.backend.id==="opencv24")$("parameters").append(el("p",sequenceText("ui.legacyCode"),"note"));
   }
   for (const [key, value] of Object.entries(node.params)) {
     if (key === "code") continue;
@@ -816,6 +840,23 @@ $("media").onchange = () => {
   });
   $("media").value = "";
 };
+async function loadDetectionSequence(id) {
+  const item=window.SEQUENCE_DATA.lessons.find(s=>s.id===id);
+  if(!item)return;
+  if((dirty || pendingCode()) && !confirm(sequenceText("ui.confirm")))return;
+  return serial(async()=>{
+    const next=clone(item.state);next.name=sequenceText(id+".title");
+    next.view.locale=state.view.locale;next.view.codeLanguage=state.view.codeLanguage;
+    if(item.sample){
+      const response=await fetch("/manuals/learning/"+item.sample);
+      if(!response.ok)throw Error("Missing lesson test scene");
+      const upload=await fetch("/api/upload",{method:"POST",headers:{"X-Studio-Token":token,"X-File-Extension":".png"},body:await response.arrayBuffer()});
+      const asset=await upload.json();if(!upload.ok)throw Error(asset.error);
+      next.source={type:asset.type,asset:asset.asset,camera:0};
+    }
+    await load(next);$("classroom").close();
+  });
+}
 function syncClassroom(topic) {
   const frame = $("classroomFrame");
   if (!frame.getAttribute("src")) return;
@@ -872,6 +913,7 @@ window.addEventListener("message", (event) => {
     event.source !== $("classroomFrame").contentWindow
   )
     return;
+  if (event.data?.type === "learning-load-sequence")loadDetectionSequence(event.data.id);
   if (event.data?.type === "learning-close") $("classroom").close();
   if (
     event.data?.type === "learning-preference" &&

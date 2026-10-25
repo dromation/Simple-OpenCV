@@ -51,3 +51,7 @@ v aplikaciji še ni izveden.
 
 Viri za API so povezani pri vsaki temi. `verification.json` navaja izvedeno
 preverjanje in njegove omejitve.
+
+## Detection sequences / Zaporedja zaznavanja
+
+The classroom also contains six complete OpenCV 2.4 detection exercises with ordered blocks, mathematics, parameters, failure cases and book/web references. Load an exercise and its synthetic scene directly into the studio. The sequence orchestrator is Python; the four-language examples above describe the original foundation topics. See [sources and verification](../../DETECTION_SEQUENCES.md).

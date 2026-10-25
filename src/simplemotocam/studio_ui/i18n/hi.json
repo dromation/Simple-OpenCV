@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "3f4d98ad71cad5fa7a9e3fdebc8f823dcfea24cbb440d911cd078c0664b4f814",
+  "sourceDigest": "a16dae2c267467310195588c26755d6ae848a4c657ef3e5c86c9205a2006864c",
   "protectedFallbackKeys": [
     "export",
     "signedMath",
@@ -193,6 +193,7 @@
     "engineUnavailable": "इंजन स्थापित नहीं है",
     "backendIncompatible": "चयनित OpenCV के साथ असंगत",
     "engineScope": "चयनित संस्करण समर्थित प्रसंस्करण ब्लॉकों को निष्पादित करता है। रिकॉर्डिंग, डिस्प्ले और छवि स्थानांतरण अनुप्रयोग द्वारा साझा किया जाता है।",
-    "api24Hint": "OpenCV 2.4.13.7 स्रोत संदर्भ लाइब्रेरी ब्लॉक समर्थित ऑपरेशन चलाते हैं; इस इंजन के लिए कस्टम कोड अभी तक समर्थित नहीं है।"
+    "api24Hint": "OpenCV 2.4.13.7 स्रोत संदर्भ लाइब्रेरी ब्लॉक मूल ऑपरेशन चलाते हैं; कस्टम Python सीमित cv24.run पुल का उपयोग करें।",
+    "additionalAlgorithms": "अतिरिक्त एल्गोरिथ्म"
   }
 }

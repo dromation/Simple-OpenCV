@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "3f4d98ad71cad5fa7a9e3fdebc8f823dcfea24cbb440d911cd078c0664b4f814",
+  "sourceDigest": "a16dae2c267467310195588c26755d6ae848a4c657ef3e5c86c9205a2006864c",
   "protectedFallbackKeys": [
     "export",
     "signedMath",
@@ -192,6 +192,7 @@
     "engineUnavailable": "มอเตอร์ไม่ได้ติดตั้ง",
     "backendIncompatible": "ไม่เข้ากันได้กับ OpenCV ที่เลือก",
     "engineScope": "รุ่นที่เลือกจะดําเนินการบล็อกการประมวลผลที่ได้รับการสนับสนุน การถ่ายภาพการแสดงภาพและการถ่ายโอนภาพยังคงแบ่งปันโดยแอพพลิเคชัน",
-    "api24Hint": "OpenCV 2.4.13.7 คําอธิบายแหล่งข้อมูล บล็อกห้องสมุดดําเนินการดําเนินการที่ได้รับการสนับสนุน รหัสที่กําหนดเองสําหรับเครื่องนี้ยังไม่ได้รับการสนับสนุน"
+    "api24Hint": "OpenCV 2.4.13.7 คําอธิบายแหล่งข้อมูล บล็อกห้องสมุดเรียกใช้การดําเนินงานในประเทศ; ปรับแต่ง Python ใช้ cv24.run ปลั๊ก จํากัด",
+    "additionalAlgorithms": "อัลgorithms เพิ่มเติม"
   }
 }

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "simplemotocam"
-version = "0.4.0"
+version = "0.5.0"
 description = "Visual OpenCV algorithm studio with channel algebra and standalone export"
 license = {file = "LICENSE"}
 readme = "SIMPLEMOTOCAM.md"
@@ -19,7 +19,7 @@ simplemotocam = "simplemotocam.cli:main"
 simplemotocam-studio = "simplemotocam.studio:main"
 
 [tool.setuptools.package-data]
-simplemotocam = ["studio_ui/*"]
+simplemotocam = ["studio_ui/*", "studio_sequences.json"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

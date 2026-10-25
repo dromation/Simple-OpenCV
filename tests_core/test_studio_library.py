@@ -177,7 +177,7 @@ def test_timeout():
 def test_import_and_configuration_never_execute_custom_code(tmp_path):
     marker = tmp_path / "side-effect.txt"
     code = f'def process(c,p):\n    from pathlib import Path\n    Path({str(marker)!r}).write_text("executed")\n    return c["R"]'
-    session = StudioSession(tmp_path / "storage")
+    session = StudioSession(tmp_path / "storage", backend="current")
     session.configure(state_for("custom", code=code))
     assert not marker.exists()
     assert session.frame()["needsCodeRun"]

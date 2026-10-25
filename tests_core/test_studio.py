@@ -128,7 +128,7 @@ def test_export_is_standalone_and_matches(tmp_path):
 
 
 def test_state_save_and_view_keeps_history(tmp_path):
-    s = StudioSession(tmp_path)
+    s = StudioSession(tmp_path, backend="current")
     s.frame()
     history = s.pipeline.previous
     state = copy.deepcopy(s.state)
@@ -148,7 +148,7 @@ def test_state_save_and_view_keeps_history(tmp_path):
 
 @pytest.fixture
 def server(tmp_path):
-    srv = StudioServer(("127.0.0.1", 0), StudioSession(tmp_path))
+    srv = StudioServer(("127.0.0.1", 0), StudioSession(tmp_path, backend="current"))
     thread = threading.Thread(target=srv.serve_forever, daemon=True)
     thread.start()
     yield srv
@@ -186,7 +186,7 @@ def test_http_session_and_origin(server):
 
 
 def test_image_and_video_source(tmp_path):
-    session = StudioSession(tmp_path)
+    session = StudioSession(tmp_path, backend="current")
     cv2.imwrite(str(tmp_path / "uploads" / "image.png"), demo_frame(0))
     state = default_state()
     state["source"].update(type="image", asset="image.png")

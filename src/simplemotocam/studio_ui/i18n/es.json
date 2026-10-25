@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "3f4d98ad71cad5fa7a9e3fdebc8f823dcfea24cbb440d911cd078c0664b4f814",
+  "sourceDigest": "a16dae2c267467310195588c26755d6ae848a4c657ef3e5c86c9205a2006864c",
   "protectedFallbackKeys": [
     "export",
     "exampleHint",
@@ -189,6 +189,7 @@
     "engineUnavailable": "El motor no está instalado",
     "backendIncompatible": "Incompatible con el seleccionado OpenCV",
     "engineScope": "La versión seleccionada ejecuta bloques de procesamiento apoyados. La captura, la exhibición y la transferencia de imágenes permanecen compartidas por la aplicación.",
-    "api24Hint": "OpenCV 2.4.13.7 referencia de fuente. Los bloques de la biblioteca ejecutan operaciones apoyadas; el código personalizado para este motor aún no está apoyado."
+    "api24Hint": "OpenCV 2.4.13.7 referencia de fuente. Los bloques de la biblioteca ejecutan operaciones nativas; Python personalizado utiliza el puente limitado cv24.run.",
+    "additionalAlgorithms": "Algoritmos adicionales"
   }
 }

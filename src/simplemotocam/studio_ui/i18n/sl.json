@@ -171,6 +171,7 @@
     "engineUnavailable": "Izvajalnik ni nameščen",
     "backendIncompatible": "Ni združljivo z izbranim OpenCV",
     "engineScope": "Izbrana različica izvaja podprte bloke obdelave. Zajem, prikaz in prenos slik ostajajo skupni aplikaciji.",
-    "api24Hint": "Izvorna referenca OpenCV 2.4.13.7. Podprte operacije izvajajo bloki iz knjižnice; lastna koda za ta izvajalnik še ni podprta."
+    "api24Hint": "Izvorna referenca OpenCV 2.4.13.7. Knjižnični bloki izvajajo izvorne operacije; lastna koda Python uporablja omejeni most cv24.run.",
+    "additionalAlgorithms": "Dodatni algoritmi"
   }
 }

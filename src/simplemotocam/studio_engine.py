@@ -23,6 +23,7 @@ from .studio_backend import (
     CV24_NATIVE,
     CV24_INDEPENDENT,
     run_opencv24,
+    legacy_custom_context,
 )  # EXPORT_BACKEND
 
 SCHEMA_VERSION = 1
@@ -579,6 +580,11 @@ class StudioPipeline:
                         values,
                         p,
                         p["timeout"],
+                        (
+                            legacy_custom_context(KINDS)
+                            if self.state["backend"]["id"] == "opencv24"
+                            else None
+                        ),
                     )
                     if p["code"].strip()
                     else values[p["input"]].copy()

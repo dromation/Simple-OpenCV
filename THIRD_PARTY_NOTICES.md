@@ -15,3 +15,5 @@ The `external/README.md` and source manifests record optional local reference sn
 The studio has no external frontend CDN, analytics or remote translation dependency at runtime. Its screenshots use the project's synthetic demo, not camera recordings.
 
 The optional Windows OpenCV 2.4 worker statically links upstream `core`, `imgproc` and bundled zlib 1.2.7. Its build output includes OpenCV BSD-style, zlib and SimpleMotocam MIT notices plus source revision and binary hash. These dependencies retain their own licenses.
+
+The detection classroom cites locally consulted Howse and Trucco–Verri books and official OpenCV 2.4 tutorials. The explanations, sequence configurations and synthetic test images are project-authored. Book PDFs, scans and listings are not redistributed; their rights remain with their respective holders. Bibliographic page references are recorded in `docs/DETECTION_SEQUENCES.md`.

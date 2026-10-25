@@ -833,3 +833,5 @@ html[dir="rtl"] #name {
 .engine-choice select { max-width:200px; }
 .library-card:disabled { opacity:.5; cursor:not-allowed; }
 #backendBadge { white-space:nowrap; }
+
+#openAdditional{width:100%;margin:12px 0}#additionalAlgorithms{width:min(760px,94vw);max-height:85vh;box-sizing:border-box;overflow:auto}.additional-head{display:flex;align-items:center;justify-content:space-between;gap:20px}.additional-head h2{margin:0}.additional-head button{font-size:24px}#additionalSearch,#additionalSelect{box-sizing:border-box;width:100%;margin-top:14px}#additionalList{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:10px;margin-top:18px}#additionalList button{overflow-wrap:anywhere;min-width:0;text-align:start}

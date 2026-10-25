@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "3f4d98ad71cad5fa7a9e3fdebc8f823dcfea24cbb440d911cd078c0664b4f814",
+  "sourceDigest": "a16dae2c267467310195588c26755d6ae848a4c657ef3e5c86c9205a2006864c",
   "protectedFallbackKeys": [
     "export",
     "signedMath",
@@ -195,6 +195,7 @@
     "engineUnavailable": "엔진이 설치되지 않습니다.",
     "backendIncompatible": "선택한 OpenCV와 호환되지 않습니다.",
     "engineScope": "선택된 버전은 지원되는 처리 블록을 실행합니다. 촬영, 표시 및 이미지 전송은 응용 프로그램에 의해 공유됩니다.",
-    "api24Hint": "OpenCV 2.4.13.7 출처 참조 도서관 블록은 지원되는 작업을 수행합니다; 이 엔진에 대한 사용자 지정 코드는 아직 지원되지 않습니다."
+    "api24Hint": "OpenCV 2.4.13.7 출처 참조 도서관 블록은 원주민 작업을 수행합니다; 사용자 지정 Python 제한된 cv24.run 다리를 사용합니다.",
+    "additionalAlgorithms": "추가 알고리즘"
   }
 }

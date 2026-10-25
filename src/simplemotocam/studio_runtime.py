@@ -54,13 +54,38 @@ def check_runtime(language, kind):
 PYTHON_WORKER = r"""import json, sys
 from pathlib import Path
 import numpy as np
-import cv2
 root=Path(sys.argv[1])
 try:
     request=json.loads((root/"request.json").read_text(encoding="utf-8"))
     shape=tuple(request["shape"])
     channels={name:np.fromfile(root/f"in{i}.bin",dtype="<f4").reshape(shape) for i,name in enumerate(request["channels"])}
-    scope={"np":np,"cv2":cv2,"__name__":"simplemotocam_user_block"}
+    if request.get("backend") == "opencv24":
+        import types
+        native={"__file__":str(root/"legacy_backend.py")}
+        exec((root/"legacy_backend.py").read_text(encoding="utf-8"),native)
+        def operation(kind, plane, **params):
+            if kind not in request["nativeDefaults"]:
+                raise ValueError("Unknown native OpenCV 2.4 operation: " + str(kind))
+            value=np.asarray(plane,dtype=np.float32)
+            if value.shape != shape or not np.isfinite(value).all():
+                raise ValueError("cv24.run requires a finite H x W plane")
+            defaults=request["nativeDefaults"][kind]
+            if set(params)-set(defaults):
+                raise ValueError("Unknown parameters: " + str(sorted(set(params)-set(defaults))))
+            return native["run_opencv24"](kind,value,{**defaults,**params})
+        cv24=types.ModuleType("cv24")
+        cv24.__version__="2.4.13.7"
+        cv24.run=operation
+        # Do not let normal `import cv2` silently select the host's OpenCV 4.
+        def unsupported(name):
+            raise AttributeError("This OpenCV 2.4 bridge exposes cv24.run(kind, plane, **params); it is not the full legacy cv2 Python binding: " + name)
+        cv24.__getattr__=unsupported
+        sys.modules["cv24"]=cv24
+        sys.modules["cv2"]=cv24
+        scope={"np":np,"cv24":cv24,"cv2":cv24,"__name__":"simplemotocam_user_block"}
+    else:
+        import cv2
+        scope={"np":np,"cv2":cv2,"__name__":"simplemotocam_user_block"}
     exec(compile(request["code"],"<custom-block>","exec"),scope)
     output=np.asarray(scope["process"](channels,request["params"]),dtype=np.float32)
     if output.shape!=shape or not np.isfinite(output).all():
@@ -85,11 +110,13 @@ try {
 """
 
 
-def run_worker(language, code, values, params, timeout=5):
+def run_worker(language, code, values, params, timeout=5, legacy=None):
     check_runtime(language, "custom")
     shape = values["R"].shape
     with tempfile.TemporaryDirectory(prefix="simplemotocam-worker-") as folder:
         root = Path(folder)
+        if legacy:
+            (root / "legacy_backend.py").write_text(legacy["source"], encoding="utf-8")
         for i, plane in enumerate(values.values()):
             np.asarray(plane, dtype="<f4").tofile(root / f"in{i}.bin")
         (root / "request.json").write_text(
@@ -99,6 +126,8 @@ def run_worker(language, code, values, params, timeout=5):
                     "channels": list(values),
                     "params": params,
                     "code": code,
+                    "backend": "opencv24" if legacy else "current",
+                    "nativeDefaults": legacy["defaults"] if legacy else {},
                 }
             ),
             encoding="utf-8",

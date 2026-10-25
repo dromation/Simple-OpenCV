@@ -238,9 +238,26 @@ def library_catalog(storage):
                     if function in ("magnitude", "line")
                     else "imgproc/include/opencv2/imgproc/imgproc.hpp"
                 ),
-                "note": "api24Hint",
+                "note": "legacyCode",
             }
         )
+    sequence_file = Path(__file__).with_name("studio_sequences.json")
+    if sequence_file.exists():
+        for lesson in json.loads(sequence_file.read_text(encoding="utf-8"))["lessons"]:
+            entries.append(
+                {
+                    "id": "sequence:" + lesson["id"],
+                    "type": "example",
+                    "template": False,
+                    "group": "exampleGroup",
+                    "label": lesson["title"]["en"],
+                    "sequence": lesson["id"],
+                    "state": lesson["state"],
+                    "note": "recipeHint",
+                }
+            )
+    for entry in entries:
+        entry["additional"] = entry["type"] in ("example", "reference")
     return {
         "api": CATALOG_API,
         "opencv": cv2.__version__,

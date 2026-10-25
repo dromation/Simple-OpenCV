@@ -38,6 +38,12 @@
       ></span>
     </div>
     <dialog id="catalogDetail"><button id="closeCatalog" class="catalog-close" aria-label="Close">×</button><div id="catalogBody"></div></dialog>
+    <dialog id="additionalAlgorithms" aria-labelledby="additionalTitle">
+      <div class="additional-head"><h2 id="additionalTitle" data-i18n="additionalAlgorithms"></h2><button id="closeAdditional" type="button" data-i18n-aria="close">×</button></div>
+      <input id="additionalSearch" data-i18n-placeholder="search" data-i18n-aria="search" />
+      <select id="additionalSelect" data-i18n-aria="chooseEntry"></select>
+      <div id="additionalList"></div>
+    </dialog>
     <main>
       <aside class="library">
         <h2 data-i18n="library"></h2>
@@ -49,6 +55,7 @@
         />
         <label class="field"><span data-i18n="catalogChoice"></span><select id="libraryCategory" data-i18n-aria="catalogChoice"></select></label>
         <select id="librarySelect" data-i18n-aria="chooseEntry"></select>
+        <button id="openAdditional" type="button" aria-haspopup="dialog" data-i18n="additionalAlgorithms"></button>
         <div id="library"></div>
         <div class="future">
           <b data-i18n="geometry"></b>
@@ -174,6 +181,7 @@
     <script src="/manuals/learning/lessons.js"></script>
     <script src="/manuals/learning/translations.js"></script>
     <script src="i18n.js"></script>
+    <script src="/manuals/learning/sequences-data.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

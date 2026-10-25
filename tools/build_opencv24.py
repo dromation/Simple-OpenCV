@@ -189,6 +189,7 @@ def build():
         json.dumps(
             {
                 "opencv": "2.4.13.7",
+                "protocol": 2,
                 "source_commit": manifest["commit"],
                 "platform": "Windows x64",
                 "modules": ["core", "imgproc"],

@@ -1,0 +1,734 @@
+{
+  "schema": 1,
+  "lessons": [
+    {
+      "id": "red-part",
+      "title": {
+        "en": "Find a red part",
+        "sl": "Poišči rdeč predmet"
+      },
+      "goal": {
+        "en": "Select a red object against a neutral or green background. The output is a binary mask of sufficiently large red regions.",
+        "sl": "Izberi rdeč predmet na nevtralnem ali zelenem ozadju. Rezultat je binarna maska dovolj velikih rdečih območij."
+      },
+      "order": {
+        "en": "Extract the color channels, subtract green from red, then threshold. Opening removes isolated foreground pixels before component filtering measures the remaining connected regions.",
+        "sl": "Razcepi barvne kanale, odštej zeleno od rdeče in nato uporabi prag. Odpiranje odstrani osamljene piksle, preden filtriranje povezanih območij izmeri preostale skupine."
+      },
+      "tune": {
+        "en": "Start with threshold 0.20, opening size 3 and minimum area 100 pixels. Raise the threshold to reject weak redness; raise the area limit to reject small fragments.",
+        "sl": "Začni s pragom 0,20, velikostjo odpiranja 3 in najmanjšo površino 100 pikslov. Višji prag zavrne šibko rdečino; večja površina zavrne majhne delce."
+      },
+      "expected": {
+        "en": "The supplied scene contains one large red rectangle, a green rectangle and small red specks. The final mask should keep only the large red rectangle.",
+        "sl": "Priložen prizor vsebuje velik rdeč pravokotnik, zelen pravokotnik in drobne rdeče pike. Končna maska ohrani samo velik rdeč pravokotnik."
+      },
+      "caution": {
+        "en": "This is color segmentation, not object recognition. White balance, colored illumination and highlights change the difference. The threshold uses normalized float channels.",
+        "sl": "To je segmentacija barve, ne prepoznavanje vrste predmeta. Ravnovesje beline, barvna osvetlitev in odsevi spremenijo razliko. Prag uporablja normalizirane kanale."
+      },
+      "formula": "S = R − G\nM = 1[S > τ]\nM₁ = (M ⊖ K) ⊕ K\nO(p) = 1[p ∈ C ∧ |C| ≥ A_min]",
+      "state": {
+        "schema": 1,
+        "name": "Find a red part",
+        "backend": {
+          "id": "opencv24",
+          "version": "2.4.13.7"
+        },
+        "source": {
+          "type": "synthetic",
+          "camera": 0,
+          "asset": ""
+        },
+        "nodes": [
+          {
+            "id": "source",
+            "kind": "source",
+            "enabled": true,
+            "params": {}
+          },
+          {
+            "id": "channels",
+            "kind": "channels",
+            "enabled": true,
+            "params": {}
+          },
+          {
+            "id": "algebra_0",
+            "kind": "algebra",
+            "enabled": true,
+            "params": {
+              "expression": "R-G",
+              "wR": 1.0,
+              "wG": -1.0,
+              "wB": 0.5,
+              "output": "S"
+            }
+          },
+          {
+            "id": "threshold_1",
+            "kind": "threshold",
+            "enabled": true,
+            "params": {
+              "input": "S",
+              "threshold": 0.2,
+              "output": "mask"
+            }
+          },
+          {
+            "id": "opening_2",
+            "kind": "opening",
+            "enabled": true,
+            "params": {
+              "input": "mask",
+              "size": 3,
+              "iterations": 1,
+              "output": "opening"
+            }
+          },
+          {
+            "id": "components_3",
+            "kind": "components",
+            "enabled": true,
+            "params": {
+              "input": "opening",
+              "minArea": 100,
+              "output": "blobs"
+            }
+          }
+        ],
+        "view": {
+          "signal": "blobs",
+          "result": "blobs",
+          "gain": 1.0,
+          "signed": false,
+          "locale": "sl",
+          "codeLanguage": "python"
+        }
+      },
+      "sources": [
+        {
+          "title": "Joseph Howse, OpenCV Computer Vision with Python, Packt, 2013",
+          "file": "OpenCV243 Computer Vision with Python.pdf",
+          "pages": "42–43",
+          "pdfPages": "55–56"
+        },
+        {
+          "title": "Eroding and Dilating",
+          "url": "https://docs.opencv.org/2.4.13.7/doc/tutorials/imgproc/erosion_dilatation/erosion_dilatation.html"
+        }
+      ],
+      "sample": "examples/red-part.png"
+    },
+    {
+      "id": "bright-regions",
+      "title": {
+        "en": "Keep large bright regions",
+        "sl": "Ohrani velika svetla območja"
+      },
+      "goal": {
+        "en": "Separate bright parts from a dark background and reject tiny regions by their actual pixel area.",
+        "sl": "Loči svetle predmete od temnega ozadja in zavrni drobna območja glede na dejansko število pikslov."
+      },
+      "order": {
+        "en": "Convert RGB to luminance, smooth small fluctuations, threshold, then filter connected regions. Area filtering comes after segmentation because it needs a binary foreground.",
+        "sl": "Pretvori RGB v svetlost, zgladi manjša nihanja, uporabi prag in filtriraj povezana območja. Površino filtriramo po segmentaciji, ker potrebujemo binarno ospredje."
+      },
+      "tune": {
+        "en": "Use Gaussian size 3 and sigma 1, threshold 0.60 and minimum area 80. Compare the threshold output with the final mask while raising the area limit.",
+        "sl": "Uporabi Gaussovo velikost 3 in sigmo 1, prag 0,60 in najmanjšo površino 80. Ob zviševanju površine primerjaj rezultat praga s končno masko."
+      },
+      "expected": {
+        "en": "Two large bright parts remain. A dark hole inside a part stays a hole; it does not contribute to the foreground area. Tiny bright dots disappear.",
+        "sl": "Ostaneta dva velika svetla predmeta. Temna luknja znotraj predmeta ostane luknja in ne prispeva k površini ospredja. Drobne svetle pike izginejo."
+      },
+      "caution": {
+        "en": "Eight-connectivity joins pixels touching at a corner. Touching physical objects can therefore become one region. Pixel area is not a calibrated physical area.",
+        "sl": "Osemsosednost poveže tudi piksle, ki se dotikajo v oglišču. Fizična predmeta, ki se dotikata, lahko postaneta eno območje. Površina v pikslih ni umerjena fizična površina."
+      },
+      "formula": "Y = 0.299R + 0.587G + 0.114B\nJ = Gσ ⋆ Y\nM = 1[J > τ]\nO(p) = 1[p ∈ C ∧ |C| ≥ A_min]",
+      "state": {
+        "schema": 1,
+        "name": "Keep large bright regions",
+        "backend": {
+          "id": "opencv24",
+          "version": "2.4.13.7"
+        },
+        "source": {
+          "type": "synthetic",
+          "camera": 0,
+          "asset": ""
+        },
+        "nodes": [
+          {
+            "id": "source",
+            "kind": "source",
+            "enabled": true,
+            "params": {}
+          },
+          {
+            "id": "channels",
+            "kind": "channels",
+            "enabled": true,
+            "params": {}
+          },
+          {
+            "id": "luminance_0",
+            "kind": "luminance",
+            "enabled": true,
+            "params": {
+              "output": "gray"
+            }
+          },
+          {
+            "id": "gaussian_1",
+            "kind": "gaussian",
+            "enabled": true,
+            "params": {
+              "input": "gray",
+              "sigma": 1.0,
+              "size": 3,
+              "output": "smooth"
+            }
+          },
+          {
+            "id": "threshold_2",
+            "kind": "threshold",
+            "enabled": true,
+            "params": {
+              "input": "smooth",
+              "threshold": 0.6,
+              "output": "mask"
+            }
+          },
+          {
+            "id": "components_3",
+            "kind": "components",
+            "enabled": true,
+            "params": {
+              "input": "mask",
+              "minArea": 80,
+              "output": "blobs"
+            }
+          }
+        ],
+        "view": {
+          "signal": "blobs",
+          "result": "blobs",
+          "gain": 1.0,
+          "signed": false,
+          "locale": "sl",
+          "codeLanguage": "python"
+        }
+      },
+      "sources": [
+        {
+          "title": "Joseph Howse, OpenCV Computer Vision with Python, Packt, 2013",
+          "file": "OpenCV243 Computer Vision with Python.pdf",
+          "pages": "55–57",
+          "pdfPages": "68–70"
+        },
+        {
+          "title": "Finding contours: segmentation precedes shape analysis",
+          "url": "https://docs.opencv.org/2.4.13.7/doc/tutorials/imgproc/shapedescriptors/find_contours/find_contours.html"
+        }
+      ],
+      "sample": "examples/bright-regions.png"
+    },
+    {
+      "id": "motion",
+      "title": {
+        "en": "Detect changes between frames",
+        "sl": "Zaznaj spremembe med sličicami"
+      },
+      "goal": {
+        "en": "Find regions whose color changed between consecutive frames from a fixed camera.",
+        "sl": "Poišči območja, katerih barva se je spremenila med zaporednima sličicama mirujoče kamere."
+      },
+      "order": {
+        "en": "Keep signed channel differences, combine their magnitudes, threshold, remove isolated pixels, then reject small regions. A second frame is required before a difference exists.",
+        "sl": "Ohrani predznačene razlike kanalov, združi njihove velikosti, uporabi prag, odstrani osamljene piksle in zavrni majhna območja. Za razliko potrebujemo drugo sličico."
+      },
+      "tune": {
+        "en": "Start with magnitude threshold 0.12, opening size 3 and minimum area 40. Step through two frames, then compare the signed red difference with the magnitude and mask.",
+        "sl": "Začni s pragom velikosti 0,12, odpiranjem velikosti 3 in najmanjšo površino 40. Izvedi dve sličici in primerjaj predznačeno rdečo razliko z velikostjo in masko."
+      },
+      "expected": {
+        "en": "The first processed frame is empty. Later frames show changed portions around the moving synthetic part, including its previous location.",
+        "sl": "Prva obdelana sličica je prazna. Naslednje pokažejo spremenjene dele ob premikajočem se sintetičnem predmetu, tudi na njegovi prejšnji lokaciji."
+      },
+      "caution": {
+        "en": "This detects change, not identity or a full object silhouette. Camera motion, flicker and shadows also produce responses. Restarting the algorithm resets the previous frame.",
+        "sl": "To zaznava spremembo, ne identitete ali celotne silhuete predmeta. Premik kamere, utripanje in sence prav tako povzročijo odziv. Ponovni začetek algoritma ponastavi prejšnjo sličico."
+      },
+      "formula": "ΔC = C(t) − C(t−1)\nD = √(ΔR² + ΔG² + ΔB²)\nM = 1[D > τ]",
+      "state": {
+        "schema": 1,
+        "name": "Detect changes between frames",
+        "backend": {
+          "id": "opencv24",
+          "version": "2.4.13.7"
+        },
+        "source": {
+          "type": "synthetic",
+          "camera": 0,
+          "asset": ""
+        },
+        "nodes": [
+          {
+            "id": "source",
+            "kind": "source",
+            "enabled": true,
+            "params": {}
+          },
+          {
+            "id": "channels",
+            "kind": "channels",
+            "enabled": true,
+            "params": {}
+          },
+          {
+            "id": "difference_0",
+            "kind": "difference",
+            "enabled": true,
+            "params": {}
+          },
+          {
+            "id": "algebra_1",
+            "kind": "algebra",
+            "enabled": true,
+            "params": {
+              "expression": "sqrt(dR**2+dG**2+dB**2)",
+              "wR": 1.0,
+              "wG": -1.0,
+              "wB": 0.5,
+              "output": "S"
+            }
+          },
+          {
+            "id": "threshold_2",
+            "kind": "threshold",
+            "enabled": true,
+            "params": {
+              "input": "S",
+              "threshold": 0.12,
+              "output": "mask"
+            }
+          },
+          {
+            "id": "opening_3",
+            "kind": "opening",
+            "enabled": true,
+            "params": {
+              "input": "mask",
+              "size": 3,
+              "iterations": 1,
+              "output": "opening"
+            }
+          },
+          {
+            "id": "components_4",
+            "kind": "components",
+            "enabled": true,
+            "params": {
+              "input": "opening",
+              "minArea": 40,
+              "output": "blobs"
+            }
+          }
+        ],
+        "view": {
+          "signal": "blobs",
+          "result": "blobs",
+          "gain": 1.0,
+          "signed": false,
+          "locale": "sl",
+          "codeLanguage": "python"
+        }
+      },
+      "sources": [
+        {
+          "title": "Original SimpleMotocam exercise: signed channel differencing",
+          "url": "https://github.com/mech-id-x/SI_Eksperimenti_Strojnega_Vida/blob/33ac150c0cf2205313dd91ce3eab511e12c38fe7/Test_za_podatke_While_Loop"
+        },
+        {
+          "title": "Joseph Howse, OpenCV Computer Vision with Python, Packt, 2013",
+          "file": "OpenCV243 Computer Vision with Python.pdf",
+          "pages": "42–43 (channel arithmetic background)",
+          "pdfPages": "55–56"
+        }
+      ],
+      "sample": null
+    },
+    {
+      "id": "lines",
+      "title": {
+        "en": "Detect straight edges",
+        "sl": "Zaznaj ravne robove"
+      },
+      "goal": {
+        "en": "Turn a grayscale edge map into a mask of long straight line segments.",
+        "sl": "Pretvori sivinsko karto robov v masko dolgih ravnih daljic."
+      },
+      "order": {
+        "en": "Compute luminance and smooth it before Canny. Hough then groups edge pixels into candidate line segments. Thresholding a color region is a different task from finding its boundary.",
+        "sl": "Izračunaj svetlost in jo zgladi pred Cannyjem. Hough nato združi robne piksle v kandidatne daljice. Pragovanje barvnega območja ima drugačen namen kot iskanje njegove meje."
+      },
+      "tune": {
+        "en": "Use Gaussian size 3, Canny low 40 and high 100, Hough votes 30, minimum length 60 and maximum gap 5. Canny thresholds are in the quantized 8-bit gradient domain.",
+        "sl": "Uporabi Gaussovo velikost 3, Cannyjev spodnji prag 40 in zgornji 100, Houghove glasove 30, najmanjšo dolžino 60 in največjo vrzel 5. Cannyjeva pragova sta v kvantizirani 8-bitni domeni gradienta."
+      },
+      "expected": {
+        "en": "Long straight features are retained while short isolated marks are rejected. A thick bright stripe may produce two boundary lines.",
+        "sl": "Dolge ravne značilnosti ostanejo, kratke osamljene oznake pa odpadejo. Debela svetla črta lahko povzroči dve robni daljici."
+      },
+      "caution": {
+        "en": "A line mask is not a fitted physical dimension. Perspective, calibration and uncertainty must be addressed before metrology. More votes do not guarantee a more accurate line.",
+        "sl": "Maska daljic ni izmerjena fizična dimenzija. Pred meroslovjem je treba obravnavati perspektivo, kalibracijo in negotovost. Več glasov ne zagotavlja natančnejše daljice."
+      },
+      "formula": "J = Gσ ⋆ Y\nE = Canny(J, low, high)\nρ = x cos θ + y sin θ",
+      "state": {
+        "schema": 1,
+        "name": "Detect straight edges",
+        "backend": {
+          "id": "opencv24",
+          "version": "2.4.13.7"
+        },
+        "source": {
+          "type": "synthetic",
+          "camera": 0,
+          "asset": ""
+        },
+        "nodes": [
+          {
+            "id": "source",
+            "kind": "source",
+            "enabled": true,
+            "params": {}
+          },
+          {
+            "id": "channels",
+            "kind": "channels",
+            "enabled": true,
+            "params": {}
+          },
+          {
+            "id": "luminance_0",
+            "kind": "luminance",
+            "enabled": true,
+            "params": {
+              "output": "gray"
+            }
+          },
+          {
+            "id": "gaussian_1",
+            "kind": "gaussian",
+            "enabled": true,
+            "params": {
+              "input": "gray",
+              "sigma": 1.0,
+              "size": 3,
+              "output": "smooth"
+            }
+          },
+          {
+            "id": "canny_2",
+            "kind": "canny",
+            "enabled": true,
+            "params": {
+              "input": "smooth",
+              "low": 40.0,
+              "high": 100.0,
+              "output": "canny"
+            }
+          },
+          {
+            "id": "hough_3",
+            "kind": "hough",
+            "enabled": true,
+            "params": {
+              "input": "canny",
+              "votes": 30,
+              "minLength": 60,
+              "maxGap": 5,
+              "output": "lines"
+            }
+          }
+        ],
+        "view": {
+          "signal": "lines",
+          "result": "lines",
+          "gain": 1.0,
+          "signed": false,
+          "locale": "sl",
+          "codeLanguage": "python"
+        }
+      },
+      "sources": [
+        {
+          "title": "Hough Line Transform",
+          "url": "https://docs.opencv.org/2.4.13.7/doc/tutorials/imgproc/imgtrans/hough_lines/hough_lines.html"
+        },
+        {
+          "title": "Emanuele Trucco & Alessandro Verri, Introductory Techniques for 3-D Computer Vision, Prentice Hall, 1998",
+          "file": "Zaznavanje - trucco_verri.pdf",
+          "pages": "68–69 (features and edges)",
+          "pdfPages": "43"
+        },
+        {
+          "title": "Joseph Howse, OpenCV Computer Vision with Python, Packt, 2013",
+          "file": "OpenCV243 Computer Vision with Python.pdf",
+          "pages": "55 (smoothing before edges)",
+          "pdfPages": "68"
+        }
+      ],
+      "sample": "examples/lines.png"
+    },
+    {
+      "id": "edges",
+      "title": {
+        "en": "Find edges after suppressing noise",
+        "sl": "Poišči robove po odstranitvi šuma"
+      },
+      "goal": {
+        "en": "Compare impulsive noise with coherent object boundaries using median filtering and a Laplacian response.",
+        "sl": "Z medianinim filtrom in Laplaceovim odzivom primerjaj impulzni šum s povezanimi mejami predmeta."
+      },
+      "order": {
+        "en": "Convert to luminance, apply a small median filter, compute the signed Laplacian, take its absolute value, then threshold. Absolute value keeps both edge polarities.",
+        "sl": "Pretvori v svetlost, uporabi majhen medianin filter, izračunaj predznačeni Laplaceov odziv, vzemi absolutno vrednost in uporabi prag. Absolutna vrednost ohrani obe polariteti roba."
+      },
+      "tune": {
+        "en": "Start with median size 3 and response threshold 0.15. Inspect the signed Laplacian before the absolute-value block. Increase the median size to compare lost fine detail.",
+        "sl": "Začni z mediano velikosti 3 in pragom odziva 0,15. Pred blokom absolutne vrednosti preglej predznačeni Laplaceov odziv. Povečaj velikost mediane in primerjaj izgubo drobnih podrobnosti."
+      },
+      "expected": {
+        "en": "Sparse salt-and-pepper pixels mostly disappear, while the rectangle boundary remains. This is a detection adaptation, not a copy of the book’s artistic outlining effect.",
+        "sl": "Redki črni in beli šumni piksli večinoma izginejo, rob pravokotnika pa ostane. To je prilagoditev za zaznavanje, ne kopija umetniškega učinka iz knjige."
+      },
+      "caution": {
+        "en": "The Laplacian amplifies residual noise. Filtering can erase thin objects. This exercise uses float32, a size-3 median and a size-1 Laplacian stencil, unlike the book’s color effect.",
+        "sl": "Laplacian ojača preostali šum. Filtriranje lahko izbriše tanke predmete. Vaja uporablja float32, mediano velikosti 3 in Laplaceovo shemo velikosti 1, drugače kot barvni učinek v knjigi."
+      },
+      "formula": "J = median₃(Y)\nL = ∂²J/∂x² + ∂²J/∂y²\nM = 1[|L| > τ]",
+      "state": {
+        "schema": 1,
+        "name": "Find edges after suppressing noise",
+        "backend": {
+          "id": "opencv24",
+          "version": "2.4.13.7"
+        },
+        "source": {
+          "type": "synthetic",
+          "camera": 0,
+          "asset": ""
+        },
+        "nodes": [
+          {
+            "id": "source",
+            "kind": "source",
+            "enabled": true,
+            "params": {}
+          },
+          {
+            "id": "channels",
+            "kind": "channels",
+            "enabled": true,
+            "params": {}
+          },
+          {
+            "id": "luminance_0",
+            "kind": "luminance",
+            "enabled": true,
+            "params": {
+              "output": "gray"
+            }
+          },
+          {
+            "id": "median_1",
+            "kind": "median",
+            "enabled": true,
+            "params": {
+              "input": "gray",
+              "size": 3,
+              "output": "median"
+            }
+          },
+          {
+            "id": "laplacian_2",
+            "kind": "laplacian",
+            "enabled": true,
+            "params": {
+              "input": "median",
+              "output": "laplace"
+            }
+          },
+          {
+            "id": "algebra_3",
+            "kind": "algebra",
+            "enabled": true,
+            "params": {
+              "expression": "abs(laplace)",
+              "wR": 1.0,
+              "wG": -1.0,
+              "wB": 0.5,
+              "output": "strength"
+            }
+          },
+          {
+            "id": "threshold_4",
+            "kind": "threshold",
+            "enabled": true,
+            "params": {
+              "input": "strength",
+              "threshold": 0.15,
+              "output": "mask"
+            }
+          }
+        ],
+        "view": {
+          "signal": "mask",
+          "result": "mask",
+          "gain": 1.0,
+          "signed": false,
+          "locale": "sl",
+          "codeLanguage": "python"
+        }
+      },
+      "sources": [
+        {
+          "title": "Joseph Howse, OpenCV Computer Vision with Python, Packt, 2013",
+          "file": "OpenCV243 Computer Vision with Python.pdf",
+          "pages": "55–57",
+          "pdfPages": "68–70"
+        },
+        {
+          "title": "Emanuele Trucco & Alessandro Verri, Introductory Techniques for 3-D Computer Vision, Prentice Hall, 1998",
+          "file": "Zaznavanje - trucco_verri.pdf",
+          "pages": "52–53, 68–69 (noise and edges)",
+          "pdfPages": "35, 43"
+        }
+      ],
+      "sample": "examples/edges.png"
+    },
+    {
+      "id": "uneven-light",
+      "title": {
+        "en": "Segment under uneven illumination",
+        "sl": "Segmentiraj pri neenakomerni osvetlitvi"
+      },
+      "goal": {
+        "en": "Extract dark marks on a slowly varying bright background using a local threshold.",
+        "sl": "Izloči temne oznake na počasi spreminjajočem se svetlem ozadju z lokalnim pragom."
+      },
+      "order": {
+        "en": "Convert to luminance, smooth, use adaptive Gaussian thresholding, invert the result, then remove small regions. Inversion makes the dark marks the foreground.",
+        "sl": "Pretvori v svetlost, zgladi, uporabi prilagodljivi Gaussov prag, obrni rezultat in odstrani majhna območja. Z obračanjem postanejo temne oznake ospredje."
+      },
+      "tune": {
+        "en": "Start with adaptive window size 15, offset 5 and minimum area 50. The window must be odd and wider than the mark. The offset is in 8-bit intensity units.",
+        "sl": "Začni z oknom prilagodljivega praga 15, odmikom 5 in najmanjšo površino 50. Okno mora biti liho in širše od oznake. Odmik je v 8-bitnih enotah svetlosti."
+      },
+      "expected": {
+        "en": "The two dark bars remain across the brightness gradient. Compare with a fixed threshold to see why the locally estimated background helps.",
+        "sl": "Temni letvi ostaneta kljub gradientu svetlosti. Primerjaj s fiksnim pragom, da vidiš korist lokalno ocenjenega ozadja."
+      },
+      "caution": {
+        "en": "A window that is too small can detect only outlines or miss wide marks. Strong texture and sharp shadows can resemble defects. This is an illustrative inspection task, not a trained defect classifier.",
+        "sl": "Premajhno okno lahko zazna samo obrise ali izpusti široke oznake. Močna tekstura in ostre sence lahko spominjajo na napake. To je učna kontrolna naloga, ne naučen klasifikator napak."
+      },
+      "formula": "T(x,y) = GaussianMean_window(J₈) − C\nM = 1[J₈ > T]\nD = 1 − M",
+      "state": {
+        "schema": 1,
+        "name": "Segment under uneven illumination",
+        "backend": {
+          "id": "opencv24",
+          "version": "2.4.13.7"
+        },
+        "source": {
+          "type": "synthetic",
+          "camera": 0,
+          "asset": ""
+        },
+        "nodes": [
+          {
+            "id": "source",
+            "kind": "source",
+            "enabled": true,
+            "params": {}
+          },
+          {
+            "id": "channels",
+            "kind": "channels",
+            "enabled": true,
+            "params": {}
+          },
+          {
+            "id": "luminance_0",
+            "kind": "luminance",
+            "enabled": true,
+            "params": {
+              "output": "gray"
+            }
+          },
+          {
+            "id": "gaussian_1",
+            "kind": "gaussian",
+            "enabled": true,
+            "params": {
+              "input": "gray",
+              "sigma": 1.0,
+              "size": 3,
+              "output": "smooth"
+            }
+          },
+          {
+            "id": "adaptive_2",
+            "kind": "adaptive",
+            "enabled": true,
+            "params": {
+              "input": "smooth",
+              "size": 15,
+              "offset": 5.0,
+              "output": "adaptive"
+            }
+          },
+          {
+            "id": "invert_3",
+            "kind": "invert",
+            "enabled": true,
+            "params": {
+              "input": "adaptive",
+              "output": "inverted"
+            }
+          },
+          {
+            "id": "components_4",
+            "kind": "components",
+            "enabled": true,
+            "params": {
+              "input": "inverted",
+              "minArea": 50,
+              "output": "blobs"
+            }
+          }
+        ],
+        "view": {
+          "signal": "blobs",
+          "result": "blobs",
+          "gain": 1.0,
+          "signed": false,
+          "locale": "sl",
+          "codeLanguage": "python"
+        }
+      },
+      "sources": [
+        {
+          "title": "OpenCV 2.4 miscellaneous image transformations: adaptiveThreshold",
+          "url": "https://docs.opencv.org/2.4.13.7/modules/imgproc/doc/miscellaneous_transformations.html#adaptivethreshold"
+        }
+      ],
+      "sample": "examples/uneven-light.png"
+    }
+  ]
+}

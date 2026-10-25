@@ -29,7 +29,15 @@ def main():
         parser.exit(0, f"Kept existing reference unchanged: {target}\n")
     target.mkdir(parents=True)
     url, revision = SOURCES[args.source]
-    git = ["git", "-c", f"safe.directory={target.as_posix()}", "-C", str(target)]
+    git = [
+        "git",
+        "-c",
+        "core.autocrlf=false",
+        "-c",
+        f"safe.directory={target.as_posix()}",
+        "-C",
+        str(target),
+    ]
     try:
         for command in [
             ["init"],

@@ -27,13 +27,13 @@ Run `Start-SimpleMotocam.cmd` after `Install-SimpleMotocam.cmd`, or `python -m s
 
 The application header selects one of **21 languages** for buttons, block names, parameters, status messages and the lesson inspector. The classroom opens as an in-app overlay from the header, library or full-lesson button. Its language and code-example selections stay synchronized with the studio. Close it with × or Escape; your graph and classroom exercise values remain in place. Language changes do not advance frames or reset numerical history. Raw diagnostic details from the numerical engine retain their original technical wording.
 
-Removable block cards have × at the top-right corner; the fixed source and RGB blocks remain required. Undo restores a removed block. The learning companion still works independently when opened directly and provides formulas and Python/C++/C/Java examples. English and Slovenian interface text and lessons are authored; 19 translations are clearly marked machine drafts with an expanded English original. They need human technical review. This is an eight-topic learning companion, not a translation of every OpenCV manual. The original three OpenCV 2.4 PDFs remain English and unchanged.
+Removable block cards have × at the top-right corner; the fixed source and RGB blocks remain required. Undo restores a removed block. The learning companion still works independently when opened directly and provides formulas and Python/C++/C/Java examples. English and Slovenian interface text and lessons are authored; 19 translations are clearly marked machine drafts with an expanded English original. They need human technical review. The companion contains eight foundation topics plus six runnable detection sequences, not a translation of every OpenCV manual. The original three OpenCV 2.4 PDFs remain English and unchanged.
 
 ## Local files and reproducibility
 
 `.motocam/projects/` stores configurations; `.motocam/uploads/` stores imported media under content-derived names. Both are ignored by Git. JSON state refers to an uploaded asset by ID and does not embed the image/video. On another computer, select the media again; the export requires an explicit input path for non-demo sources. Camera indices and available codecs depend on the machine.
 
-The header selects the installed current OpenCV or the optional genuine OpenCV 2.4.13.7 processing worker. See [backend setup and compatibility](OPENCV_BACKENDS.md). Source capture and preview rendering remain shared host services. The legacy Kivy application and its samples are preserved separately. Geometry and metrology are reserved extension modules, not implemented calibrated measurements.
+OpenCV 2.4.13.7 is the primary processing engine. The header also offers the installed current OpenCV. All 28 registered block kinds are supported in the 2.4 profile, including exact connected-region area filtering and custom Python/JavaScript. See [backend setup and compatibility](OPENCV_BACKENDS.md). Source capture and preview rendering remain shared host services. The legacy Kivy application and its samples are preserved separately. Geometry and metrology are reserved extension modules, not implemented calibrated measurements.
 
 
 ## Expanded block library
@@ -50,7 +50,7 @@ Select an algorithm and choose **Save block with dependencies**. It saves the se
 
 Add **Empty block · custom code**. An empty editor passes the selected input through unchanged. Select **Python** or **JavaScript**, enter a function, then choose **Apply and run code**. Code is saved in the project and embedded in exports. Apply pending editor changes before saving or exporting. The output selector switches to the custom result after Apply.
 
-Python receives a dictionary of all upstream two-dimensional float32 channels and the block's parameter dictionary. NumPy is available as `np`, OpenCV as `cv2`:
+Python receives a dictionary of all upstream two-dimensional float32 channels and the block's parameter dictionary. NumPy is available as `np`. In the primary OpenCV 2.4 profile, use `cv24.run(kind, plane, **params)` for native operations; it is a limited explicit bridge, not the full legacy Python bindings. In the current profile, the installed OpenCV is available as `cv2`:
 
 ```python
 def process(channels, params):
@@ -88,3 +88,7 @@ Primary API references: [OpenCV thresholding](https://docs.opencv.org/4.x/d7/d4d
 `studio_runtime.py` defines runtime contract version 1, capability metadata, availability checks, starter code and worker adapters. `/api/library` and bootstrap publish the installed capabilities; the UI derives enabled language choices from this response. Restart the local server and reload the page after updating an adapter. Project nodes store `runtime`; omitted means Python for backwards compatibility. Unknown/unavailable/incompatible runtimes are rejected rather than silently falling back to another language.
 
 To extend a runtime, implement its availability probe and worker command/serialization, declare supported block kinds, validate code without executing it during import, and add numerical parity/timeout/export tests. Keep the finite float32 H × W contract. `export_python` embeds the complete runtime module and engine; avoid package-only dependencies or add explicit export support. The full Python application remains the orchestrator for mixed-language graphs.
+
+In the classroom, select **Zaporedja zaznavanja / Detection sequences** below the foundation topics. Every sequence shows its block order, mathematics, tuning suggestions, expected result, failure cases and book/web references. **Build this algorithm** loads the complete 2.4 graph with its synthetic test scene; unsaved work requires confirmation. The same recipes appear in the block library. See [detailed sequence documentation](DETECTION_SEQUENCES.md).
+
+**Additional algorithms / Dodatni algoritmi** opens a separate, initially closed collection for mech-id-x adaptations, original source references, teaching recipes and saved user algorithms. These recipes do not populate the default left-hand card list. Search and the complete dropdown remain available; selecting a saved algorithm still opens its details before loading it.

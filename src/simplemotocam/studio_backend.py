@@ -22,6 +22,7 @@ CV24_NATIVE = {
     "otsu",
     "adaptive",
     "hough",
+    "components",
     "erode",
     "dilate",
     "opening",
@@ -37,6 +38,7 @@ CV24_INDEPENDENT = {
     "luminance",
     "color_distance",
     "invert",
+    "custom",
 }
 
 
@@ -69,7 +71,18 @@ def probe_worker(path, modified, size):
             timeout=3,
             creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),
         )
-        return result.stdout.strip() if result.returncode == 0 else ""
+        protocol = subprocess.run(
+            [path, "--protocol"],
+            capture_output=True,
+            text=True,
+            timeout=3,
+            creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),
+        )
+        return (
+            result.stdout.strip()
+            if result.returncode == 0 and protocol.stdout.strip() == "2"
+            else ""
+        )
     except (OSError, subprocess.TimeoutExpired):
         return ""
 
@@ -88,7 +101,7 @@ def backend_catalog():
             "version": "2.4.13.7",
             "available": version == "2.4.13.7",
             "kinds": sorted(CV24_NATIVE | CV24_INDEPENDENT),
-            "customCode": False,
+            "customCode": True,
         },
         "current": {
             "id": "current",
@@ -108,7 +121,7 @@ def validate_backend(value):
     installed = backend_catalog()[value["id"]]
     if not installed["available"]:
         raise ValueError(
-            "OpenCV 2.4.13.7 worker is not installed; run tools/build_opencv24.py"
+            "OpenCV 2.4.13.7 worker is missing or outdated; run tools/build_opencv24.py"
         )
     version = value.get("version", installed["version"])
     if version != installed["version"]:
@@ -181,3 +194,27 @@ def run_opencv24(kind, plane, params):
         if not np.isfinite(value).all():
             raise ValueError("OpenCV 2.4 returned nonfinite values")
         return value
+
+
+def legacy_custom_context(kinds):
+    # Exports contain this exact source constant, so user code remains portable.
+    source = globals().get("OPENCV24_CUSTOM_SOURCE") or Path(__file__).read_text(
+        encoding="utf-8"
+    )
+    source = (
+        "import os\nos.environ['SIMPLEMOTOCAM_OPENCV24_WORKER'] = "
+        + repr(str(opencv24_worker()))
+        + "\n"
+        + source
+    )
+    return {
+        "source": source,
+        "defaults": {
+            kind: {
+                key: value
+                for key, value in kinds[kind]["params"].items()
+                if key not in ("input", "output")
+            }
+            for kind in sorted(CV24_NATIVE)
+        },
+    }

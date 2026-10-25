@@ -51,3 +51,7 @@ application metrology remains unimplemented.
 
 Each lesson links its API source. `verification.json` records the checks performed
 and their limitations.
+
+## Detection sequences / Zaporedja zaznavanja
+
+The classroom also contains six complete OpenCV 2.4 detection exercises with ordered blocks, mathematics, parameters, failure cases and book/web references. Load an exercise and its synthetic scene directly into the studio. The sequence orchestrator is Python; the four-language examples above describe the original foundation topics. See [sources and verification](../../DETECTION_SEQUENCES.md).

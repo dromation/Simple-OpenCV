@@ -16,6 +16,7 @@ static cv::Mat readPlane(const char* name, int rows, int cols, int type) {
 }
 int main(int argc, char** argv) {
     if (argc==2 && std::string(argv[1])=="--version") { std::cout << CV_VERSION << std::endl; return 0; }
+    if (argc==2 && std::string(argv[1])=="--protocol") { std::cout << 2 << std::endl; return 0; }
     try {
         if (argc!=2) throw std::runtime_error("Expected request.yml");
         cv::FileStorage config(argv[1],cv::FileStorage::READ);
@@ -48,6 +49,19 @@ int main(int argc, char** argv) {
             else if(kind=="otsu") cv::threshold(bytes,mask,0,255,cv::THRESH_BINARY|cv::THRESH_OTSU);
             else cv::adaptiveThreshold(bytes,mask,255,cv::ADAPTIVE_THRESH_GAUSSIAN_C,cv::THRESH_BINARY,size,(double)config["offset"]);
             mask.convertTo(output,CV_32F,1.0/255);
+        }
+        else if(kind=="components") {
+            // Exact foreground pixel count, including holes, with 8-connectivity.
+            cv::Mat remaining; cv::compare(input,0,remaining,CV_CMP_GT);
+            output=cv::Mat::zeros(rows,cols,CV_32F);
+            for(int y=0;y<rows;++y) for(int x=0;x<cols;++x) {
+                if(remaining.at<unsigned char>(y,x)!=255) continue;
+                cv::Rect bounds;
+                int area=cv::floodFill(remaining,cv::Point(x,y),cv::Scalar(128),&bounds,cv::Scalar(),cv::Scalar(),8);
+                cv::Mat region=remaining(bounds), selected=region==128;
+                if(area >= (int)config["minArea"]) output(bounds).setTo(1,selected);
+                region.setTo(0,selected);
+            }
         }
         else if(kind=="hough") {
             cv::Mat mask=input>0;

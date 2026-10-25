@@ -47,7 +47,7 @@ def test_old_states_stay_on_current_engine():
 def test_missing_engine_never_falls_back(monkeypatch, tmp_path):
     monkeypatch.setenv("SIMPLEMOTOCAM_OPENCV24_WORKER", str(tmp_path / "missing.exe"))
     assert not backend_catalog()["opencv24"]["available"]
-    with pytest.raises(ValueError, match="not installed"):
+    with pytest.raises(ValueError, match="missing or outdated"):
         validate_state(state_for("gaussian"))
     assert validate_state(default_state())["backend"]["id"] == "current"
 
@@ -132,7 +132,7 @@ def test_numeric_comparison_with_current_on_same_input(kind):
 def test_saved_profile_export_and_history(tmp_path):
     state = default_state()
     state["backend"] = {"id": "opencv24"}
-    session = StudioSession(tmp_path)
+    session = StudioSession(tmp_path, backend="current")
     session.frame()
     session.configure(state)
     assert session.pipeline.previous is None
@@ -159,14 +159,62 @@ def test_saved_profile_export_and_history(tmp_path):
 
 
 @legacy
-@pytest.mark.parametrize("kind", ["custom", "components"])
-def test_unsupported_graph_rejected_without_mutation(kind, tmp_path):
-    session = StudioSession(tmp_path)
-    before = copy.deepcopy(session.state)
-    revision = session.revision
-    with pytest.raises(ValueError, match="no compatible OpenCV 2.4 adapter"):
-        session.configure(state_for(kind))
-    assert session.state == before and session.revision == revision
+def test_primary_engine_and_explicit_current(tmp_path, monkeypatch):
+    monkeypatch.delenv("SIMPLEMOTOCAM_DEFAULT_BACKEND", raising=False)
+    assert StudioSession(tmp_path).state["backend"]["id"] == "opencv24"
+    assert (
+        StudioSession(tmp_path, backend="current").state["backend"]["id"] == "current"
+    )
+    monkeypatch.setenv("SIMPLEMOTOCAM_OPENCV24_WORKER", str(tmp_path / "missing.exe"))
+    with pytest.raises(ValueError, match="missing or outdated"):
+        StudioSession(tmp_path)
+
+
+@legacy
+def test_components_exact_holes_diagonals_and_thresholds():
+    from simplemotocam.studio_backend import run_opencv24
+
+    for seed in range(5):
+        plane = (np.random.default_rng(seed).random((30, 40)) > 0.7).astype(np.float32)
+        plane[4:12, 4:12] = 1
+        plane[6:10, 6:10] = 0
+        count, labels, stats, _ = cv2.connectedComponentsWithStats(
+            plane.astype(np.uint8), 8
+        )
+        for area in (1, 5, 30, 80):
+            keep = np.zeros(count, np.float32)
+            keep[1:] = stats[1:, cv2.CC_STAT_AREA] >= area
+            np.testing.assert_array_equal(
+                run_opencv24("components", plane, {"minArea": area}), keep[labels]
+            )
+
+
+@legacy
+def test_custom_legacy_native_and_export(tmp_path):
+    state = state_for("custom")
+    state["nodes"][-1]["params"][
+        "code"
+    ] = 'def process(c,p):\n    import cv2\n    assert cv2.__version__ == "2.4.13.7"\n    return cv24.run("gaussian", c["R"]-c["G"], size=3, sigma=1)'
+    image = demo_frame(1, 80, 60)
+    actual, _ = StudioPipeline(state).process(image)
+    from simplemotocam.studio_backend import run_opencv24
+
+    expected = run_opencv24(
+        "gaussian", actual["R"] - actual["G"], {"size": 3, "sigma": 1}
+    )
+    np.testing.assert_array_equal(actual["custom"], expected)
+    exported = tmp_path / "legacy_custom.py"
+    exported.write_text(export_python(state), encoding="utf-8")
+    spec = importlib.util.spec_from_file_location("legacy_custom", exported)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    restored, _ = module.StudioPipeline(module.STATE).process(image)
+    np.testing.assert_array_equal(restored["custom"], expected)
+    state["nodes"][-1]["params"][
+        "code"
+    ] = 'def process(c,p):\n    import cv2\n    return cv2.GaussianBlur(c["R"], (3,3), 1)'
+    with pytest.raises(ValueError, match="not the full legacy"):
+        StudioPipeline(state).process(image)
 
 
 @legacy

@@ -16,3 +16,19 @@ jobs:
           node-version: '22'
       - run: python -m pip install -e ".[dev]"
       - run: python -m pytest tests_core tools/doc_translate/test_translate.py
+
+  opencv24:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: python -m pip install -e ".[dev]"
+      - run: python -m pip install --target work/build-tools cmake==3.31.10
+      - run: python tools/fetch_references.py opencv-2.4.13.7
+      - run: python tools/build_opencv24.py
+      - run: python -m pytest tests_core/test_studio_backend.py tests_core/test_detection_sequences.py -q

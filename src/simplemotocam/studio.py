@@ -1,5 +1,6 @@
 """Loopback-only visual studio. Run python -m simplemotocam.studio."""
 
+import os
 import argparse
 import re
 import base64
@@ -47,7 +48,10 @@ def export_python(state):
         )
     )
     source = (
-        "OPENCV24_EXPORT_HINT = "
+        "OPENCV24_CUSTOM_SOURCE = "
+        + repr(Path(studio_backend.__file__).read_text(encoding="utf-8"))
+        + "\n"
+        + "OPENCV24_EXPORT_HINT = "
         + repr(str(studio_backend.opencv24_worker()))
         + "\n"
         + Path(studio_backend.__file__).read_text(encoding="utf-8")
@@ -129,13 +133,17 @@ def encoded_image(image):
 
 
 class StudioSession:
-    def __init__(self, storage):
+    def __init__(self, storage, backend=None):
         self.storage = Path(storage)
         self.storage.mkdir(parents=True, exist_ok=True)
         (self.storage / "projects").mkdir(exist_ok=True)
         (self.storage / "uploads").mkdir(exist_ok=True)
         self.lock = threading.RLock()
-        self.state = validate_state(default_state())
+        initial = default_state()
+        initial["backend"] = {
+            "id": backend or os.environ.get("SIMPLEMOTOCAM_DEFAULT_BACKEND", "opencv24")
+        }
+        self.state = validate_state(initial)
         self.pipeline = StudioPipeline(self.state)
         self.revision = 0
         self.index = 0
@@ -488,8 +496,16 @@ def main(argv=None):
     parser.add_argument("--port", type=int, default=8765)
     parser.add_argument("--no-browser", action="store_true")
     parser.add_argument("--storage", type=Path, default=ROOT / ".motocam")
+    parser.add_argument("--backend", choices=("opencv24", "current"), default=None)
     args = parser.parse_args(argv)
-    session = StudioSession(args.storage)
+    try:
+        session = StudioSession(args.storage, backend=args.backend)
+    except ValueError as exc:
+        parser.exit(
+            1,
+            str(exc)
+            + "\nInstall the OpenCV 2.4 worker or explicitly use --backend current.\n",
+        )
     try:
         server = StudioServer(("127.0.0.1", args.port), session)
     except OSError as exc:

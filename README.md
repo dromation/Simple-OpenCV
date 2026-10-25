@@ -88,7 +88,7 @@ One language selector in the application header updates the studio controls, blo
 
 English and Slovenian interface text and lessons are authored; **the other 19 languages are machine drafts**, visibly labelled and accompanied by the English original. Optional open-source [M2M100/CTranslate2 tooling](tools/doc_translate/README.md) generates the local catalogs. Equations and code remain protected. This is an eight-topic companion, not a translation of the entire OpenCV documentation.
 
-Three unchanged [official OpenCV 2.4 PDF manuals](docs/opencv-2.4-manuals/README.md) are included for offline study. Choose **OpenCV 2.4.13.7** or the **installed current OpenCV** in the application header. The optional 2.4 worker runs actual legacy core/imgproc operations; [installation and compatibility](docs/OPENCV_BACKENDS.md) explain supported blocks and portable exports. The selected version is saved with the algorithm.
+Three unchanged [official OpenCV 2.4 PDF manuals](docs/opencv-2.4-manuals/README.md) are included for offline study. **OpenCV 2.4.13.7 is the primary engine**; optionally choose the **installed current OpenCV** in the application header. The 2.4 worker runs actual legacy core/imgproc operations, with all 28 registered block kinds available; [installation and compatibility](docs/OPENCV_BACKENDS.md) explain supported blocks and portable exports. The selected version is saved with the algorithm.
 
 ## Know what the numbers mean
 
@@ -130,3 +130,13 @@ SimpleMotocam je lokalni laboratorij za sestavljanje algoritmov računalniškega
 ![OpenCV 2.4 running the LinesScan3 adaptation](docs/images/studio-opencv24.png)
 
 The header selects the processing version. This screenshot uses actual OpenCV 2.4 Canny and Hough operations; the graph, language selector and classroom remain in the same application.
+
+### Learn by building a detector
+
+![Detection sequences inside the classroom](docs/images/studio-detection-classroom.png)
+
+The classroom adds six OpenCV 2.4 sequences: red-part segmentation, bright-region filtering, temporal changes, straight lines, noise-resistant edge detection, and local thresholding under uneven illumination. Each includes block order, equations, parameters, limits, and book/web sources. Load a complete graph and synthetic scene into the same studio. [Sources and details](docs/DETECTION_SEQUENCES.md).
+
+The Windows installer now includes `Install-OpenCV24.cmd`. Native building requires Visual Studio C++ tools, the Windows SDK and CMake/Ninja; a missing legacy worker is reported explicitly. `python -m simplemotocam.studio --backend current` is an explicit alternative.
+
+Your examples and saved algorithms are in **Additional algorithms / Dodatni algoritmi**, a separate collection opened on demand. The default sidebar shows the basic blocks; search and the complete dropdown remain available.
