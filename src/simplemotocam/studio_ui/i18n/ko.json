@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "a16dae2c267467310195588c26755d6ae848a4c657ef3e5c86c9205a2006864c",
+  "sourceDigest": "88a00e98518584b0decbf81ec5c2b549891c03326a5de324ef7b11c4a9a0dcb3",
   "protectedFallbackKeys": [
     "export",
     "signedMath",
@@ -196,6 +196,13 @@
     "backendIncompatible": "선택한 OpenCV와 호환되지 않습니다.",
     "engineScope": "선택된 버전은 지원되는 처리 블록을 실행합니다. 촬영, 표시 및 이미지 전송은 응용 프로그램에 의해 공유됩니다.",
     "api24Hint": "OpenCV 2.4.13.7 출처 참조 도서관 블록은 원주민 작업을 수행합니다; 사용자 지정 Python 제한된 cv24.run 다리를 사용합니다.",
-    "additionalAlgorithms": "추가 알고리즘"
+    "additionalAlgorithms": "추가 알고리즘",
+    "anyLanguage": "어떠한 언어 · 어댑터를 통해 실행",
+    "languageId": "언어 ID (예 : rust, java, cpp)",
+    "useLanguage": "언어 사용",
+    "adapterReady": "이 언어와 엔진에 대한 실행 어댑터가 제공됩니다.",
+    "draftOnly": "호환되는 실행 어댑터가 설치되지 않습니다. 코드를 작성하고 저장할 수 있습니다; 이 블록은 어댑터가 구성 될 때까지 입력을 통과합니다.",
+    "saveCodeDraft": "코드를 프로젝트로 유지하십시오",
+    "codeDraftSaved": "코드는 실행 없이 블록에 보관됩니다. 프로젝트를 저장하여 디스크에 보관하십시오."
   }
 }

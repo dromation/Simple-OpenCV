@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "a16dae2c267467310195588c26755d6ae848a4c657ef3e5c86c9205a2006864c",
+  "sourceDigest": "88a00e98518584b0decbf81ec5c2b549891c03326a5de324ef7b11c4a9a0dcb3",
   "protectedFallbackKeys": [
     "export",
     "exampleHint",
@@ -190,6 +190,13 @@
     "backendIncompatible": "Incompatível com o OpenCV selecionado",
     "engineScope": "A versão selecionada executa blocos de processamento suportados. A captura, exibição e transferência de imagem permanecem compartilhados pela aplicação.",
     "api24Hint": "OpenCV 2.4.13.7 referência de fonte. Os blocos da biblioteca executam operações nativas; Python personalizado usa a ponte limitada cv24.run.",
-    "additionalAlgorithms": "Algoritmos adicionais"
+    "additionalAlgorithms": "Algoritmos adicionais",
+    "anyLanguage": "Qualquer linguagem · execução através de um adaptador",
+    "languageId": "ID de língua (por exemplo: rust, java, cpp)",
+    "useLanguage": "Uso da Língua",
+    "adapterReady": "Um adaptador de execução está disponível para este idioma e motor.",
+    "draftOnly": "Não existe um adaptador de execução compatível. Você pode escrever e salvar código; este bloco passa sua entrada até que um adaptador seja configurado.",
+    "saveCodeDraft": "Mantenha o código como projeto",
+    "codeDraftSaved": "Código mantido no bloco sem execução. Salve o projeto para mantê-lo no disco."
   }
 }

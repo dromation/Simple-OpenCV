@@ -22,3 +22,5 @@ Run `npm run test:interface` against the same disposable server to check all 21 
 Run `npm run test:library` for catalog/custom-code checks. With the optional native OpenCV 2.4 worker installed, run `npm run test:backends` to verify actual 2.4 processing, saved profiles, compatibility and failed-switch preservation. All suites mutate the disposable session.
 
 Start the disposable session with its default primary OpenCV 2.4 engine and run `npm run test:sequences` before suites that replace its graph. This checks all six classroom recipes, synthetic scenes, source references, custom native code, language sync and three widths.
+
+`npm run test:empty-block` checks arbitrary language selection, separate persistent drafts, project save/reload, unavailable-runtime bypass, actual Python results, incomplete-code drafts and three viewport widths.

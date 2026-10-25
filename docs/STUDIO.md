@@ -69,7 +69,7 @@ Return exactly one finite H × W channel (flat H*W values for JavaScript). The `
 
 **Custom code runs with your local user permissions.** A worker process and timeout are reliability controls, not a security sandbox or a memory/process-tree limit. Run only code you trust. Importing/configuring a custom-code recipe does not execute it; Run, Single frame or Apply starts execution. External Python 2 scripts and API reference entries are never automatically executed. The restricted algebra block continues to reject arbitrary Python access.
 
-Language changes preserve the current editor draft for each language during the editing session; they do not translate code. Only the currently selected implementation is saved/exported. C, C++ and Java remain disabled for execution until compatible adapters are implemented and installed. Installing a compiler alone does not supply an adapter.
+The library has a direct **Empty block · custom code** button. Select a listed language or enter any language ID. Language changes preserve separate drafts in the project; they do not translate code. **Keep code as draft** accepts unfinished code and bypasses the block. Save the project to persist all language drafts on disk. **Apply and run** requires an available compatible adapter and enables the block. C, C++ and Java can be selected for editing; execution requires a configured adapter. Installing a compiler alone does not supply an adapter. See [arbitrary languages and the external adapter contract](CUSTOM_CODE_ADAPTERS.md).
 
 ## Additional numerical contracts
 
@@ -85,7 +85,7 @@ Primary API references: [OpenCV thresholding](https://docs.opencv.org/4.x/d7/d4d
 
 ## Updating execution backends
 
-`studio_runtime.py` defines runtime contract version 1, capability metadata, availability checks, starter code and worker adapters. `/api/library` and bootstrap publish the installed capabilities; the UI derives enabled language choices from this response. Restart the local server and reload the page after updating an adapter. Project nodes store `runtime`; omitted means Python for backwards compatibility. Unknown/unavailable/incompatible runtimes are rejected rather than silently falling back to another language.
+`studio_runtime.py` defines runtime contract version 1, capability metadata, availability checks, starter code and worker adapters. `/api/library` and bootstrap publish the installed capabilities. Project nodes store `runtime`; omitted means Python for backwards compatibility. Disabled custom blocks may retain arbitrary language drafts, while enabled blocks require a compatible installed runtime. Optional `codeDrafts` stores each language's source. The host reads external adapters from `SIMPLEMOTOCAM_RUNTIME_CONFIG`; commands are never taken from imported project data. Reload the page after updating the configuration.
 
 To extend a runtime, implement its availability probe and worker command/serialization, declare supported block kinds, validate code without executing it during import, and add numerical parity/timeout/export tests. Keep the finite float32 H × W contract. `export_python` embeds the complete runtime module and engine; avoid package-only dependencies or add explicit export support. The full Python application remains the orchestrator for mixed-language graphs.
 

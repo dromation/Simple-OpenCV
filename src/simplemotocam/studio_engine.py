@@ -16,6 +16,7 @@ from .studio_runtime import (
     run_worker,
     run_javascript_builtin,
     STARTERS,
+    language_id,
 )  # EXPORT_RUNTIME
 
 from .studio_backend import (
@@ -360,7 +361,9 @@ def validate_state(state):
             raise ValueError("Unknown block")
         kind, identifier = n["kind"], n.get("id")
         language = n.get("runtime", "python")
-        check_runtime(language, kind)
+        language_id(language)
+        if kind != "custom" or n.get("enabled", True):
+            check_runtime(language, kind, backend["id"])
         if backend["id"] == "opencv24" and kind not in CV24_NATIVE | CV24_INDEPENDENT:
             raise ValueError(
                 f"{kind}: no compatible OpenCV 2.4 adapter; choose the current engine or remove the block"
@@ -438,7 +441,7 @@ def validate_state(state):
         if kind == "custom":
             if not isinstance(p["code"], str) or len(p["code"]) > 20000:
                 raise ValueError("Custom code: maximum 20000 characters")
-            if p["code"].strip() and language == "python":
+            if enabled and p["code"].strip() and language == "python":
                 try:
                     tree = ast.parse(p["code"])
                 except (SyntaxError, RecursionError) as exc:
@@ -472,6 +475,15 @@ def validate_state(state):
         result.append({"id": identifier, "kind": kind, "enabled": enabled, "params": p})
         if language != "python":
             result[-1]["runtime"] = language
+        if kind == "custom" and "codeDrafts" in n:
+            drafts = n["codeDrafts"]
+            if (not isinstance(drafts, dict) or len(drafts) > 32
+                or any(not isinstance(code, str) or len(code) > 20000 for code in drafts.values())
+                or sum(len(code) for code in drafts.values()) > 120000):
+                raise ValueError("Code drafts: up to 32 languages, 20000 characters each, 120000 total")
+            for key in drafts:
+                language_id(key)
+            result[-1]["codeDrafts"] = copy.deepcopy(drafts)
     view = state.get("view", {})
     if not isinstance(view, dict):
         raise ValueError("Invalid view")

@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "a16dae2c267467310195588c26755d6ae848a4c657ef3e5c86c9205a2006864c",
+  "sourceDigest": "88a00e98518584b0decbf81ec5c2b549891c03326a5de324ef7b11c4a9a0dcb3",
   "protectedFallbackKeys": [
     "export",
     "signedMath",
@@ -194,6 +194,13 @@
     "backendIncompatible": "चयनित OpenCV के साथ असंगत",
     "engineScope": "चयनित संस्करण समर्थित प्रसंस्करण ब्लॉकों को निष्पादित करता है। रिकॉर्डिंग, डिस्प्ले और छवि स्थानांतरण अनुप्रयोग द्वारा साझा किया जाता है।",
     "api24Hint": "OpenCV 2.4.13.7 स्रोत संदर्भ लाइब्रेरी ब्लॉक मूल ऑपरेशन चलाते हैं; कस्टम Python सीमित cv24.run पुल का उपयोग करें।",
-    "additionalAlgorithms": "अतिरिक्त एल्गोरिथ्म"
+    "additionalAlgorithms": "अतिरिक्त एल्गोरिथ्म",
+    "anyLanguage": "किसी भी भाषा · एडाप्टर के माध्यम से निष्पादन",
+    "languageId": "भाषा आईडी (उदाहरण के लिए: rust, java, cpp)",
+    "useLanguage": "भाषा का उपयोग करें",
+    "adapterReady": "इस भाषा और इंजन के लिए एक निष्पादन एडाप्टर उपलब्ध है।",
+    "draftOnly": "कोई संगत निष्पादन एडाप्टर स्थापित नहीं किया गया है। आप कोड लिख सकते हैं और संग्रहीत कर सकते हैं; यह ब्लॉक अपने इनपुट के माध्यम से गुजरता है जब तक कि एक एडाप्टर सेट नहीं किया जाता है।",
+    "saveCodeDraft": "प्रोजेक्ट के रूप में कोड रखें",
+    "codeDraftSaved": "कोड बिना निष्पादन के ब्लॉक में रखा गया है। इसे डिस्क पर रखने के लिए परियोजना को बचाएं।"
   }
 }

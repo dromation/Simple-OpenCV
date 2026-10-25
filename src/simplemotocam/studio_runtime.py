@@ -5,6 +5,8 @@ requires validation, availability, execution and numerical contract tests.
 """
 
 import json
+import os
+import re
 import shutil
 import subprocess
 import sys
@@ -29,8 +31,44 @@ STARTERS = {
 }
 
 
+def language_id(value):
+    if not isinstance(value, str) or not re.fullmatch(r"[a-z][a-z0-9_+.#-]{0,39}", value):
+        raise ValueError("Language ID: use 1–40 lowercase letters, digits or _ + . # -")
+    return value
+
+
+def external_adapters():
+    """Read trusted local configuration, never commands embedded in a project."""
+    location = os.environ.get("SIMPLEMOTOCAM_RUNTIME_CONFIG")
+    if not location:
+        return {}
+    document = json.loads(Path(location).read_text(encoding="utf-8"))
+    if document.get("api") != RUNTIME_API or not isinstance(document.get("adapters"), dict):
+        raise ValueError("Runtime configuration requires api: 1 and adapters")
+    result = {}
+    for key, item in document["adapters"].items():
+        language_id(key)
+        if key in ("python", "javascript") or not isinstance(item, dict):
+            raise ValueError("External adapters cannot replace built-in Python/JavaScript")
+        command = item.get("command")
+        extension = item.get("extension", ".txt")
+        backends = item.get("backends", ["opencv24", "current"])
+        name = item.get("name", key)
+        if (not isinstance(command, list) or not command
+            or any(not isinstance(arg, str) or not arg or "\x00" in arg for arg in command)
+            or not isinstance(extension, str) or not re.fullmatch(r"\.[a-zA-Z0-9]{1,12}", extension)
+            or not isinstance(backends, list) or not backends
+            or any(b not in ("opencv24", "current") for b in backends)
+            or not isinstance(name, str) or not 1 <= len(name) <= 100):
+            raise ValueError("Invalid external adapter: " + key)
+        result[key] = {"name": name, "command": command, "extension": extension,
+                       "backends": backends, "kinds": ["custom"],
+                       "available": shutil.which(command[0]) is not None, "api": RUNTIME_API}
+    return result
+
+
 def runtime_catalog():
-    return {
+    entries = {
         key: {
             **item,
             "available": key == "python"
@@ -39,14 +77,19 @@ def runtime_catalog():
         }
         for key, item in RUNTIME_REGISTRY.items()
     }
+    for key, item in external_adapters().items():
+        entries[key] = {k: v for k, v in item.items() if k not in ("command", "extension")}
+    return entries
 
 
-def check_runtime(language, kind):
+def check_runtime(language, kind, backend=None):
+    language_id(language)
     entry = runtime_catalog().get(language)
     if (
         not entry
         or not entry["available"]
         or (entry["kinds"] != "*" and kind not in entry["kinds"])
+        or (backend and backend not in entry.get("backends", ["opencv24", "current"]))
     ):
         raise ValueError(f"{language}: no compatible installed adapter for {kind}")
 
@@ -111,7 +154,7 @@ try {
 
 
 def run_worker(language, code, values, params, timeout=5, legacy=None):
-    check_runtime(language, "custom")
+    check_runtime(language, "custom", "opencv24" if legacy else "current")
     shape = values["R"].shape
     with tempfile.TemporaryDirectory(prefix="simplemotocam-worker-") as folder:
         root = Path(folder)
@@ -126,26 +169,26 @@ def run_worker(language, code, values, params, timeout=5, legacy=None):
                     "channels": list(values),
                     "params": params,
                     "code": code,
+                    "api": RUNTIME_API,
+                    "language": language,
+                    "dtype": "<f4",
                     "backend": "opencv24" if legacy else "current",
                     "nativeDefaults": legacy["defaults"] if legacy else {},
                 }
             ),
             encoding="utf-8",
         )
-        runner = root / ("worker.py" if language == "python" else "worker.cjs")
-        runner.write_text(
-            PYTHON_WORKER if language == "python" else JS_WORKER, encoding="utf-8"
-        )
-        command = (
-            [sys.executable, "-I", str(runner), str(root)]
-            if language == "python"
-            else [
-                shutil.which("node"),
-                "--max-old-space-size=256",
-                str(runner),
-                str(root),
-            ]
-        )
+        if language in ("python", "javascript"):
+            runner = root / ("worker.py" if language == "python" else "worker.cjs")
+            runner.write_text(PYTHON_WORKER if language == "python" else JS_WORKER, encoding="utf-8")
+            command = ([sys.executable, "-I", str(runner), str(root)] if language == "python"
+                       else [shutil.which("node"), "--max-old-space-size=256", str(runner), str(root)])
+        else:
+            adapter = external_adapters()[language]
+            source = root / ("source" + adapter["extension"])
+            source.write_text(code, encoding="utf-8")
+            # Positional arguments appended without a shell: work directory, source file.
+            command = [*adapter["command"], str(root), str(source)]
         try:
             completed = subprocess.run(
                 command,

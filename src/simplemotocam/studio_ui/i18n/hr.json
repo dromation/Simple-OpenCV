@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "a16dae2c267467310195588c26755d6ae848a4c657ef3e5c86c9205a2006864c",
+  "sourceDigest": "88a00e98518584b0decbf81ec5c2b549891c03326a5de324ef7b11c4a9a0dcb3",
   "protectedFallbackKeys": [
     "export",
     "exampleHint",
@@ -192,6 +192,13 @@
     "backendIncompatible": "Neusklađen s odabranim OpenCV",
     "engineScope": "Izabrana verzija izvršava podržane blokove obrade. Fotografija, prikaz i prijenos slike ostaju podijeljeni aplikacijom.",
     "api24Hint": "OpenCV 2.4.13.7 izvorne referencije . Knjižnice blokovi obavljaju domaće operacije; prilagođeni Python Koristite ograničeni cv24.run most.",
-    "additionalAlgorithms": "Dodatni algoritmi"
+    "additionalAlgorithms": "Dodatni algoritmi",
+    "anyLanguage": "Izvođenje jezika preko adaptera",
+    "languageId": "ID jezika (na primjer: rust, java, cpp)",
+    "useLanguage": "Koristite jezik",
+    "adapterReady": "Adapter za izvršenje je dostupan za ovaj jezik i motor.",
+    "draftOnly": "Ne postoji kompatibilni adapter za izvršenje. Možete napisati i sačuvati kod; ovaj blok prolazi kroz svoj ulaz sve dok se ne konfigurira adapter.",
+    "saveCodeDraft": "Sadrži kod kao nacrt",
+    "codeDraftSaved": "Kod zadržan u bloku bez izvršenja. Sačuvajte projekt kako biste ga držali na disku."
   }
 }

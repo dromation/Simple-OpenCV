@@ -232,7 +232,7 @@ function renderLibrary() {
     if (entry.kind) button.dataset.kind = entry.kind;
     button.disabled=!entryCompatible(entry);
     if(button.disabled)button.title=t("backendIncompatible");
-    button.append(el("b", (entry.type === "block" || entry.type === "function" ? "＋ " : "↗ ") + libraryLabel(entry)),el("small",entry.expression || (entry.note ? (entry.note==="legacyCode" ? sequenceText("ui.legacyCode") : t(entry.note)) : entry.kind === "custom" ? "Python · JavaScript" : `OpenCV / ${entry.kind}`)));
+    button.append(el("b", (entry.type === "block" || entry.type === "function" ? "＋ " : "↗ ") + libraryLabel(entry)),el("small",entry.expression || (entry.note ? (entry.note==="legacyCode" ? sequenceText("ui.legacyCode") : t(entry.note)) : entry.kind === "custom" ? t("anyLanguage") : `OpenCV / ${entry.kind}`)));
     button.onclick = () => activateEntry(entry);
     button.draggable = !button.disabled && ["block","function"].includes(entry.type);
     button.ondragstart = e => e.dataTransfer.setData("text/plain",JSON.stringify({entry:entry.id}));
@@ -286,6 +286,12 @@ function pendingCode() {
   return state?.nodes.some(n => n.kind === "custom" && codeDrafts.has(n.id+":"+(n.runtime || "python")) && codeDrafts.get(n.id+":"+(n.runtime || "python")) !== n.params.code);
 }
 function requireAppliedCode() { if (pendingCode()) throw Error(t("applyCode")); }
+function runtimeReady(id, kind) {
+  const adapter=catalog.runtimes[id];
+  return !!adapter?.available && (adapter.kinds==="*" || adapter.kinds.includes(kind)) &&
+    (!adapter.backends || adapter.backends.includes(state.backend.id));
+}
+$("addEmpty").onclick=()=>{running=false;add("custom");};
 
 function add(kind, index = state.nodes.length, overrides = {}) {
   if(!backendSupports(kind)){status(t("backendIncompatible"),true);return;}
@@ -510,21 +516,38 @@ function renderInspector() {
     const language=el("select");language.id="blockRuntime";
     const current=node.runtime || "python";
     for (const [id, adapter] of Object.entries(catalog.runtimes)) {
-      const compatible=adapter.available && (adapter.kinds==="*" || adapter.kinds.includes(node.kind));
+      const compatible=runtimeReady(id,node.kind);
       const option=new Option(adapter.name + (compatible ? "" : " · " + t(adapter.reason || "incompatible")),id);
-      option.disabled=!compatible;language.append(option);
+      option.disabled=node.kind!=="custom" && !compatible;language.append(option);
     }
+    if(!catalog.runtimes[current])language.append(new Option(current,current));
     language.value=current;
-    language.onchange=()=>{ running=false; return commit(()=>{
+    const changeLanguage=(next)=>{ running=false; return commit(()=>{
       if (node.kind==="custom") {
-        codeDrafts.set(node.id+":"+current,$("customCode")?.value ?? node.params.code);
-        node.params.code=codeDrafts.get(node.id+":"+language.value) || "";
+        node.codeDrafts ??= {};
+        node.codeDrafts[current]=$("customCode")?.value ?? node.params.code;
+        codeDrafts.set(node.id+":"+current,node.codeDrafts[current]);
+        node.params.code=codeDrafts.get(node.id+":"+next) ?? node.codeDrafts[next] ?? "";
+        if(!runtimeReady(next,"custom"))node.enabled=false;
       }
-      node.runtime=language.value;
+      node.runtime=next;
     },true,false); };
+    language.onchange=()=>changeLanguage(language.value);
     field(t("runtime"),language);
     $("parameters").append(el("small",t("runtimeHint")));
-    if(node.kind==="custom" && state.backend.id==="opencv24")$("parameters").append(el("p",sequenceText("ui.legacyCode"),"note"));
+    if(node.kind==="custom") {
+      const languageName=el("input");languageName.id="customLanguage";languageName.value=current;
+      languageName.maxLength=40;languageName.dir="ltr";languageName.placeholder="rust, julia, csharp, lua …";
+      field(t("languageId"),languageName);
+      const choose=el("button",t("useLanguage"));choose.id="setCustomLanguage";
+      choose.onclick=()=>{
+        const next=languageName.value.trim().toLowerCase();
+        if(!/^[a-z][a-z0-9_+.#-]{0,39}$/.test(next)){status(t("languageId"),true);return;}
+        changeLanguage(next);
+      };
+      $("parameters").append(choose,el("p",t(runtimeReady(current,"custom") ? "adapterReady" : "draftOnly"),"note"));
+    }
+    if(node.kind==="custom" && current==="python" && state.backend.id==="opencv24")$("parameters").append(el("p",sequenceText("ui.legacyCode"),"note"));
   }
   for (const [key, value] of Object.entries(node.params)) {
     if (key === "code") continue;
@@ -580,16 +603,26 @@ function renderInspector() {
     const editor=el("textarea");editor.id="customCode";editor.rows=12;editor.spellcheck=false;editor.dir="ltr";
     const draftKey=node.id+":"+(node.runtime || "python");
     editor.value=codeDrafts.get(draftKey) ?? node.params.code;
-    editor.placeholder=catalog.starters[node.runtime || "python"];
+    editor.placeholder=catalog.starters[node.runtime || "python"] || "";
     editor.oninput=()=>{codeDrafts.set(draftKey,editor.value);mark();};
     field(t("code"),editor);
     $("parameters").append(el("p",t("codeContract")),el("small",t("codeHint")));
     const apply=el("button",t("applyCode"),"primary");apply.id="applyCode";
+    apply.disabled=!runtimeReady(node.runtime || "python","custom");
     apply.onclick=async()=>{
       running=false;
-      try {await commit(()=>{node.params.code=editor.value;state.view.result=node.params.output;},true,false);await serial(()=>frame(true));} catch {}
+      try {await commit(()=>{node.params.code=editor.value;node.enabled=true;
+        (node.codeDrafts ??= {})[node.runtime || "python"]=editor.value;
+        state.view.result=node.params.output;},true,false);await serial(()=>frame(true));} catch {}
     };
-    $("parameters").append(apply);
+    const draft=el("button",t("saveCodeDraft"));draft.id="saveCodeDraft";
+    draft.onclick=async()=>{
+      running=false;
+      try {await commit(()=>{node.params.code=editor.value;node.enabled=false;
+        (node.codeDrafts ??= {})[node.runtime || "python"]=editor.value;},true,false);
+        status(t("codeDraftSaved"));} catch {}
+    };
+    $("parameters").append(draft,apply);
   }
   if (state.nodes.indexOf(node)>=2) {
     const name=el("input");name.id="blockName";name.value=blockLabel(node.kind);name.maxLength=100;field(t("blockName"),name);
@@ -604,6 +637,7 @@ function renderInspector() {
     const enabled = el("input");
     enabled.type = "checkbox";
     enabled.checked = node.enabled;
+    if(node.kind==="custom")enabled.disabled=!runtimeReady(node.runtime || "python","custom");
     enabled.onchange = () => commit(() => (node.enabled = enabled.checked));
     field(t("enabled"), enabled);
   }

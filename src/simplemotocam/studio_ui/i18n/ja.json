@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "a16dae2c267467310195588c26755d6ae848a4c657ef3e5c86c9205a2006864c",
+  "sourceDigest": "88a00e98518584b0decbf81ec5c2b549891c03326a5de324ef7b11c4a9a0dcb3",
   "protectedFallbackKeys": [
     "export",
     "signedMath",
@@ -198,6 +198,13 @@
     "backendIncompatible": "選択した OpenCVと互換性がない",
     "engineScope": "選択したバージョンは、サポートされた処理ブロックを実行します。 撮影、表示、画像転送はアプリケーションによって共有されます。",
     "api24Hint": "OpenCV 2.4.13.7 情報源参照 図書館ブロックは先住民の操作を実行します。 Python cv24.run ブリッジを使用します。",
-    "additionalAlgorithms": "追加アルゴリズム"
+    "additionalAlgorithms": "追加アルゴリズム",
+    "anyLanguage": "言語・アダプターによる実行",
+    "languageId": "言語ID(例えば、Rust、Java、CPP)",
+    "useLanguage": "言語使用",
+    "adapterReady": "この言語とエンジンのための実行アダプターが利用可能です。",
+    "draftOnly": "互換性のある実行アダプターが設置されていません。 コードを書き、保存することができます; このブロックはアダプターが設定されるまでその入力を通過します。",
+    "saveCodeDraft": "プロジェクトとしてコードを保持する",
+    "codeDraftSaved": "コードは実行なしにブロックに保管されます。 プロジェクトを保存してディスクに保存します。"
   }
 }

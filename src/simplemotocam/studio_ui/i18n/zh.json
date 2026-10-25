@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "a16dae2c267467310195588c26755d6ae848a4c657ef3e5c86c9205a2006864c",
+  "sourceDigest": "88a00e98518584b0decbf81ec5c2b549891c03326a5de324ef7b11c4a9a0dcb3",
   "protectedFallbackKeys": [
     "export",
     "exampleHint",
@@ -194,6 +194,13 @@
     "backendIncompatible": "不符合所选择的 OpenCV",
     "engineScope": "选择的版本执行支持的处理区块。 拍摄、显示和图像传输仍然由应用程序共享。",
     "api24Hint": "OpenCV 2.4.13.7 来源参考。 图书馆区块运行本地操作;自定义 Python 使用有限的 cv24.run 桥。",
-    "additionalAlgorithms": "附加算法"
+    "additionalAlgorithms": "附加算法",
+    "anyLanguage": "任何语言 · 通过适配器执行",
+    "languageId": "语言ID(例如:rust、java、cpp)",
+    "useLanguage": "使用语言",
+    "adapterReady": "对于这个语言和发动机,有一个执行适配器可用。",
+    "draftOnly": "没有安装兼容的执行适配器。 您可以编写和保存代码;此区块通过其输入,直到配置一个适配器。",
+    "saveCodeDraft": "保持代码作为草案",
+    "codeDraftSaved": "代码保留在区块中,没有执行。 保存项目,将其存放在磁盘上。"
   }
 }

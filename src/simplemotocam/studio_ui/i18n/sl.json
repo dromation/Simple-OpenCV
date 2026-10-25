@@ -172,6 +172,13 @@
     "backendIncompatible": "Ni združljivo z izbranim OpenCV",
     "engineScope": "Izbrana različica izvaja podprte bloke obdelave. Zajem, prikaz in prenos slik ostajajo skupni aplikaciji.",
     "api24Hint": "Izvorna referenca OpenCV 2.4.13.7. Knjižnični bloki izvajajo izvorne operacije; lastna koda Python uporablja omejeni most cv24.run.",
-    "additionalAlgorithms": "Dodatni algoritmi"
+    "additionalAlgorithms": "Dodatni algoritmi",
+    "anyLanguage": "Poljuben jezik · izvajanje prek adapterja",
+    "languageId": "Oznaka jezika (na primer: rust, java, cpp)",
+    "useLanguage": "Izberi jezik",
+    "adapterReady": "Za ta jezik in pogon je na voljo izvajalnik.",
+    "draftOnly": "Ustrezen izvajalnik ni nameščen. Kodo lahko napišeš in shraniš; do nastavitve izvajalnika blok nespremenjeno prepušča vhod.",
+    "saveCodeDraft": "Ohrani kodo kot osnutek",
+    "codeDraftSaved": "Koda je v bloku ohranjena brez izvajanja. Za shranjevanje na disk shrani projekt."
   }
 }

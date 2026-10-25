@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "a16dae2c267467310195588c26755d6ae848a4c657ef3e5c86c9205a2006864c",
+  "sourceDigest": "88a00e98518584b0decbf81ec5c2b549891c03326a5de324ef7b11c4a9a0dcb3",
   "protectedFallbackKeys": [
     "export",
     "exampleHint",
@@ -191,6 +191,13 @@
     "backendIncompatible": "Tidak kompatibel dengan yang dipilih OpenCV",
     "engineScope": "Versi yang dipilih menjalankan blok pemrosesan yang didukung. Pemotretan, paparan dan transfer gambar tetap dikongsi oleh aplikasi.",
     "api24Hint": "OpenCV 2.4.13.7 Referensi sumbernya Blok perpustakaan menjalankan operasi asli; custom Python Gunakan jembatan terbatas cv24.run.",
-    "additionalAlgorithms": "Algoritma tambahan"
+    "additionalAlgorithms": "Algoritma tambahan",
+    "anyLanguage": "Semua bahasa · eksekusi melalui adaptor",
+    "languageId": "ID bahasa (misalnya: rust, java, cpp)",
+    "useLanguage": "Menggunakan Bahasa",
+    "adapterReady": "Adaptor eksekutif tersedia untuk bahasa dan mesin ini.",
+    "draftOnly": "Tidak ada adaptor eksekutif yang kompatibel dipasang. Anda dapat menulis dan menyimpan kode; blok ini melewati inputnya sampai adaptor terkonfigurasi.",
+    "saveCodeDraft": "Menjaga kode sebagai rancangan",
+    "codeDraftSaved": "Kode yang disimpan di blok tanpa eksekusi. Simpan proyek untuk menyimpannya pada cakera."
   }
 }

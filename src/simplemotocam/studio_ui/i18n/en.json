@@ -172,6 +172,13 @@
     "backendIncompatible": "Incompatible with the selected OpenCV",
     "engineScope": "The selected version executes supported processing blocks. Capture, display and image transfer remain shared by the application.",
     "api24Hint": "OpenCV 2.4.13.7 source reference. Library blocks run native operations; custom Python uses the limited cv24.run bridge.",
-    "additionalAlgorithms": "Additional algorithms"
+    "additionalAlgorithms": "Additional algorithms",
+    "anyLanguage": "Any language · execution via adapter",
+    "languageId": "Language ID (for example: rust, java, cpp)",
+    "useLanguage": "Use language",
+    "adapterReady": "An execution adapter is available for this language and engine.",
+    "draftOnly": "No compatible execution adapter is installed. You can write and save code; this block passes its input through until an adapter is configured.",
+    "saveCodeDraft": "Keep code as draft",
+    "codeDraftSaved": "Code kept in the block without execution. Save the project to keep it on disk."
   }
 }

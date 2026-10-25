@@ -67,10 +67,12 @@ Export uses NumPy and OpenCV; graphs containing JavaScript blocks also require N
 
 - **28 block kinds:** channel mathematics, filters, morphology, Canny/Laplacian, automatic thresholds, component filtering, line detection and custom code.
 - **Search + category filter + complete dropdown:** browse executable blocks, five math functions, your adapted examples, saved recipes, 37 original source references and the installed OpenCV API.
-- **Your own code:** write a Python or JavaScript function in an empty block, adjust parameters and inspect its numerical output. Save the block together with its dependencies for reuse.
-- **Compatible language choices:** Python handles native OpenCV operations; JavaScript executes custom code and four compatible built-ins through Node.js. Disabled languages are not presented as working implementations. The backend exposes a versioned runtime registry for future adapters.
+- **Your own code:** add an empty block directly, select or type any language, and keep separate language drafts in the saved project. Python and JavaScript execute with their built-in adapters; other languages can be connected through the [external adapter contract](docs/CUSTOM_CODE_ADAPTERS.md).
+- **Compatible language choices:** Python handles native OpenCV operations; JavaScript executes custom code and four compatible built-ins through Node.js. Execution is enabled only when a compatible adapter is installed. Unavailable languages remain editable, saveable drafts that pass the input through.
 
 ![Custom Python block running in the same studio](docs/images/studio-custom-code.png)
+
+![Empty block with a saved Rust draft awaiting an execution adapter](docs/images/studio-empty-block.png)
 
 Imported custom code waits for explicit execution. Workers enforce a time limit and output-shape/finite-value checks, but run with your user permissions and are not security sandboxes. Only run code you trust. See [code examples, numerical contracts and adapter extension instructions](docs/STUDIO.md#write-and-run-a-custom-block).
 

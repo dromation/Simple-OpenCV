@@ -6,7 +6,8 @@
     "test:interface": "node verify_interface.cjs",
     "test:library": "node verify_library.cjs",
     "test:backends": "node verify_backends.cjs",
-    "test:sequences": "node verify_sequences.cjs"
+    "test:sequences": "node verify_sequences.cjs",
+    "test:empty-block": "node verify_empty_block.cjs"
   },
   "devDependencies": {
     "playwright": "1.62.1"
