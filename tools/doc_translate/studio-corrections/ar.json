@@ -120,6 +120,14 @@
     "engineCurrent": {
       "source": "Current OpenCV",
       "translation": "OpenCV الحالي"
+    },
+    "blockMathRuntime": {
+      "source": "This block runs as compiled code in the selected language.",
+      "translation": "تُنفَّذ هذه الكتلة كشيفرة مُترجَمة برمجيًا باللغة المختارة."
+    },
+    "blockVisionRuntime": {
+      "source": "The selected language uses an adapter to the shared OpenCV engine. The algorithm and OpenCV version stay the same.",
+      "translation": "تستخدم اللغة المختارة مُحوِّلًا للاتصال بمحرك OpenCV المشترك. تظل الخوارزمية وإصدار OpenCV كما هما."
     }
   }
 }

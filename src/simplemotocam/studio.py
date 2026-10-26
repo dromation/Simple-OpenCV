@@ -40,7 +40,7 @@ def export_python(state):
     source = (
         Path(studio_compiled.__file__).read_text(encoding="utf-8")
         + "\n"
-        + re.sub(r"from \.studio_compiled import [^\n]*# EXPORT_COMPILED", "",
+        + re.sub(r"from \.(?:studio_compiled|studio_backend) import [^\n]*# EXPORT_(?:COMPILED|VISION)", "",
                  Path(studio_runtime.__file__).read_text(encoding="utf-8"))
         + "\n"
         + re.sub(

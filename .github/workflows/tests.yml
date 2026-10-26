@@ -39,4 +39,4 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '11'
-      - run: python -m pytest tests_core/test_studio_backend.py tests_core/test_detection_sequences.py tests_core/test_compiled_blocks.py -q
+      - run: python -m pytest tests_core/test_studio_backend.py tests_core/test_detection_sequences.py tests_core/test_compiled_blocks.py tests_core/test_block_languages.py -q

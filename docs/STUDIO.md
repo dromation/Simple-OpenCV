@@ -85,6 +85,14 @@ Primary API references: [OpenCV thresholding](https://docs.opencv.org/4.x/d7/d4d
 
 ## Updating execution backends
 
+C, C++ and Java are available on all 25 editable block kinds when their
+toolchains are installed. Algebra, confidence, luminance, color distance and
+inversion compile to the selected language. The 19 OpenCV operations use a
+compiled process adapter to the selected shared engine, preserving its version
+and numerical behavior. This is not a direct C/Java binding for the full OpenCV
+API. The inspector explains which mode is active. Source, channel extraction
+and temporal differences stay shared. See [compiler setup and examples](COMPILED_BLOCKS.md).
+
 `studio_runtime.py` defines runtime contract version 1, capability metadata, availability checks, starter code and worker adapters. `/api/library` and bootstrap publish the installed capabilities. Project nodes store `runtime`; omitted means Python for backwards compatibility. Disabled custom blocks may retain arbitrary language drafts, while enabled blocks require a compatible installed runtime. Optional `codeDrafts` stores each language's source. The host reads external adapters from `SIMPLEMOTOCAM_RUNTIME_CONFIG`; commands are never taken from imported project data. Reload the page after updating the configuration.
 
 To extend a runtime, implement its availability probe and worker command/serialization, declare supported block kinds, validate code without executing it during import, and add numerical parity/timeout/export tests. Keep the finite float32 H × W contract. `export_python` embeds the complete runtime module and engine; avoid package-only dependencies or add explicit export support. The full Python application remains the orchestrator for mixed-language graphs.

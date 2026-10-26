@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "d23969d0fce1782b4e929971a9dada6aea4ba7203b5718e174bea4131c85f8e6",
+  "sourceDigest": "ed07b386caac8c10e57baffbd06f360517718e045b03762623e03eeec00a0aac",
   "protectedFallbackKeys": [
     "export",
     "exampleHint",
@@ -205,6 +205,8 @@
     "cCodeContract": "C11: void process(const SmContext *ctx, float *out). Lesen Sie die Kanäle mit sm_channel(ctx, \"R\"); Schreiben Sie alle ctx->rows * ctx->cols Werte. Parameter: ctx->input, ctx->gain, ctx->backend",
     "cppCodeContract": "C++17: void process(const SmContext& ctx, float *out). Lesen Sie die Kanäle mit sm_channel(&ctx, \"R\"); Schreiben Sie alle ctx.rows * ctx.cols Werte. Parameter: ctx.input, ctx.gain, ctx.backend",
     "javaCodeContract": "Java: public static float[] process(Map<String, float[]> channels, Params p). Rückkehr p.rows * p.cols Werte. Parameter: p.input, p.gain, p.backend Schreiben Sie Methoden hier; die Anwendung liefert die UserBlock-Klasse.",
-    "compiledHint": "Die erste Runde kompiliert Ihren Code (bis zu 30 Sekunden). Später benutzen die Frame den Bau wieder. Die Block-Zeitgrenze gilt für die Durchführung. Diese Adapter verarbeiten Flutkanäle; OpenCV Operationen bleiben separate Blöcke im ausgewählten Motor."
+    "compiledHint": "Die erste Runde kompiliert Ihren Code (bis zu 30 Sekunden). Später benutzen die Frame den Bau wieder. Die Block-Zeitgrenze gilt für die Durchführung. Diese Adapter verarbeiten Flutkanäle; OpenCV Operationen bleiben separate Blöcke im ausgewählten Motor.",
+    "blockMathRuntime": "Dieser Block funktioniert als zusammengeführte Code in der ausgewählten Sprache.",
+    "blockVisionRuntime": "Die ausgewählte Sprache verwendet einen Adapter zum geteilten OpenCV-Motor. Der Algorithmus und die OpenCV Version bleiben gleich."
   }
 }

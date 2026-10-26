@@ -186,6 +186,8 @@
     "cCodeContract": "C11: void process(const SmContext *ctx, float *out). Kanale bereš s sm_channel(ctx, \"R\"); zapiši vseh ctx->rows * ctx->cols vrednosti. Parametri: ctx->input, ctx->gain, ctx->backend.",
     "cppCodeContract": "C++17: void process(const SmContext& ctx, float *out). Kanale bereš s sm_channel(&ctx, \"R\"); zapiši vseh ctx.rows * ctx.cols vrednosti. Parametri: ctx.input, ctx.gain, ctx.backend.",
     "javaCodeContract": "Java: public static float[] process(Map<String, float[]> channels, Params p). Vrni p.rows * p.cols vrednosti. Parametri: p.input, p.gain, p.backend. Tukaj pišeš metode; aplikacija pripravi razred UserBlock.",
-    "compiledHint": "Prvi zagon prevede kodo (do 30 sekund). Naslednje sličice uporabijo že prevedeno različico. Časovna omejitev bloka velja za izvajanje. Adapterji obdelujejo kanale float; operacije OpenCV ostanejo ločeni bloki izbranega pogona."
+    "compiledHint": "Prvi zagon prevede kodo (do 30 sekund). Naslednje sličice uporabijo že prevedeno različico. Časovna omejitev bloka velja za izvajanje. Adapterji obdelujejo kanale float; operacije OpenCV ostanejo ločeni bloki izbranega pogona.",
+    "blockMathRuntime": "Ta blok se izvede kot prevedena koda izbranega jezika.",
+    "blockVisionRuntime": "Izbrani jezik uporablja adapter do skupnega pogona OpenCV. Algoritem in različica OpenCV ostaneta enaka."
   }
 }

@@ -23,7 +23,7 @@ const url=process.env.STUDIO_TEST_URL||"http://127.0.0.1:8766";
   await page.click("#closeCatalog");
   await page.selectOption("#librarySelect","block:canny");await settle();
   assert.equal(await page.locator('#blockRuntime option[value="javascript"]').evaluate(e=>e.disabled),true);
-  assert.equal(await page.locator('#blockRuntime option[value="cpp"]').evaluate(e=>e.disabled),true);
+  assert.equal(await page.locator('#blockRuntime option[value="cpp"]').evaluate(e=>e.disabled),!(await page.evaluate(()=>catalog.runtimes.cpp.available)));
   await page.fill("#search","");
   await page.selectOption("#libraryCategory","functionGroup");
   assert.equal(await page.locator("#library .library-card").count(),5);

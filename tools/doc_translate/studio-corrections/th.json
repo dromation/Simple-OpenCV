@@ -116,6 +116,14 @@
     "engineCurrent": {
       "source": "Current OpenCV",
       "translation": "OpenCV ปัจจุบัน"
+    },
+    "blockMathRuntime": {
+      "source": "This block runs as compiled code in the selected language.",
+      "translation": "บล็อกนี้ทำงานเป็นโค้ดที่คอมไพล์ด้วยภาษาโปรแกรมที่เลือก"
+    },
+    "blockVisionRuntime": {
+      "source": "The selected language uses an adapter to the shared OpenCV engine. The algorithm and OpenCV version stay the same.",
+      "translation": "ภาษาที่เลือกใช้อะแดปเตอร์เพื่อเชื่อมต่อกับเอนจิน OpenCV ที่ใช้ร่วมกัน อัลกอริทึมและเวอร์ชัน OpenCV ยังคงเดิม"
     }
   }
 }

@@ -1,4 +1,41 @@
-# Lastna koda C, C++ in Java
+# Bloki C, C++ in Java
+
+## Izbira jezika standardnega bloka
+
+Izberi kartico in v nastavitvah **Jezik izvajanja** izberi C, C++ ali Java.
+Izbira velja za posamezen blok, zato lahko sestaviš tudi mešano zaporedje:
+**algebra C → Gauss C++ → Sobel Java**. Na voljo je 25 vrst blokov, vključno
+z lastno kodo; zajem, razcep kanalov in časovna razlika ostanejo skupne stopnje.
+
+![Mešano zaporedje C, C++ in Java z glavnim pogonom OpenCV 2.4](images/studio-block-languages.png)
+
+| Vrsta bloka | Kaj se dejansko izvede |
+| --- | --- |
+| Algebra, zaupanje, luminanca, barvna razdalja, inverzija | Iz enačbe nastane koda C/C++/Java, ki se prevede in izračuna kanal. |
+| 19 filtrov in zaznav OpenCV | Preveden adapter izbranega jezika zažene skupni pogon OpenCV z istimi podatki in parametri. |
+| Prazen blok / lastna koda | Prevede in izvede tvojo funkcijo `process`. |
+
+Prevajalnik pripravi program, adapter prenese podatke, pogon OpenCV pa izvede
+operacije računalniškega vida. Glavni profil uporablja pravi C++ pogon
+**OpenCV 2.4.13.7**. Izbirni trenutni profil uporablja nameščeni `cv2` prek
+storitve Python. Izbira jezika ne spremeni različice OpenCV in ne pomeni
+neposrednih vezav C ali Java za celoten API OpenCV. Vmesnik prikazuje način
+izvajanja in uporabljeno različico.
+
+Prevedeni programi se ponovno uporabljajo; spreminjanje številskih parametrov
+matematičnega bloka ne zahteva novega prevajanja. Sprememba enačbe ga zahteva.
+Pogonski adapter se prevede enkrat na jezik in konfiguracijo prevajalnika.
+Vsaka sličica še vedno potrebuje procese in prenose podatkov, zato mešano
+izvajanje ni zagotovilo obdelave v realnem času. Pogonski klic ima omejitev
+10 sekund; prevajanje 30 sekund. Napake in prekoračitve ustavijo izračun.
+
+Shranjeno stanje ohrani jezike, enačbe, parametre in profil OpenCV. Izvoz je
+samostojen program Python, ki vsebuje iste adapterje in orkestrira izbrane
+jezike. Na ciljnem računalniku potrebuje ustrezne prevajalnike in pogon OpenCV.
+Preverjanja primerjajo vseh 19 filtrov z neposrednim klicem istega pogona,
+matematične izračune z referenco ter mešana zaporedja z njihovim izvozom.
+
+## Lastna funkcija
 
 1. Dodaj **Prazen blok · lastna koda** ali odpri **Napiši / uredi kodo** na kartici.
 2. Izberi **C**, **C++** ali **Java** in klikni **Vstavi začetno funkcijo**.

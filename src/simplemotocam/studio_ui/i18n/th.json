@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "d23969d0fce1782b4e929971a9dada6aea4ba7203b5718e174bea4131c85f8e6",
+  "sourceDigest": "ed07b386caac8c10e57baffbd06f360517718e045b03762623e03eeec00a0aac",
   "protectedFallbackKeys": [
     "export",
     "signedMath",
@@ -208,6 +208,8 @@
     "cCodeContract": "C11: void process(const SmContext *ctx, float *out). อ่านช่องด้วย sm_channel(ctx, \"R\"); เขียนค่า ctx->rows * ctx->cols ทั้งหมด พารามิเตอร์: ctx->input, ctx->gain, ctx->backend",
     "cppCodeContract": "C++17: void process(const SmContext& ctx, float *out). อ่านช่องด้วย sm_channel(&ctx, \"R\"); เขียนค่า ctx.rows * ctx.cols ทั้งหมด พารามิเตอร์: ctx.input, ctx.gain, ctx.backend",
     "javaCodeContract": "Java: public static float[] process(Map<String, float[]> channels, Params p). การคืนเงิน p.rows * p.cols หมายเลข พารามิเตอร์ p.input, p.gain, p.backend. เขียนวิธีการที่นี่; แอพลิเคชันให้ UserBlock หลักสูตร",
-    "compiledHint": "หลักสูตรแรกประกอบรหัสของคุณ (ถึง 30 วินาที) ภายหลังกรอบใช้ใหม่โครงสร้าง บล็อกเวลา จํากัด ใช้สําหรับการดําเนินการ อะแดปเตอร์เหล่านี้กระบวนการช่องคลอด OpenCV การดําเนินงานยังคงเป็นบล็อกที่แยกต่างหากในมอเตอร์ที่เลือก"
+    "compiledHint": "หลักสูตรแรกประกอบรหัสของคุณ (ถึง 30 วินาที) ภายหลังกรอบใช้ใหม่โครงสร้าง บล็อกเวลา จํากัด ใช้สําหรับการดําเนินการ อะแดปเตอร์เหล่านี้กระบวนการช่องคลอด OpenCV การดําเนินงานยังคงเป็นบล็อกที่แยกต่างหากในมอเตอร์ที่เลือก",
+    "blockMathRuntime": "บล็อกนี้ทํางานเป็นรหัสที่ประกอบในภาษาที่เลือก",
+    "blockVisionRuntime": "ภาษาที่เลือกใช้อะแดปเตอร์สําหรับมอเตอร์ OpenCV ที่แบ่งปัน อัลgorithm และ OpenCV รุ่นยังคงเหมือนกัน"
   }
 }

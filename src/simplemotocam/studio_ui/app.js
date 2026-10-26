@@ -563,6 +563,11 @@ function renderInspector() {
     language.onchange=()=>changeLanguage(language.value);
     field(t("runtime"),language);
     $("parameters").append(el("small",t("runtimeHint")));
+    if(node.kind!=="custom" && catalog.runtimes[current]?.execution) {
+      const mode=catalog.runtimes[current].execution;
+      $("parameters").append(el("p",t(mode.compiledMath.includes(node.kind) ? "blockMathRuntime" : "blockVisionRuntime"),"note"));
+      if(mode.sharedOpenCV.includes(node.kind))$("parameters").append(el("small",catalog.runtimes[current].name+" → OpenCV "+state.backend.version));
+    }
     if(node.kind==="custom") {
       const languageName=el("input");languageName.id="customLanguage";languageName.value=current;
       languageName.maxLength=40;languageName.dir="ltr";languageName.placeholder="rust, julia, csharp, lua …";

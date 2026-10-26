@@ -17,6 +17,7 @@ from .studio_runtime import (
     run_javascript_builtin,
     STARTERS,
     language_id,
+    run_language_block,
 )  # EXPORT_RUNTIME
 
 from .studio_backend import (
@@ -24,6 +25,7 @@ from .studio_backend import (
     CV24_NATIVE,
     CV24_INDEPENDENT,
     run_opencv24,
+    run_current,
     legacy_custom_context,
 )  # EXPORT_BACKEND
 
@@ -578,6 +580,8 @@ class StudioPipeline:
                 continue
             if not node["enabled"]:
                 output = values[p["input"]].copy()
+            elif kind != "custom" and node.get("runtime") in ("c", "cpp", "java"):
+                output = run_language_block(node["runtime"], kind, values, p, self.state["backend"]["id"])
             elif (
                 self.state["backend"]["id"] == "opencv24"
                 and kind in CV24_NATIVE
@@ -622,116 +626,7 @@ class StudioPipeline:
                     np.minimum(rgb, 1 - rgb).min(axis=2) / p["margin"], 0, 1
                 )
             else:
-                plane = values[p["input"]]
-                if kind == "gaussian":
-                    output = cv2.GaussianBlur(
-                        plane,
-                        (p["size"], p["size"]),
-                        p["sigma"],
-                        borderType=cv2.BORDER_REFLECT_101,
-                    )
-                elif kind == "median":
-                    output = cv2.medianBlur(plane, p["size"])
-                elif kind == "kernel":
-                    output = cv2.filter2D(
-                        plane,
-                        -1,
-                        np.asarray(p["kernel"], np.float32),
-                        borderType=cv2.BORDER_REFLECT_101,
-                    )
-                elif kind == "invert":
-                    output = 1 - plane
-                elif kind == "box":
-                    output = cv2.blur(plane, (p["size"], p["size"]))
-                elif kind == "bilateral":
-                    output = cv2.bilateralFilter(
-                        plane, p["size"], p["colorSigma"], p["sigma"]
-                    )
-                elif kind == "laplacian":
-                    output = cv2.Laplacian(plane, cv2.CV_32F, ksize=1)
-                elif kind in (
-                    "erode",
-                    "dilate",
-                    "opening",
-                    "closing",
-                    "morph_gradient",
-                ):
-                    operation = {
-                        "erode": cv2.MORPH_ERODE,
-                        "dilate": cv2.MORPH_DILATE,
-                        "opening": cv2.MORPH_OPEN,
-                        "closing": cv2.MORPH_CLOSE,
-                        "morph_gradient": cv2.MORPH_GRADIENT,
-                    }[kind]
-                    output = cv2.morphologyEx(
-                        plane,
-                        operation,
-                        np.ones((p["size"], p["size"]), np.uint8),
-                        iterations=p["iterations"],
-                    )
-                elif kind in ("canny", "otsu", "adaptive"):
-                    # Explicit 8-bit intensity contract, independent of display gain.
-                    byte = np.rint(np.clip(plane, 0, 1) * 255).astype(np.uint8)
-                    if kind == "canny":
-                        output = (
-                            cv2.Canny(byte, p["low"], p["high"], L2gradient=True)
-                            / 255.0
-                        )
-                    elif kind == "otsu":
-                        output = (
-                            cv2.threshold(
-                                byte, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU
-                            )[1]
-                            / 255.0
-                        )
-                    else:
-                        output = (
-                            cv2.adaptiveThreshold(
-                                byte,
-                                255,
-                                cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
-                                cv2.THRESH_BINARY,
-                                p["size"],
-                                p["offset"],
-                            )
-                            / 255.0
-                        )
-                elif kind == "components":
-                    count, labels, stats, centers = cv2.connectedComponentsWithStats(
-                        (plane > 0).astype(np.uint8), connectivity=8
-                    )
-                    keep = stats[:, cv2.CC_STAT_AREA] >= p["minArea"]
-                    keep[0] = False
-                    output = keep[labels].astype(np.float32)
-                elif kind == "hough":
-                    lines = cv2.HoughLinesP(
-                        (plane > 0).astype(np.uint8) * 255,
-                        1,
-                        np.pi / 180,
-                        p["votes"],
-                        minLineLength=p["minLength"],
-                        maxLineGap=p["maxGap"],
-                    )
-                    output = np.zeros(shape, np.float32)
-                    if lines is not None:
-                        for x1, y1, x2, y2 in lines[:, 0]:
-                            cv2.line(
-                                output, (int(x1), int(y1)), (int(x2), int(y2)), 1, 1
-                            )
-                elif kind == "threshold":
-                    output = (plane > p["threshold"]).astype(np.float32)
-                else:
-                    ksize = p.get("size", 3)
-                    if kind == "scharr":
-                        dx = cv2.Scharr(plane, cv2.CV_32F, 1, 0, scale=1 / 32)
-                        dy = cv2.Scharr(plane, cv2.CV_32F, 0, 1, scale=1 / 32)
-                    else:
-                        # Normalise each Sobel derivative to response 1 on a unit ramp.
-                        kx, ky = cv2.getDerivKernels(1, 0, ksize, normalize=True)
-                        dx = cv2.sepFilter2D(plane, -1, kx, ky)
-                        kx, ky = cv2.getDerivKernels(0, 1, ksize, normalize=True)
-                        dy = cv2.sepFilter2D(plane, -1, kx, ky)
-                    output = np.hypot(dx, dy)
+                output = run_current(kind, values[p["input"]], p)
             output = np.asarray(output, dtype=np.float32)
             if output.ndim == 0:
                 output = np.full(shape, output, np.float32)

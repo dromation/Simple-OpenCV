@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "d23969d0fce1782b4e929971a9dada6aea4ba7203b5718e174bea4131c85f8e6",
+  "sourceDigest": "ed07b386caac8c10e57baffbd06f360517718e045b03762623e03eeec00a0aac",
   "protectedFallbackKeys": [
     "export",
     "exampleHint",
@@ -205,6 +205,8 @@
     "cCodeContract": "C11: void process(const SmContext *ctx, float *out). Прочитајте канале са sm_channel(ctx, \"R\"); упишите све вредности ctx->rows * ctx->cols. Параметри: ctx->input, ctx->gain, ctx->backend",
     "cppCodeContract": "C++17: void process(const SmContext& ctx, float *out). Прочитајте канале са sm_channel(&ctx, \"R\"); упишите све вредности ctx.rows * ctx.cols. Параметри: ctx.input, ctx.gain, ctx.backend",
     "javaCodeContract": "Java: public static float[] process(Map<String, float[]> channels, Params p). Повратак p.rows * p.cols вредности. Параметри: p.input, p.gain, p.backend Напишите методе овде; апликација испоручује класу UserBlock.",
-    "compiledHint": "Први покрет сакупља ваш код (до 30 секунди). Касније оквири поново користе изградњу. Временски ограничење блока се примењује на извршење. Ови адаптери обрађују плутајуће канале; OpenCV операције остају одвојени блокови у изабраном мотору."
+    "compiledHint": "Први покрет сакупља ваш код (до 30 секунди). Касније оквири поново користе изградњу. Временски ограничење блока се примењује на извршење. Ови адаптери обрађују плутајуће канале; OpenCV операције остају одвојени блокови у изабраном мотору.",
+    "blockMathRuntime": "Овај блок ради као компилисани код на изабраном језику.",
+    "blockVisionRuntime": "Изабрани језик користи адаптер за заједнички OpenCV мотор. Алгоритм и верзија OpenCV остају исти."
   }
 }

@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "d23969d0fce1782b4e929971a9dada6aea4ba7203b5718e174bea4131c85f8e6",
+  "sourceDigest": "ed07b386caac8c10e57baffbd06f360517718e045b03762623e03eeec00a0aac",
   "protectedFallbackKeys": [
     "export",
     "import",
@@ -203,6 +203,8 @@
     "cCodeContract": "C11: void process(const SmContext *ctx, float *out). Leggi i canali con sm_channel(ctx, \"R\"); scrivi tutti i valori ctx->rows * ctx->cols. Parametri: ctx->input, ctx->gain, ctx->backend.",
     "cppCodeContract": "C++17: void process(const SmContext& ctx, float *out). Leggi i canali con sm_channel(&ctx, \"R\"); scrivi tutti i valori ctx.rows * ctx.cols. Parametri: ctx.input, ctx.gain, ctx.backend.",
     "javaCodeContract": "Java: public static float[] process(Map<String, float[]> channels, Params p). Ritorno dei valori p.rows * p.cols. Parametri: p.input, p.gain, p.backend. Scrivi i metodi qui; l'applicazione fornisce la classe UserBlock.",
-    "compiledHint": "Il primo run compila il tuo codice (fino a 30 secondi). Più tardi i quadri riutilizzano la costruzione. Il limite di tempo del blocco si applica all'esecuzione. Questi adattatori elaborano canali fluttuanti; le operazioni OpenCV rimangono blocchi separati nel motore selezionato."
+    "compiledHint": "Il primo run compila il tuo codice (fino a 30 secondi). Più tardi i quadri riutilizzano la costruzione. Il limite di tempo del blocco si applica all'esecuzione. Questi adattatori elaborano canali fluttuanti; le operazioni OpenCV rimangono blocchi separati nel motore selezionato.",
+    "blockMathRuntime": "Questo blocco funziona come codice compilato nella lingua selezionata.",
+    "blockVisionRuntime": "Il linguaggio selezionato utilizza un adattatore al motore condiviso OpenCV. L'algoritmo e la versione OpenCV rimangono le stesse."
   }
 }

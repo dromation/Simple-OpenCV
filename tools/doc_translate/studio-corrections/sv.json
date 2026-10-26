@@ -116,6 +116,14 @@
     "engineCurrent": {
       "source": "Current OpenCV",
       "translation": "Aktuell OpenCV"
+    },
+    "blockMathRuntime": {
+      "source": "This block runs as compiled code in the selected language.",
+      "translation": "Det här blocket körs som kompilerad kod i det valda programmeringsspråket."
+    },
+    "blockVisionRuntime": {
+      "source": "The selected language uses an adapter to the shared OpenCV engine. The algorithm and OpenCV version stay the same.",
+      "translation": "Det valda språket använder en adapter till den gemensamma OpenCV-motorn. Algoritmen och OpenCV-versionen förblir oförändrade."
     }
   }
 }

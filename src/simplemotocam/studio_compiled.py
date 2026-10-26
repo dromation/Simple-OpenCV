@@ -1,10 +1,13 @@
-"""Local C/C++/Java custom-block adapters; no implicit OpenCV linkage.
+"""Local C/C++/Java math/custom workers and explicit shared-engine adapters.
 
 Compilation occurs only on explicit execution. A bounded process-local cache
 keeps successful builds; data/parameters travel separately for every frame.
 """
 import functools
+import ast
 import os
+import signal
+import json
 from pathlib import Path
 import shutil
 import struct
@@ -13,6 +16,9 @@ import tempfile
 import threading
 
 import numpy as np
+
+MATH_BLOCKS = {"algebra", "confidence", "luminance", "color_distance", "invert"}
+MATH_PARAMETERS = ("wR", "wG", "wB", "margin", "red", "green", "blue", "threshold")
 
 COMPILED_STARTERS = {
     "c": '''void process(const SmContext *ctx, float *out) {
@@ -108,6 +114,7 @@ C_HEADER = r'''
 typedef struct {
     int rows, cols, count;
     double gain;
+    double parameters[8];
     const char *input;
     const char *backend;
     char (*names)[32];
@@ -127,10 +134,11 @@ int main(int argc, char **argv) {
     FILE *f=fopen(argv[1],"rb");
     if (!f) return 2;
     uint32_t h[6]; SmContext ctx;
-    if (fread(h,4,6,f)!=6 || h[0]!=0x534d4331 || !h[1] || !h[2] || h[3]>64 || h[4]>=h[3]) return 2;
+    if (fread(h,4,6,f)!=6 || h[0]!=0x534d4332 || !h[1] || !h[2] || h[3]>64 || h[4]>=h[3]) return 2;
     ctx.rows=(int)h[1]; ctx.cols=(int)h[2]; ctx.count=(int)h[3];
     ctx.backend=h[5] ? "opencv24" : "current";
     if (fread(&ctx.gain,8,1,f)!=1) return 2;
+    if (fread(ctx.parameters,8,8,f)!=8) return 2;
     size_t size=(size_t)ctx.rows * ctx.cols;
     ctx.names=(char (*)[32])calloc(h[3],32);
     ctx.planes=(float**)calloc(h[3],sizeof(float*));
@@ -162,17 +170,20 @@ public class UserBlock {
         public final int rows, cols;
         public final String input, backend;
         public final double gain;
-        Params(int rows,int cols,String input,double gain,String backend) {
+        public final double[] parameters;
+        Params(int rows,int cols,String input,double gain,String backend,double[] parameters) {
             this.rows=rows;this.cols=cols;this.input=input;this.gain=gain;this.backend=backend;
+            this.parameters=parameters;
         }
     }
 '''
 JAVA_MAIN = r'''
     public static void main(String[] args) throws Exception {
         ByteBuffer b=ByteBuffer.wrap(Files.readAllBytes(Paths.get(args[0]))).order(ByteOrder.LITTLE_ENDIAN);
-        if(b.getInt()!=0x534d4331) throw new IllegalArgumentException("Invalid channel packet");
+        if(b.getInt()!=0x534d4332) throw new IllegalArgumentException("Invalid channel packet");
         int rows=b.getInt(),cols=b.getInt(),count=b.getInt(),input=b.getInt(),backend=b.getInt();
         double gain=b.getDouble();
+        double[] parameters=new double[8];for(int j=0;j<8;j++)parameters[j]=b.getDouble();
         Map<String,float[]> channels=new LinkedHashMap<>();
         String selected=null;
         for(int c=0;c<count;c++) {
@@ -182,7 +193,7 @@ JAVA_MAIN = r'''
             float[] values=new float[rows*cols];for(int i=0;i<values.length;i++)values[i]=b.getFloat();
             channels.put(key,values);
         }
-        float[] out=process(channels,new Params(rows,cols,selected,gain,backend!=0?"opencv24":"current"));
+        float[] out=process(channels,new Params(rows,cols,selected,gain,backend!=0?"opencv24":"current",parameters));
         if(out==null || out.length!=rows*cols)throw new IllegalArgumentException("Return H * W values with the input shape");
         ByteBuffer result=ByteBuffer.allocate(out.length*4).order(ByteOrder.LITTLE_ENDIAN);
         for(float v:out)result.putFloat(v);
@@ -251,8 +262,9 @@ def run_compiled(language, code, values, params, timeout, backend):
         root = Path(folder)
         packet, output, errors = root / "input.bin", root / "out.bin", root / "error.txt"
         with packet.open("wb") as handle:
-            handle.write(struct.pack("<6Id", 0x534d4331, *shape, len(names), names.index(params["input"]),
+            handle.write(struct.pack("<6Id", 0x534d4332, *shape, len(names), names.index(params["input"]),
                                      int(backend == "opencv24"), params["gain"]))
+            handle.write(struct.pack("<8d", *(params.get(key, 0) for key in MATH_PARAMETERS)))
             for name, plane in values.items():
                 handle.write(name.encode("ascii").ljust(32, b"\0"))
                 handle.write(np.asarray(plane, dtype="<f4").tobytes())
@@ -274,3 +286,202 @@ def run_compiled(language, code, values, params, timeout, backend):
         if not np.isfinite(plane).all():
             raise ValueError("Custom block returned nonfinite or unwritten values")
         return plane
+
+
+def math_block_source(language, kind, params):
+    """Generate only validated expression syntax, never inject raw user text."""
+    formulas = {
+        "luminance": "0.299*R + 0.587*G + 0.114*B",
+        "color_distance": "sqrt((R-_red)**2 + (G-_green)**2 + (B-_blue)**2)/sqrt(3)",
+        "confidence": "clip(minimum(minimum(minimum(R,1-R),minimum(G,1-G)),minimum(B,1-B))/_margin,0,1)",
+        "invert": "1-_input",
+    }
+    expression = params["expression"] if kind == "algebra" else formulas[kind]
+    tree = ast.parse(expression, mode="eval")
+    channels = {}
+    access = "p.parameters" if language == "java" else ("ctx->parameters" if language == "c" else "ctx.parameters")
+    functions = {"abs": "fabsf", "sqrt": "sqrtf", "minimum": "sm_min", "maximum": "sm_max"}
+    java_functions = {"abs": "Math.abs", "sqrt": "Math.sqrt", "minimum": "Math.min", "maximum": "Math.max"}
+
+    def emit(node):
+        if isinstance(node, ast.Expression):
+            return emit(node.body)
+        if isinstance(node, ast.Constant) and isinstance(node.value, (int, float)) and np.isfinite(node.value):
+            return "((float)" + repr(float(node.value)) + ")"
+        if isinstance(node, ast.Name):
+            parameter = node.id if node.id in ("wR", "wG", "wB") else node.id.removeprefix("_") if node.id.startswith("_") else None
+            if parameter in MATH_PARAMETERS:
+                return f"((float){access}[{MATH_PARAMETERS.index(parameter)}])"
+            if not node.id.isascii() or not node.id.replace("_", "").isalnum():
+                raise ValueError("Invalid compiled channel name")
+            if node.id not in channels:
+                channels[node.id] = "ch" + str(len(channels))
+            return channels[node.id] + "[i]"
+        if isinstance(node, ast.UnaryOp) and isinstance(node.op, (ast.UAdd, ast.USub)):
+            return "(" + ("-" if isinstance(node.op, ast.USub) else "+") + emit(node.operand) + ")"
+        if isinstance(node, ast.BinOp):
+            left, right = emit(node.left), emit(node.right)
+            if isinstance(node.op, ast.Pow):
+                return "((float)Math.pow(" + left + "," + right + "))" if language == "java" else "powf(" + left + "," + right + ")"
+            symbols = {ast.Add: "+", ast.Sub: "-", ast.Mult: "*", ast.Div: "/"}
+            if type(node.op) in symbols:
+                return "(" + left + symbols[type(node.op)] + right + ")"
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and not node.keywords:
+            name = node.func.id
+            args = [emit(arg) for arg in node.args]
+            mapping = java_functions if language == "java" else functions
+            if name == "clip" and len(args) == 3:
+                return f'{mapping["minimum"]}({mapping["maximum"]}({args[0]},{args[1]}),{args[2]})'
+            if name in mapping and len(args) == (2 if name in ("minimum", "maximum") else 1):
+                return "((float)" + mapping[name] + "(" + ",".join(args) + "))"
+        raise ValueError("Unsupported compiled mathematical expression")
+
+    body = emit(tree)
+    if language == "java":
+        bindings = "\n".join(f'float[] {variable}=channels.get(' + ("p.input" if name == "_input" else json.dumps(name)) + ");" for name, variable in channels.items())
+        return "public static float[] process(Map<String,float[]> channels,Params p){\n" + bindings + "\nfloat[] out=new float[p.rows*p.cols];for(int i=0;i<out.length;i++)out[i]=" + body + ";return out;}"
+    pointer = "ctx" if language == "c" else "&ctx"
+    member = "ctx->" if language == "c" else "ctx."
+    bindings = "\n".join(f'const float* {variable}=sm_channel({pointer},' + (member + "input" if name == "_input" else json.dumps(name)) + ");" for name, variable in channels.items())
+    helper = "static float sm_min(float a,float b){return (isnan(a)||isnan(b))?NAN:fminf(a,b);}\nstatic float sm_max(float a,float b){return (isnan(a)||isnan(b))?NAN:fmaxf(a,b);}\n"
+    signature = "const SmContext *ctx" if language == "c" else "const SmContext& ctx"
+    return helper + "void process(" + signature + ",float*out){\n" + bindings + "\nfor(int i=0;i<" + member + "rows*" + member + "cols;i++)out[i]=" + body + ";}"
+
+
+def run_math_block(language, kind, values, params, backend):
+    return run_compiled(language, math_block_source(language, kind, params), values,
+                        {"input": "R", "gain": 1.0, **params}, 10, backend)
+
+
+ENGINE_C_BRIDGE = r'''
+#include <stdio.h>
+#ifdef _WIN32
+#include <process.h>
+#include <stdlib.h>
+#include <string.h>
+/* _spawnv concatenates arguments. Quote each using the Windows CRT rules. */
+static char *quote_argument(const char *arg){
+    char *result=(char*)malloc(2*strlen(arg)+3), *out=result;
+    size_t slashes=0;
+    if(!result)return NULL;
+    *out++='"';
+    for(;;++arg){
+        if(*arg=='\\'){++slashes;continue;}
+        if(*arg=='"' || !*arg){
+            for(size_t i=0;i<2*slashes;++i)*out++='\\';
+            if(*arg=='"')*out++='\\';
+        }else{
+            for(size_t i=0;i<slashes;++i)*out++='\\';
+        }
+        slashes=0;
+        if(!*arg)break;
+        *out++=*arg;
+    }
+    *out++='"';*out=0;return result;
+}
+#else
+#include <unistd.h>
+#endif
+int main(int argc,char**argv){
+    if(argc<2)return 2;
+#ifdef _WIN32
+    char **quoted=(char**)calloc((size_t)argc,sizeof(char*));
+    if(!quoted)return 2;
+    for(int i=1;i<argc;++i){quoted[i-1]=quote_argument(argv[i]);if(!quoted[i-1])return 2;}
+    intptr_t code=_spawnv(_P_WAIT,argv[1],(const char*const*)quoted);
+    for(int i=0;i<argc-1;++i)free(quoted[i]);free(quoted);
+    if(code==-1){perror("OpenCV engine launch");return 2;}
+    return (int)code;
+#else
+    execv(argv[1],argv+1);perror("OpenCV engine launch");return 2;
+#endif
+}
+'''
+ENGINE_JAVA_BRIDGE = r'''
+public class EngineBridge {
+    private static String quoteArgument(String arg) {
+        StringBuilder out=new StringBuilder("\"");int slashes=0;
+        for(int i=0;i<=arg.length();i++){
+            char c=i==arg.length()?'\0':arg.charAt(i);
+            if(c=='\\'){slashes++;continue;}
+            int count=(c=='\"'||c=='\0')?2*slashes:slashes;
+            for(int j=0;j<count;j++)out.append('\\');
+            slashes=0;
+            if(c=='\0')break;
+            if(c=='\"')out.append('\\');
+            out.append(c);
+        }
+        return out.append('\"').toString();
+    }
+    public static void main(String[] args) throws Exception {
+        if(args.length==0)throw new IllegalArgumentException("Missing engine command");
+        if(System.getProperty("os.name").startsWith("Windows"))
+            for(int i=1;i<args.length;i++)args[i]=quoteArgument(args[i]);
+        Process child=new ProcessBuilder(args).inheritIO().start();
+        System.exit(child.waitFor());
+    }
+}
+'''
+
+
+@functools.lru_cache(maxsize=6)
+def compile_engine_bridge(language, compiler, runner):
+    """Language-owned process adapter to the selected, unchanged OpenCV engine."""
+    temporary = tempfile.TemporaryDirectory(prefix="simplemotocam-engine-bridge-")
+    root = Path(temporary.name)
+    toolchain = compiled_toolchain(language)
+    if not toolchain or toolchain[:2] != (compiler, runner):
+        raise ValueError("Compiler configuration changed")
+    if language == "java":
+        source = root / "EngineBridge.java"
+        source.write_text(ENGINE_JAVA_BRIDGE, encoding="utf-8")
+        command = [compiler, "-encoding", "UTF-8", "-d", str(root), str(source)]
+        execute = [runner, "-Xmx128m", "-cp", str(root), "EngineBridge"]
+    else:
+        source = root / ("engine.c" if language == "c" else "engine.cpp")
+        source.write_text(ENGINE_C_BRIDGE, encoding="utf-8")
+        binary = root / ("engine.exe" if os.name == "nt" else "engine")
+        if Path(compiler).stem.lower() == "cl":
+            command = [compiler, "/nologo", "/O2", "/utf-8", "/TC" if language == "c" else "/TP",
+                       str(source), "/Fe:" + str(binary), "/Fo:" + str(root / "engine.obj")]
+        else:
+            command = [compiler, str(source), "-O2", "-o", str(binary)]
+        execute = [str(binary)]
+    try:
+        result = subprocess.run(command, cwd=root, env=toolchain[2], capture_output=True, timeout=30,
+                                creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
+    except subprocess.TimeoutExpired as exc:
+        raise ValueError("Engine adapter compilation exceeded 30 seconds") from exc
+    if result.returncode:
+        raise ValueError("Engine adapter compilation: " + (result.stdout + result.stderr).decode("utf-8", errors="replace")[-4000:])
+    return CompiledBlock(temporary, execute)
+
+
+def run_engine_bridge(language, command, root, timeout):
+    toolchain = compiled_toolchain(language)
+    if not toolchain:
+        raise ValueError("Compiler/JDK unavailable: " + language)
+    with _compile_lock:
+        program = compile_engine_bridge(language, *toolchain[:2])
+    errors = root / "bridge-error.txt"
+    with errors.open("wb") as log:
+        process = subprocess.Popen([*program.command, *command], cwd=root,
+            stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=log,
+            creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0), start_new_session=os.name != "nt")
+        try:
+            code = process.wait(timeout=timeout)
+        except subprocess.TimeoutExpired as exc:
+            if os.name == "nt":
+                subprocess.run(["taskkill", "/T", "/F", "/PID", str(process.pid)],
+                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=5,
+                    creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
+            else:
+                os.killpg(process.pid, signal.SIGKILL)
+            process.kill(); process.wait()
+            raise ValueError(f"{language} OpenCV adapter exceeded {timeout:g} s") from exc
+    if code and not (root / "error.txt").exists():
+        with errors.open("rb") as handle:
+            handle.seek(max(0, errors.stat().st_size - 3000))
+            detail = handle.read(3000).decode("utf-8", errors="replace")
+        raise ValueError(language + " OpenCV adapter: " + (detail or str(code)))
+    return subprocess.CompletedProcess(command, code)

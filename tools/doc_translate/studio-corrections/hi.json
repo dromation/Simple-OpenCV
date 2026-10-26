@@ -116,6 +116,14 @@
     "engineCurrent": {
       "source": "Current OpenCV",
       "translation": "वर्तमान OpenCV"
+    },
+    "blockMathRuntime": {
+      "source": "This block runs as compiled code in the selected language.",
+      "translation": "यह ब्लॉक चुनी गई प्रोग्रामिंग भाषा में संकलित कोड के रूप में चलता है।"
+    },
+    "blockVisionRuntime": {
+      "source": "The selected language uses an adapter to the shared OpenCV engine. The algorithm and OpenCV version stay the same.",
+      "translation": "चुनी गई भाषा साझा OpenCV इंजन से जुड़ने के लिए एक एडेप्टर का उपयोग करती है। एल्गोरिदम और OpenCV का संस्करण नहीं बदलते।"
     }
   }
 }

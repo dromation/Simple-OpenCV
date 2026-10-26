@@ -53,6 +53,17 @@ def process(channels, params):
 
 `cv24.__version__` is `2.4.13.7`. Normal `import cv2` resolves to this limited bridge in that worker, so an unsupported call raises a clear error rather than using OpenCV 4. This is not a complete legacy `cv2` module. Use `cv24.run("components", mask, minArea=100)` for eight-connected area filtering. Existing Python code written against the full modern `cv2` API may need adapting when switching profiles. Imported custom code still waits for explicit Apply/Run; code has local-user permissions and is not a security sandbox. The timeout covers the complete custom operation including nested native work. These custom blocks and their selected engine survive state saving and Python export.
 
+## C, C++ and Java block adapters
+
+The block language selector supports all 25 editable kinds through C, C++ and
+Java toolchains. Five mathematical blocks generate and execute compiled code.
+The 19 OpenCV operations use compiled process adapters to the selected engine:
+the C++ 2.4 worker for the primary profile, or a Python service sharing the
+host's exact `run_current` implementation for the current profile. This does
+not provide direct C/Java OpenCV bindings. Source, channel extraction and frame
+differencing remain shared host stages. Mixed-language state and Python exports
+preserve the selected profile; see [execution details](COMPILED_BLOCKS.md).
+
 ## Learning detection pipelines
 
 The in-app classroom now includes six source-referenced, runnable [detection sequences](DETECTION_SEQUENCES.md), with five original synthetic test scenes. Loading one selects OpenCV 2.4 explicitly and asks before replacing unsaved work. Individual intermediate channels remain inspectable in the normal studio.

@@ -124,6 +124,14 @@
     "engineCurrent": {
       "source": "Current OpenCV",
       "translation": "当前 OpenCV"
+    },
+    "blockMathRuntime": {
+      "source": "This block runs as compiled code in the selected language.",
+      "translation": "此模块运行用所选编程语言编译的代码。"
+    },
+    "blockVisionRuntime": {
+      "source": "The selected language uses an adapter to the shared OpenCV engine. The algorithm and OpenCV version stay the same.",
+      "translation": "所选语言通过适配器使用共用的 OpenCV 引擎。算法和 OpenCV 版本保持不变。"
     }
   }
 }

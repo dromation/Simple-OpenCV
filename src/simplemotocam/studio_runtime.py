@@ -13,7 +13,8 @@ import sys
 import tempfile
 from pathlib import Path
 import numpy as np
-from .studio_compiled import COMPILED_STARTERS, compiled_toolchain, run_compiled  # EXPORT_COMPILED
+from .studio_compiled import COMPILED_STARTERS, MATH_BLOCKS, compiled_toolchain, run_compiled, run_math_block, run_engine_bridge  # EXPORT_COMPILED
+from .studio_backend import CV24_NATIVE, run_opencv24, run_current_worker  # EXPORT_VISION
 
 RUNTIME_API = 1
 RUNTIME_REGISTRY = {
@@ -22,9 +23,9 @@ RUNTIME_REGISTRY = {
         "name": "JavaScript · Node.js",
         "kinds": ["custom", "invert", "luminance", "threshold", "color_distance"],
     },
-    "cpp": {"name": "C++ · C++17", "kinds": ["custom"], "reason": "compilerMissing"},
-    "java": {"name": "Java · JDK", "kinds": ["custom"], "reason": "compilerMissing"},
-    "c": {"name": "C · C11", "kinds": ["custom"], "reason": "compilerMissing"},
+    "cpp": {"name": "C++ · C++17", "kinds": sorted({"custom"} | MATH_BLOCKS | CV24_NATIVE), "reason": "compilerMissing"},
+    "java": {"name": "Java · JDK", "kinds": sorted({"custom"} | MATH_BLOCKS | CV24_NATIVE), "reason": "compilerMissing"},
+    "c": {"name": "C · C11", "kinds": sorted({"custom"} | MATH_BLOCKS | CV24_NATIVE), "reason": "compilerMissing"},
 }
 STARTERS = {
     **COMPILED_STARTERS,
@@ -80,6 +81,8 @@ def runtime_catalog():
         }
         for key, item in RUNTIME_REGISTRY.items()
     }
+    for key in COMPILED_STARTERS:
+        entries[key]["execution"] = {"compiledMath": sorted(MATH_BLOCKS), "sharedOpenCV": sorted(CV24_NATIVE)}
     for key, item in external_adapters().items():
         entries[key] = {k: v for k, v in item.items() if k not in ("command", "extension")}
     return entries
@@ -95,6 +98,16 @@ def check_runtime(language, kind, backend=None):
         or (backend and backend not in entry.get("backends", ["opencv24", "current"]))
     ):
         raise ValueError(f"{language}: no compatible installed adapter for {kind}")
+
+
+def run_language_block(language, kind, values, params, backend):
+    check_runtime(language, kind, backend)
+    if kind in MATH_BLOCKS:
+        return run_math_block(language, kind, values, params, backend)
+    launcher = lambda command, root, timeout: run_engine_bridge(language, command, root, timeout)
+    if backend == "opencv24":
+        return run_opencv24(kind, values[params["input"]], params, launcher)
+    return run_current_worker(kind, values[params["input"]], params, launcher)
 
 
 PYTHON_WORKER = r"""import json, sys
