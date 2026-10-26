@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "88a00e98518584b0decbf81ec5c2b549891c03326a5de324ef7b11c4a9a0dcb3",
+  "sourceDigest": "13f31fc903905daee75b08f421b894735df968250a88ef6695f21e87fb741428",
   "protectedFallbackKeys": [
     "export",
     "signedMath",
@@ -205,6 +205,8 @@
     "adapterReady": "この言語とエンジンのための実行アダプターが利用可能です。",
     "draftOnly": "互換性のある実行アダプターが設置されていません。 コードを書き、保存することができます; このブロックはアダプターが設定されるまでその入力を通過します。",
     "saveCodeDraft": "プロジェクトとしてコードを保持する",
-    "codeDraftSaved": "コードは実行なしにブロックに保管されます。 プロジェクトを保存してディスクに保存します。"
+    "codeDraftSaved": "コードは実行なしにブロックに保管されます。 プロジェクトを保存してディスクに保存します。",
+    "editCode": "編集コード/編集コード",
+    "insertStarter": "スタート機能入力"
   }
 }

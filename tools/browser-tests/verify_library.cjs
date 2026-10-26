@@ -31,6 +31,7 @@ const url=process.env.STUDIO_TEST_URL||"http://127.0.0.1:8766";
   assert.equal(await page.locator('[data-parameter="expression"]').inputValue(),"maximum(R,G)");
   await page.selectOption("#libraryCategory","customGroup");
   await page.selectOption("#librarySelect","block:custom");await settle();
+  await page.click("#closeCodeEditor");
   assert.equal(await page.locator("#customCode").inputValue(),"");
   const python='def process(channels, params):\n    return (channels["R"] - channels["G"]) * params["gain"]';
   await page.fill("#customCode",python);await apply();await settle();

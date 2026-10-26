@@ -36,6 +36,7 @@ const url=process.env.STUDIO_TEST_URL||'http://127.0.0.1:8766';
   await page.selectOption('#librarySelect','block:custom');await page.evaluate(async()=>{await queue;});
   await page.fill('#customCode','def process(c,p):\n    return cv24.run("gaussian", c["R"]-c["G"], size=3, sigma=1)');
   await page.click('#applyCode');await page.evaluate(async()=>{await queue;});assert.equal(await page.locator('body.error').count(),0);
+  await page.click('#closeCodeEditor');
   await page.click('#guide');await frame.locator('[data-sequence="lines"]').click();
   for(const lang of ['en','sl','ja','ar']){
    await frame.locator('#locale').selectOption(lang);await page.evaluate(async()=>{await queue;});

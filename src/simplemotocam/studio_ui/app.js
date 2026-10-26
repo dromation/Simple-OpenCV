@@ -70,6 +70,10 @@ function el(tag, text, cls) {
 function status(text, error = false) {
   $("status").textContent = text;
   document.body.classList.toggle("error", error);
+  if($("codeEditor").open) {
+    $("codeEditorStatus").textContent=text;
+    $("codeEditorStatus").classList.toggle("code-error",error);
+  }
 }
 async function api(path, data, raw = false) {
   const r = await fetch(
@@ -292,6 +296,22 @@ function runtimeReady(id, kind) {
     (!adapter.backends || adapter.backends.includes(state.backend.id));
 }
 $("addEmpty").onclick=()=>{running=false;add("custom");};
+const parametersHome=$("parameters").parentElement;
+function openCodeEditor(id=selected) {
+  running=false;
+  selected=id;
+  renderGraph();renderInspector();
+  if(state.nodes.find(n=>n.id===id)?.kind!=="custom")return;
+  $("codeEditorBody").append($("parameters"));
+  $("codeEditorStatus").textContent="";
+  if(!$("codeEditor").open)$("codeEditor").showModal();
+  $("customCode").focus();
+}
+$("closeCodeEditor").onclick=()=>$("codeEditor").close();
+$("codeEditor").addEventListener("close",()=>{
+  parametersHome.insertBefore($("parameters"),parametersHome.querySelector("hr"));
+  renderInspector();
+});
 
 function add(kind, index = state.nodes.length, overrides = {}) {
   if(!backendSupports(kind)){status(t("backendIncompatible"),true);return;}
@@ -299,7 +319,7 @@ function add(kind, index = state.nodes.length, overrides = {}) {
     status(t("exists"));
     return;
   }
-  commit(() => {
+  const added=commit(() => {
     index = Math.max(2, index);
     const p = {...clone(blocks[kind].params), ...overrides},
       names = channels(index);
@@ -320,6 +340,8 @@ function add(kind, index = state.nodes.length, overrides = {}) {
     state.nodes.splice(index, 0, node);
     selected = node.id;
   });
+  if(kind==="custom")openCodeEditor();
+  return added;
 }
 function reorder(id, index) {
   const from = state.nodes.findIndex((n) => n.id === id);
@@ -406,6 +428,12 @@ function renderGraph() {
       );
     for (const k of ["wR", "wG", "wB", "sigma", "margin", "threshold"])
       if (k in node.params) slider(node, k, card);
+    if(node.kind==="custom") {
+      const edit=el("button",t("editCode"),"primary edit-code");
+      edit.type="button";edit.dataset.action="edit-code";
+      edit.onclick=e=>{e.stopPropagation();openCodeEditor(node.id);};
+      card.append(edit);
+    }
     if (index >= 2) {
       const close = el("button", "×", "node-close");
       close.type = "button";
@@ -600,13 +628,25 @@ function renderInspector() {
     field(key === "gain" && node.kind === "custom" ? t("customGain") : paramLabel(key), input);
   }
   if (node.kind === "custom") {
+    const codePanel=el("div",undefined,"custom-code-panel");
     const editor=el("textarea");editor.id="customCode";editor.rows=12;editor.spellcheck=false;editor.dir="ltr";
     const draftKey=node.id+":"+(node.runtime || "python");
     editor.value=codeDrafts.get(draftKey) ?? node.params.code;
     editor.placeholder=catalog.starters[node.runtime || "python"] || "";
-    editor.oninput=()=>{codeDrafts.set(draftKey,editor.value);mark();};
-    field(t("code"),editor);
-    $("parameters").append(el("p",t("codeContract")),el("small",t("codeHint")));
+    const starter=el("button",t("insertStarter"));starter.id="insertStarter";starter.type="button";
+    starter.disabled=!!editor.value.trim() || !catalog.starters[node.runtime || "python"];
+    editor.oninput=()=>{codeDrafts.set(draftKey,editor.value);mark();
+      starter.disabled=!!editor.value.trim() || !catalog.starters[node.runtime || "python"];};
+    editor.onkeydown=e=>{
+      if(e.key==="Tab" && !e.shiftKey){e.preventDefault();editor.setRangeText("    ",editor.selectionStart,editor.selectionEnd,"end");editor.oninput();}
+    };
+    starter.onclick=()=>{
+      if(editor.value.trim())return;
+      editor.value=catalog.starters[node.runtime || "python"] || "";
+      editor.oninput();editor.focus();
+    };
+    const codeLabel=el("label",t("code"),"field");codeLabel.append(editor);
+    codePanel.append(starter,codeLabel);
     const apply=el("button",t("applyCode"),"primary");apply.id="applyCode";
     apply.disabled=!runtimeReady(node.runtime || "python","custom");
     apply.onclick=async()=>{
@@ -622,7 +662,9 @@ function renderInspector() {
         (node.codeDrafts ??= {})[node.runtime || "python"]=editor.value;},true,false);
         status(t("codeDraftSaved"));} catch {}
     };
-    $("parameters").append(draft,apply);
+    const actions=el("div",undefined,"custom-code-actions");actions.append(draft,apply);
+    codePanel.append(actions,el("p",t("codeContract")),el("small",t("codeHint")));
+    $("parameters").prepend(codePanel);
   }
   if (state.nodes.indexOf(node)>=2) {
     const name=el("input");name.id="blockName";name.value=blockLabel(node.kind);name.maxLength=100;field(t("blockName"),name);
@@ -640,6 +682,11 @@ function renderInspector() {
     if(node.kind==="custom")enabled.disabled=!runtimeReady(node.runtime || "python","custom");
     enabled.onchange = () => commit(() => (node.enabled = enabled.checked));
     field(t("enabled"), enabled);
+  }
+  if(node.kind==="custom") {
+    const settings=el("div",undefined,"custom-code-settings");
+    for(const child of [...$("parameters").children])if(!child.classList.contains("custom-code-panel"))settings.append(child);
+    $("parameters").append(settings);
   }
   renderLesson(node);
 }

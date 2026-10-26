@@ -1,6 +1,13 @@
 # Prazen blok in poljubni programski jeziki
 
-V knjižnici klikni **Prazen blok · lastna koda**. V urejevalniku izberi jezik
+V knjižnici klikni **Prazen blok · lastna koda**. Takoj se odpre velik urejevalnik
+v isti aplikaciji, s kazalko v polju za pisanje kode. Pozneje ga odpreš z gumbom
+**Napiši / uredi kodo** na kartici bloka. **Vstavi začetno funkcijo** v prazno
+polje vstavi dejansko začetno funkcijo Python ali JavaScript, ki jo lahko
+spreminjaš; že napisane kode ne prepiše. Tab vstavi štiri presledke, Shift+Tab
+premakne fokus. Zapiranje z × ali Escape ohrani napisani osnutek.
+
+V urejevalniku izberi jezik
 ali vpiši njegovo oznako, na primer `rust`, `java`, `cpp`, `csharp`, `julia` ali
 `lua`, in klikni **Izberi jezik**. Vsak jezik ima svoj osnutek; preklop jezika
 ohrani prejšnjo kodo. Jezik ne spremeni izbranega pogona OpenCV.

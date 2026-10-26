@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "88a00e98518584b0decbf81ec5c2b549891c03326a5de324ef7b11c4a9a0dcb3",
+  "sourceDigest": "13f31fc903905daee75b08f421b894735df968250a88ef6695f21e87fb741428",
   "protectedFallbackKeys": [
     "export",
     "signedMath",
@@ -203,6 +203,8 @@
     "adapterReady": "이 언어와 엔진에 대한 실행 어댑터가 제공됩니다.",
     "draftOnly": "호환되는 실행 어댑터가 설치되지 않습니다. 코드를 작성하고 저장할 수 있습니다; 이 블록은 어댑터가 구성 될 때까지 입력을 통과합니다.",
     "saveCodeDraft": "코드를 프로젝트로 유지하십시오",
-    "codeDraftSaved": "코드는 실행 없이 블록에 보관됩니다. 프로젝트를 저장하여 디스크에 보관하십시오."
+    "codeDraftSaved": "코드는 실행 없이 블록에 보관됩니다. 프로젝트를 저장하여 디스크에 보관하십시오.",
+    "editCode": "글쓰기 / 편집 코드",
+    "insertStarter": "스타트업 기능 설정"
   }
 }

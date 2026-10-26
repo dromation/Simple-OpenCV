@@ -179,6 +179,8 @@
     "adapterReady": "An execution adapter is available for this language and engine.",
     "draftOnly": "No compatible execution adapter is installed. You can write and save code; this block passes its input through until an adapter is configured.",
     "saveCodeDraft": "Keep code as draft",
-    "codeDraftSaved": "Code kept in the block without execution. Save the project to keep it on disk."
+    "codeDraftSaved": "Code kept in the block without execution. Save the project to keep it on disk.",
+    "editCode": "Write / edit code",
+    "insertStarter": "Insert starter function"
   }
 }

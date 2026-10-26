@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "88a00e98518584b0decbf81ec5c2b549891c03326a5de324ef7b11c4a9a0dcb3",
+  "sourceDigest": "13f31fc903905daee75b08f421b894735df968250a88ef6695f21e87fb741428",
   "protectedFallbackKeys": [
     "export",
     "import",
@@ -196,6 +196,8 @@
     "adapterReady": "Un adattatore di esecuzione è disponibile per questo linguaggio e motore.",
     "draftOnly": "Non è installato alcun adattatore di esecuzione compatibile. È possibile scrivere e salvare il codice; questo blocco passa attraverso la sua input fino a quando un adattatore è configurato.",
     "saveCodeDraft": "Mantenere il codice come progetto",
-    "codeDraftSaved": "Codice conservato nel blocco senza esecuzione. Salva il progetto per tenerlo sul disco."
+    "codeDraftSaved": "Codice conservato nel blocco senza esecuzione. Salva il progetto per tenerlo sul disco.",
+    "editCode": "Scrivi / edit codice",
+    "insertStarter": "Inserisci la funzione Start"
   }
 }

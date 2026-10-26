@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "88a00e98518584b0decbf81ec5c2b549891c03326a5de324ef7b11c4a9a0dcb3",
+  "sourceDigest": "13f31fc903905daee75b08f421b894735df968250a88ef6695f21e87fb741428",
   "protectedFallbackKeys": [
     "export",
     "signedMath",
@@ -200,6 +200,8 @@
     "adapterReady": "มีอะแดปเตอร์การดําเนินการสําหรับภาษาและมอเตอร์นี้",
     "draftOnly": "ไม่มีการติดตั้งอะแดปเตอร์การทํางานที่เข้ากันได้ คุณสามารถเขียนและบันทึกรหัสได้ บล็อกนี้ผ่านการป้อนของมันจนกว่ามีการกําหนดค่าอะแดปเตอร์",
     "saveCodeDraft": "บันทึกรหัสเป็นโครงการ",
-    "codeDraftSaved": "รหัสที่เก็บไว้ในบล็อกโดยไม่มีการดําเนินการ เก็บโครงการเพื่อเก็บไว้บนไดรฟ์"
+    "codeDraftSaved": "รหัสที่เก็บไว้ในบล็อกโดยไม่มีการดําเนินการ เก็บโครงการเพื่อเก็บไว้บนไดรฟ์",
+    "editCode": "เขียน / Edit รหัส",
+    "insertStarter": "ใส่ฟังก์ชั่นเริ่มต้น"
   }
 }

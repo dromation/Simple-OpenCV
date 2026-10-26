@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "88a00e98518584b0decbf81ec5c2b549891c03326a5de324ef7b11c4a9a0dcb3",
+  "sourceDigest": "13f31fc903905daee75b08f421b894735df968250a88ef6695f21e87fb741428",
   "protectedFallbackKeys": [
     "export",
     "exampleHint",
@@ -199,6 +199,8 @@
     "adapterReady": "Un adaptateur d'exécution est disponible pour ce langage et ce moteur.",
     "draftOnly": "Aucun adaptateur d'exécution compatible n'est installé. Vous pouvez écrire et enregistrer le code; ce bloc passe son entrée jusqu'à ce qu'un adaptateur soit configuré.",
     "saveCodeDraft": "Gardez le code comme projet",
-    "codeDraftSaved": "Le code gardé dans le bloc sans exécution. Sauver le projet pour le garder sur le disque."
+    "codeDraftSaved": "Le code gardé dans le bloc sans exécution. Sauver le projet pour le garder sur le disque.",
+    "editCode": "Écrire / éditer code",
+    "insertStarter": "Insérer la fonction de démarrage"
   }
 }

@@ -179,6 +179,8 @@
     "adapterReady": "Za ta jezik in pogon je na voljo izvajalnik.",
     "draftOnly": "Ustrezen izvajalnik ni nameščen. Kodo lahko napišeš in shraniš; do nastavitve izvajalnika blok nespremenjeno prepušča vhod.",
     "saveCodeDraft": "Ohrani kodo kot osnutek",
-    "codeDraftSaved": "Koda je v bloku ohranjena brez izvajanja. Za shranjevanje na disk shrani projekt."
+    "codeDraftSaved": "Koda je v bloku ohranjena brez izvajanja. Za shranjevanje na disk shrani projekt.",
+    "editCode": "Napiši / uredi kodo",
+    "insertStarter": "Vstavi začetno funkcijo"
   }
 }
