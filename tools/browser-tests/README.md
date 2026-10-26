@@ -24,3 +24,5 @@ Run `npm run test:library` for catalog/custom-code checks. With the optional nat
 Start the disposable session with its default primary OpenCV 2.4 engine and run `npm run test:sequences` before suites that replace its graph. This checks all six classroom recipes, synthetic scenes, source references, custom native code, language sync and three widths.
 
 `npm run test:empty-block` checks arbitrary language selection, separate persistent drafts, project save/reload, unavailable-runtime bypass, actual Python results, incomplete-code drafts and three viewport widths.
+
+`npm run test:compiled` requires the native OpenCV 2.4 worker, C/C++ compilers and a JDK. It compiles/runs all three languages through the editor, checks actual numerical results, compiler diagnostics and recovery, saves each language draft and reloads the project.

@@ -13,6 +13,7 @@ import sys
 import tempfile
 from pathlib import Path
 import numpy as np
+from .studio_compiled import COMPILED_STARTERS, compiled_toolchain, run_compiled  # EXPORT_COMPILED
 
 RUNTIME_API = 1
 RUNTIME_REGISTRY = {
@@ -21,11 +22,12 @@ RUNTIME_REGISTRY = {
         "name": "JavaScript · Node.js",
         "kinds": ["custom", "invert", "luminance", "threshold", "color_distance"],
     },
-    "cpp": {"name": "C++", "kinds": [], "reason": "adapterMissing"},
-    "java": {"name": "Java", "kinds": [], "reason": "adapterMissing"},
-    "c": {"name": "C", "kinds": [], "reason": "adapterMissing"},
+    "cpp": {"name": "C++ · C++17", "kinds": ["custom"], "reason": "compilerMissing"},
+    "java": {"name": "Java · JDK", "kinds": ["custom"], "reason": "compilerMissing"},
+    "c": {"name": "C · C11", "kinds": ["custom"], "reason": "compilerMissing"},
 }
 STARTERS = {
+    **COMPILED_STARTERS,
     "python": 'def process(channels, params):\n    return channels[params["input"]].copy()\n',
     "javascript": "function process(channels, params, shape) {\n  return new Float32Array(channels[params.input]);\n}\n",
 }
@@ -72,7 +74,8 @@ def runtime_catalog():
         key: {
             **item,
             "available": key == "python"
-            or (key == "javascript" and shutil.which("node") is not None),
+            or (key == "javascript" and shutil.which("node") is not None)
+            or (key in COMPILED_STARTERS and compiled_toolchain(key) is not None),
             "api": RUNTIME_API,
         }
         for key, item in RUNTIME_REGISTRY.items()
@@ -155,6 +158,8 @@ try {
 
 def run_worker(language, code, values, params, timeout=5, legacy=None):
     check_runtime(language, "custom", "opencv24" if legacy else "current")
+    if language in COMPILED_STARTERS and language not in external_adapters():
+        return run_compiled(language, code, values, params, timeout, "opencv24" if legacy else "current")
     shape = values["R"].shape
     with tempfile.TemporaryDirectory(prefix="simplemotocam-worker-") as folder:
         root = Path(folder)

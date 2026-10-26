@@ -17,7 +17,7 @@ from pathlib import Path
 from urllib.parse import urlparse, unquote
 import cv2
 import numpy as np
-from . import studio_engine, studio_runtime, studio_backend
+from . import studio_engine, studio_runtime, studio_backend, studio_compiled
 from .studio_catalog import library_catalog, save_library_block
 from .studio_engine import (
     StudioPipeline,
@@ -38,7 +38,10 @@ def export_python(state):
     state = validate_state(state)
     source = Path(studio_engine.__file__).read_text(encoding="utf-8")
     source = (
-        Path(studio_runtime.__file__).read_text(encoding="utf-8")
+        Path(studio_compiled.__file__).read_text(encoding="utf-8")
+        + "\n"
+        + re.sub(r"from \.studio_compiled import [^\n]*# EXPORT_COMPILED", "",
+                 Path(studio_runtime.__file__).read_text(encoding="utf-8"))
         + "\n"
         + re.sub(
             r"from \.studio_runtime import [\s\S]*?# EXPORT_RUNTIME",

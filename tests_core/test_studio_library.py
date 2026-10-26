@@ -194,7 +194,7 @@ def test_runtime_compatibility():
     with pytest.raises(ValueError, match="compatible"):
         validate_state(state_for("gaussian", "javascript"))
     with pytest.raises(ValueError, match="compatible"):
-        validate_state(state_for("custom", "cpp"))
+        validate_state(state_for("custom", "missing-language"))
     assert runtime_catalog()["python"]["available"]
     with pytest.raises(ValueError, match="Canny"):
         validate_state(state_for("canny", low=100, high=50))

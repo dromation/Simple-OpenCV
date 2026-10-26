@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "13f31fc903905daee75b08f421b894735df968250a88ef6695f21e87fb741428",
+  "sourceDigest": "d23969d0fce1782b4e929971a9dada6aea4ba7203b5718e174bea4131c85f8e6",
   "protectedFallbackKeys": [
     "export",
     "signedMath",
@@ -23,7 +23,10 @@
     "houghBlock",
     "opencvEngine",
     "engineCurrent",
-    "api24Hint"
+    "api24Hint",
+    "cCodeContract",
+    "cppCodeContract",
+    "javaCodeContract"
   ],
   "strings": {
     "guide": "교실",
@@ -205,6 +208,11 @@
     "saveCodeDraft": "코드를 프로젝트로 유지하십시오",
     "codeDraftSaved": "코드는 실행 없이 블록에 보관됩니다. 프로젝트를 저장하여 디스크에 보관하십시오.",
     "editCode": "글쓰기 / 편집 코드",
-    "insertStarter": "스타트업 기능 설정"
+    "insertStarter": "스타트업 기능 설정",
+    "compilerMissing": "컴파일러 / JDK 설치되지 않음",
+    "cCodeContract": "C11: void process(const SmContext *ctx, float *out). 채널 읽기 sm_channel(ctx, \"R\")· 모든 글을 쓰기 ctx->rows * ctx->cols 가치에 대하여 파라미터 : ctx->input, ctx->gain, ctx->backend.",
+    "cppCodeContract": "C++17: void process(const SmContext& ctx, float *out). 채널 읽기 sm_channel(&ctx, \"R\")· 모든 글을 쓰기 ctx.rows * ctx.cols 가치에 대하여 파라미터 : ctx.input, ctx.gain, ctx.backend.",
+    "javaCodeContract": "Java: public static float[] process(Map<String, float[]> channels, Params p). 돌아오기 p.rows * p.cols 가치에 대하여 파라미터 : p.input, p.gain, p.backend. 여기에 방법을 작성하십시오; 응용 프로그램은 UserBlock 클래스 입니다",
+    "compiledHint": "첫 번째 실행은 코드를 작성합니다 ( 30 초까지). 나중에 프레임은 건물을 다시 사용합니다. 블록 시간 제한은 실행에 적용됩니다. 이 어댑터는 흐르는 채널을 처리합니다; OpenCV 작업은 선택한 엔진에서 별도의 블록으로 남아 있습니다."
   }
 }

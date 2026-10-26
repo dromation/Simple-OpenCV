@@ -3,7 +3,7 @@
 V knjižnici klikni **Prazen blok · lastna koda**. Takoj se odpre velik urejevalnik
 v isti aplikaciji, s kazalko v polju za pisanje kode. Pozneje ga odpreš z gumbom
 **Napiši / uredi kodo** na kartici bloka. **Vstavi začetno funkcijo** v prazno
-polje vstavi dejansko začetno funkcijo Python ali JavaScript, ki jo lahko
+polje vstavi dejansko začetno funkcijo Python, JavaScript, C, C++ ali Java, ki jo lahko
 spreminjaš; že napisane kode ne prepiše. Tab vstavi štiri presledke, Shift+Tab
 premakne fokus. Zapiranje z × ali Escape ohrani napisani osnutek.
 
@@ -19,8 +19,9 @@ Osnutek lahko shraniš tudi v zbirko dodatnih algoritmov z gumbom za shranjevanj
 bloka. Uvoz in odpiranje projekta kode ne izvedeta.
 
 **Uporabi in izvedi kodo** je omogočen samo ob združljivem nameščenem adapterju;
-vključi blok in preveri dejanski rezultat. Python in JavaScript imata vgrajena
-izvajalnika (JavaScript zahteva Node.js). Python pri OpenCV 2.4 uporablja NumPy
+vključi blok in preveri dejanski rezultat. Python, JavaScript, C, C++ in Java imajo vgrajene
+izvajalnike (JavaScript zahteva Node.js, C/C++ prevajalnik, Java JDK).
+Glej [primere C/C++/Java in navodila](COMPILED_BLOCKS.md). Python pri OpenCV 2.4 uporablja NumPy
 in omejeni most `cv24.run`. Vpis drugega jezika sam po sebi ne namesti njegovega
 prevajalnika in ne prevede kode iz prejšnjega jezika.
 
@@ -79,10 +80,12 @@ Delovna mapa vsebuje:
   Vrednosti niso omejene na [0,1], zato so možne predznačene razlike in odvodi.
 - Ob napaki zapiše UTF-8 `error.txt` in vrne neničelno izhodno kodo.
 
-Adapter za C, C++, Java, Rust ali drug jezik lahko najprej prevede `source`,
+Zunanji adapter za Rust ali drug jezik lahko najprej prevede `source`,
 nato požene program in pretvori njegov izhod v to pogodbo. Prevajanje in
 izvajanje sta vključena v časovno omejitev bloka (do 30 sekund).
-Takšni izvajalniki niso vključeni zgolj z izbiro njihovega imena v meniju.
+Zunanji izvajalniki niso vključeni zgolj z izbiro njihovega imena v meniju.
+Vgrajeni izvajalniki C/C++/Java imajo ločeno časovno omejitev prevajanja in
+predpomnilnik gradenj, opisan v njihovih navodilih.
 Referenčni adapter in testi prikazujejo tudi napake ob napačni velikosti,
 nekončnih številih, neuspelem procesu in časovni prekoračitvi.
 

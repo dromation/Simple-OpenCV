@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "13f31fc903905daee75b08f421b894735df968250a88ef6695f21e87fb741428",
+  "sourceDigest": "d23969d0fce1782b4e929971a9dada6aea4ba7203b5718e174bea4131c85f8e6",
   "protectedFallbackKeys": [
     "export",
     "exampleHint",
@@ -203,6 +203,11 @@
     "saveCodeDraft": "保持代码作为草案",
     "codeDraftSaved": "代码保留在区块中,没有执行。 保存项目,将其存放在磁盘上。",
     "editCode": "编辑 / 编辑代码",
-    "insertStarter": "插入启动功能"
+    "insertStarter": "插入启动功能",
+    "compilerMissing": "编辑器 / JDK 不安装",
+    "cCodeContract": "C11: void process(const SmContext *ctx, float *out). 用 sm_channel(ctx, \"R\") 阅读频道;写下所有 ctx->rows * ctx->cols 值。 参数: ctx->input, ctx->gain, ctx->backend。",
+    "cppCodeContract": "C++17: void process(const SmContext& ctx, float *out). 用 sm_channel(&ctx, \"R\") 阅读频道;写下所有 ctx.rows * ctx.cols 值。 参数: ctx.input, ctx.gain, ctx.backend。",
+    "javaCodeContract": "Java: public static float[] process(Map<String, float[]> channels, Params p). 返回 p.rows * p.cols 值。 参数: p.input, p.gain, p.backend。 在这里写方法;应用程序提供 UserBlock 类。",
+    "compiledHint": "第一行编写您的代码(高达 30 秒)。 后来,重复使用建筑。 区块时间限制适用于执行。 这些适配器处理流通渠道; OpenCV 操作在所选择的发动机中保持单独的区块。"
   }
 }

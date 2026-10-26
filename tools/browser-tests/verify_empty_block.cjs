@@ -30,7 +30,7 @@ const url=process.env.STUDIO_TEST_URL||'http://127.0.0.1:8766';
   assert((await page.locator('#customCode').inputValue()).endsWith('    '));
   assert.equal(await page.locator('#blockRuntime option[value="cpp"]').evaluate(e=>e.disabled),false);
   await page.selectOption('#blockRuntime','cpp');await settle();
-  assert(await page.locator('#applyCode').isDisabled());
+  assert.equal(await page.locator('#applyCode').isDisabled(),!(await page.evaluate(()=>catalog.runtimes.cpp.available)));
   const cpp='// Work in progress\nfloat process(float x) { return x * 2; }';
   await page.fill('#customCode',cpp);await page.click('#saveCodeDraft');await settle();
   await page.fill('#customLanguage','rust');await page.click('#setCustomLanguage');await settle();

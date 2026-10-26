@@ -181,6 +181,11 @@
     "saveCodeDraft": "Keep code as draft",
     "codeDraftSaved": "Code kept in the block without execution. Save the project to keep it on disk.",
     "editCode": "Write / edit code",
-    "insertStarter": "Insert starter function"
+    "insertStarter": "Insert starter function",
+    "compilerMissing": "Compiler / JDK not installed",
+    "cCodeContract": "C11: void process(const SmContext *ctx, float *out). Read channels with sm_channel(ctx, \"R\"); write all ctx->rows * ctx->cols values. Parameters: ctx->input, ctx->gain, ctx->backend.",
+    "cppCodeContract": "C++17: void process(const SmContext& ctx, float *out). Read channels with sm_channel(&ctx, \"R\"); write all ctx.rows * ctx.cols values. Parameters: ctx.input, ctx.gain, ctx.backend.",
+    "javaCodeContract": "Java: public static float[] process(Map<String, float[]> channels, Params p). Return p.rows * p.cols values. Parameters: p.input, p.gain, p.backend. Write methods here; the application supplies the UserBlock class.",
+    "compiledHint": "The first run compiles your code (up to 30 seconds). Later frames reuse the build. The block time limit applies to execution. These adapters process float channels; OpenCV operations remain separate blocks in the selected engine."
   }
 }

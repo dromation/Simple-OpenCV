@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "13f31fc903905daee75b08f421b894735df968250a88ef6695f21e87fb741428",
+  "sourceDigest": "d23969d0fce1782b4e929971a9dada6aea4ba7203b5718e174bea4131c85f8e6",
   "protectedFallbackKeys": [
     "export",
     "exampleHint",
@@ -17,7 +17,8 @@
     "houghBlock",
     "opencvEngine",
     "engineCurrent",
-    "api24Hint"
+    "api24Hint",
+    "javaCodeContract"
   ],
   "strings": {
     "guide": "Klassrummet",
@@ -199,6 +200,11 @@
     "saveCodeDraft": "Håll koden som utkast",
     "codeDraftSaved": "Koden hålls i block utan verkställighet. Spara projektet för att hålla det på skivan.",
     "editCode": "Skriv / edit kod",
-    "insertStarter": "Innehåller startfunktion"
+    "insertStarter": "Innehåller startfunktion",
+    "compilerMissing": "Compiler / JDK inte installerat",
+    "cCodeContract": "C11: void process(const SmContext *ctx, float *out). Läs kanaler med sm_channel(ctx, \"R\"); skriv alla ctx->rows * ctx->cols värden. Parametrar: ctx->input, ctx->gain, ctx->backend.",
+    "cppCodeContract": "C++17: void process(const SmContext& ctx, float *out). Läs kanaler med sm_channel(&ctx, \"R\"); skriv alla ctx.rows * ctx.cols värden. Parametrar: ctx.input, ctx.gain, ctx.backend.",
+    "javaCodeContract": "Java: public static float[] process(Map<String, float[]> channels, Params p). Tillbaka p.rows * p.cols värderingar . Parametrar är: p.input, p.gain, p.backend. Skriv metoder här; ansökan ger UserBlock Klassen är.",
+    "compiledHint": "Den första körningen sammanställer din kod (upp till 30 sekunder). Därefter återanvänds ramarna av byggnaden. Blocktidsgränsen gäller för verkställighet. Dessa adaptrar behandlar flytande kanaler; OpenCV-operationer förblir separata block i den valda motorn."
   }
 }

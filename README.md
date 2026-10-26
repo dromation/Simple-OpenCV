@@ -59,7 +59,7 @@ python simplemotocam_algorithm.py --video sample.mp4 --show
 python simplemotocam_algorithm.py --camera 0 --show
 ```
 
-Export uses NumPy and OpenCV; graphs containing JavaScript blocks also require Node.js. The orchestrator is Python, with each block using its selected compatible runtime. C, C++ and Java remain available as learning examples; execution adapters for these languages are not yet installed.
+Export uses NumPy and OpenCV; graphs containing JavaScript blocks also require Node.js. The orchestrator is Python, with each block using its selected compatible runtime. C, C++ and Java custom functions compile and execute through built-in adapters when a compatible compiler/JDK is installed. See [runnable examples and setup](docs/COMPILED_BLOCKS.md).
 
 ## A library you can extend
 
@@ -67,12 +67,14 @@ Export uses NumPy and OpenCV; graphs containing JavaScript blocks also require N
 
 - **28 block kinds:** channel mathematics, filters, morphology, Canny/Laplacian, automatic thresholds, component filtering, line detection and custom code.
 - **Search + category filter + complete dropdown:** browse executable blocks, five math functions, your adapted examples, saved recipes, 37 original source references and the installed OpenCV API.
-- **Your own code:** add an empty block directly, select or type any language, and keep separate language drafts in the saved project. Python and JavaScript execute with their built-in adapters; other languages can be connected through the [external adapter contract](docs/CUSTOM_CODE_ADAPTERS.md).
+- **Your own code:** add an empty block directly, select or type any language, and keep separate language drafts in the saved project. Python, JavaScript, C, C++ and Java execute with their built-in adapters and installed toolchains; other languages can be connected through the [external adapter contract](docs/CUSTOM_CODE_ADAPTERS.md).
 - **Compatible language choices:** Python handles native OpenCV operations; JavaScript executes custom code and four compatible built-ins through Node.js. Execution is enabled only when a compatible adapter is installed. Unavailable languages remain editable, saveable drafts that pass the input through.
 
 ![Custom Python block running in the same studio](docs/images/studio-custom-code.png)
 
 ![Empty block with a saved Rust draft awaiting an execution adapter](docs/images/studio-empty-block.png)
+
+![Java custom code compiled and running alongside the OpenCV 2.4 pipeline](docs/images/studio-compiled-code.png)
 
 Imported custom code waits for explicit execution. Workers enforce a time limit and output-shape/finite-value checks, but run with your user permissions and are not security sandboxes. Only run code you trust. See [code examples, numerical contracts and adapter extension instructions](docs/STUDIO.md#write-and-run-a-custom-block).
 
@@ -98,7 +100,7 @@ Three unchanged [official OpenCV 2.4 PDF manuals](docs/opencv-2.4-manuals/README
 - `A` is an exposure-margin heuristic, not a measured transparency channel or probability.
 - Temporal differences start at zero after an algorithm/source change. A single still image produces no ongoing temporal motion.
 - Live previews are processed at a maximum side length of 960 pixels. Export processes the original size; match resolution when comparing spatial-filter results.
-- The workspace is an ordered dataflow: inputs must exist earlier in the sequence. Invalid edits stop execution until repaired. The algebra expression parser remains restricted. Explicit custom-code blocks run trusted Python or JavaScript after Apply/Run, with local user permissions.
+- The workspace is an ordered dataflow: inputs must exist earlier in the sequence. Invalid edits stop execution until repaired. The algebra expression parser remains restricted. Explicit custom-code blocks run trusted Python, JavaScript, C, C++ or Java after Apply/Run, with local user permissions.
 - Geometry and metrology directories are extension points. Calibrated physical measurements are **not implemented yet**.
 
 See [the full numerical contract and operating guide](docs/STUDIO.md).

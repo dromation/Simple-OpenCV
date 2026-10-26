@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "13f31fc903905daee75b08f421b894735df968250a88ef6695f21e87fb741428",
+  "sourceDigest": "d23969d0fce1782b4e929971a9dada6aea4ba7203b5718e174bea4131c85f8e6",
   "protectedFallbackKeys": [
     "export",
     "exampleHint",
@@ -19,7 +19,8 @@
     "houghBlock",
     "opencvEngine",
     "engineCurrent",
-    "api24Hint"
+    "api24Hint",
+    "javaCodeContract"
   ],
   "strings": {
     "guide": "Klasa",
@@ -201,6 +202,11 @@
     "saveCodeDraft": "Trzymaj kod jako projekt",
     "codeDraftSaved": "Kod przechowywany w bloku bez wykonania. Zapisz projekt, aby zachować go na dysku.",
     "editCode": "Wpisz / edytuj kod",
-    "insertStarter": "Wprowadź funkcję Start"
+    "insertStarter": "Wprowadź funkcję Start",
+    "compilerMissing": "Kompilator / JDK nie zainstalowany",
+    "cCodeContract": "C11: void process(const SmContext *ctx, float *out). Czytaj kanały za pomocą sm_channel(ctx, \"R\"); napisz wszystkie wartości ctx->rows * ctx->cols. Podstawowe parametry: ctx->input, ctx->gain, ctx->backend",
+    "cppCodeContract": "C++17: void process(const SmContext& ctx, float *out). Czytaj kanały za pomocą sm_channel(&ctx, \"R\"); napisz wszystkie wartości ctx.rows * ctx.cols. Podstawowe parametry: ctx.input, ctx.gain, ctx.backend",
+    "javaCodeContract": "Java: public static float[] process(Map<String, float[]> channels, Params p). Powrót p.rows * p.cols i wartości. Wskaźniki parametrów: p.input, p.gain, p.backend. Wpisz tutaj metody; aplikacja dostarcza UserBlock w klasie .",
+    "compiledHint": "Pierwsza runda gromadzi swój kod (do 30 sekund). Następnie ramy ponownie wykorzystują budowę. Okres blokowy obowiązuje do wykonania. Te adaptery przetwarzają kanały pływające; operacje OpenCV pozostają oddzielnymi blokami w wybranym silniku."
   }
 }

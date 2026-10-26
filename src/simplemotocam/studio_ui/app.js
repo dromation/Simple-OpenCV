@@ -545,7 +545,7 @@ function renderInspector() {
     const current=node.runtime || "python";
     for (const [id, adapter] of Object.entries(catalog.runtimes)) {
       const compatible=runtimeReady(id,node.kind);
-      const option=new Option(adapter.name + (compatible ? "" : " · " + t(adapter.reason || "incompatible")),id);
+      const option=new Option(adapter.name + (compatible ? "" : " · " + t(!adapter.available ? adapter.reason || "incompatible" : "incompatible")),id);
       option.disabled=node.kind!=="custom" && !compatible;language.append(option);
     }
     if(!catalog.runtimes[current])language.append(new Option(current,current));
@@ -663,7 +663,9 @@ function renderInspector() {
         status(t("codeDraftSaved"));} catch {}
     };
     const actions=el("div",undefined,"custom-code-actions");actions.append(draft,apply);
-    codePanel.append(actions,el("p",t("codeContract")),el("small",t("codeHint")));
+    const contract={c:"cCodeContract",cpp:"cppCodeContract",java:"javaCodeContract"}[node.runtime];
+    codePanel.append(actions,el("p",t(contract || "codeContract")),el("small",t("codeHint")));
+    if(contract)codePanel.append(el("p",t("compiledHint"),"note"));
     $("parameters").prepend(codePanel);
   }
   if (state.nodes.indexOf(node)>=2) {

@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "13f31fc903905daee75b08f421b894735df968250a88ef6695f21e87fb741428",
+  "sourceDigest": "d23969d0fce1782b4e929971a9dada6aea4ba7203b5718e174bea4131c85f8e6",
   "protectedFallbackKeys": [
     "export",
     "signedMath",
@@ -21,7 +21,8 @@
     "houghBlock",
     "opencvEngine",
     "engineCurrent",
-    "api24Hint"
+    "api24Hint",
+    "javaCodeContract"
   ],
   "strings": {
     "guide": "कक्षाएं",
@@ -203,6 +204,11 @@
     "saveCodeDraft": "प्रोजेक्ट के रूप में कोड रखें",
     "codeDraftSaved": "कोड बिना निष्पादन के ब्लॉक में रखा गया है। इसे डिस्क पर रखने के लिए परियोजना को बचाएं।",
     "editCode": "लिखें / संपादित करें",
-    "insertStarter": "स्टार्टअप फ़ंक्शन"
+    "insertStarter": "स्टार्टअप फ़ंक्शन",
+    "compilerMissing": "संपादक / JDK स्थापित नहीं है",
+    "cCodeContract": "C11: void process(const SmContext *ctx, float *out). sm_channel(ctx, \"R\") के साथ चैनलों को पढ़ें; सभी ctx->rows * ctx->cols मूल्यों को लिखें। पैरामीटर: ctx->input, ctx->gain, ctx->backend।",
+    "cppCodeContract": "C++17: void process(const SmContext& ctx, float *out). sm_channel(&ctx, \"R\") के साथ चैनलों को पढ़ें; सभी ctx.rows * ctx.cols मूल्यों को लिखें। पैरामीटर: ctx.input, ctx.gain, ctx.backend।",
+    "javaCodeContract": "Java: public static float[] process(Map<String, float[]> channels, Params p). वापसी p.rows * p.cols मूल्य है। पैरामीटर : p.input, p.gain, p.backend. अनुप्रयोग यहाँ लिखें; अनुप्रयोग प्रदान करता है UserBlock कक्षा में।",
+    "compiledHint": "पहला रन आपके कोड को संकलित करता है ( 30 सेकंड तक)। बाद में फ्रेम इमारत का पुन: उपयोग करते हैं। ब्लॉक समय सीमा निष्पादन के लिए लागू होती है। ये एडाप्टर फ्लोट चैनलों को संसाधित करते हैं; OpenCV ऑपरेशन चुने हुए इंजन में अलग-अलग ब्लॉक रहते हैं।"
   }
 }
