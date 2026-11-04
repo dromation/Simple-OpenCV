@@ -2,6 +2,7 @@
 const $ = (id) => document.getElementById(id),
   clone = (x) => structuredClone(x);
 let state,
+  hosting = null,
   blocks,
   catalog,
   token,
@@ -77,7 +78,7 @@ function status(text, error = false) {
 }
 async function api(path, data, raw = false) {
   const r = await fetch(
-    path,
+    appUrl(path),
     data === undefined
       ? {}
       : {
@@ -94,6 +95,9 @@ async function api(path, data, raw = false) {
     throw Error(e.error || r.statusText);
   }
   return raw ? r.text() : r.json();
+}
+function appUrl(path) {
+  return new URL(path.replace(/^\/+/, ""), document.baseURI).href;
 }
 function serial(fn) {
   const p = queue.then(fn);
@@ -291,6 +295,7 @@ function pendingCode() {
 }
 function requireAppliedCode() { if (pendingCode()) throw Error(t("applyCode")); }
 function runtimeReady(id, kind) {
+  if (kind === "custom" && hosting && !hosting.allowCode) return false;
   const adapter=catalog.runtimes[id];
   return !!adapter?.available && (adapter.kinds==="*" || adapter.kinds.includes(kind)) &&
     (!adapter.backends || adapter.backends.includes(state.backend.id));
@@ -506,7 +511,7 @@ function renderInspector() {
       source,
       [
         { id: "synthetic", name: t("synthetic") },
-        { id: "camera", name: t("camera") },
+        ...(!hosting || hosting.camera ? [{ id: "camera", name: t("camera") }] : []),
         { id: "image", name: t("image") },
         { id: "video", name: t("video") },
       ],
@@ -908,7 +913,7 @@ $("media").onchange = () => {
   if (!file) return;
   serial(async () => {
     if (file.size > 100 * 1024 * 1024) throw Error(t("mediaLarge"));
-    const r = await fetch("/api/upload", {
+    const r = await fetch(appUrl("/api/upload"), {
       method: "POST",
       headers: {
         "X-Studio-Token": token,
@@ -936,9 +941,9 @@ async function loadDetectionSequence(id) {
     const next=clone(item.state);next.name=sequenceText(id+".title");
     next.view.locale=state.view.locale;next.view.codeLanguage=state.view.codeLanguage;
     if(item.sample){
-      const response=await fetch("/manuals/learning/"+item.sample);
+      const response=await fetch(appUrl("/manuals/learning/"+item.sample));
       if(!response.ok)throw Error("Missing lesson test scene");
-      const upload=await fetch("/api/upload",{method:"POST",headers:{"X-Studio-Token":token,"X-File-Extension":".png"},body:await response.arrayBuffer()});
+      const upload=await fetch(appUrl("/api/upload"),{method:"POST",headers:{"X-Studio-Token":token,"X-File-Extension":".png"},body:await response.arrayBuffer()});
       const asset=await upload.json();if(!upload.ok)throw Error(asset.error);
       next.source={type:asset.type,asset:asset.asset,camera:0};
     }
@@ -966,12 +971,12 @@ function openClassroom(topic) {
   try {
     needsLesson ||=
       $("classroomFrame").contentWindow.location.pathname !==
-      "/manuals/learning/index.html";
+      new URL(appUrl("/manuals/learning/index.html")).pathname;
   } catch {
     needsLesson = true;
   }
   if (needsLesson)
-    $("classroomFrame").src = "/manuals/learning/index.html?embedded=1";
+    $("classroomFrame").src = appUrl("/manuals/learning/index.html?embedded=1");
   else syncClassroom(topic);
 }
 $("classroomFrame").onload = () => syncClassroom(classroomTopic);
@@ -1017,6 +1022,7 @@ window.addEventListener("beforeunload", (e) => {
 });
 async function start() {
   const data = await api("/api/bootstrap");
+  hosting = data.hosting || null;
   ({ state, blocks, token, revision, catalog } = data);
   selectOptions(
     $("locale"),

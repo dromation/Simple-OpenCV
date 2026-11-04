@@ -1,0 +1,7 @@
+# Public document root only. The source and hosting.json belong outside it.
+Options -Indexes
+Require all granted
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule ^(?:hosting.*\.json|private|src|tools|work|external|deploy|\.git)(?:/|$) - [F,L,NC]
+</IfModule>

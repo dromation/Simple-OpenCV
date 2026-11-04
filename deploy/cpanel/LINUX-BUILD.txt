@@ -1,0 +1,18 @@
+Included optional OpenCV 2.4.13.7 worker
+Built and tested: Ubuntu 22.04 x86_64, GCC, core/imgproc statically linked.
+Source: opencv/opencv commit 51cfa519249c89d24035b3f96315ad997deb300f
+Worker protocol: 2
+
+Dynamic system dependencies observed with ldd/readelf:
+  libc.so.6: GLIBC through 2.34
+  libstdc++.so.6: GLIBCXX through 3.4.29
+  libm.so.6, libgcc_s.so.1, /lib64/ld-linux-x86-64.so.2
+
+This binary is not compatible with every cPanel Linux distribution.
+In particular, a server with older glibc/libstdc++ needs a rebuild on that
+server or a compatible build system. Do not replace system libraries.
+Use tools/build_opencv24_linux.py to rebuild without sudo.
+The selected engine never silently falls back to a newer OpenCV.
+
+See .motocam/backends/opencv24/build-info-linux.json and PACKAGE-MANIFEST.json
+for the actual binary/source identifiers and checksums.

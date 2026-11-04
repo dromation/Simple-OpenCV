@@ -47,6 +47,13 @@ The studio opens at **http://127.0.0.1:8765**. Use `--no-browser` or `--port 876
 
 ## Your first saved algorithm
 
+For your own domain on cPanel, use the separate [Python/WSGI hosting edition](deploy/cpanel/INSTALL-CPANEL.md).
+It needs **Setup Python App / Application Manager**, HTTPS and a compatible Linux
+OpenCV 2.4 worker; uploading HTML to PHP-only hosting does not run this engine.
+The deployment ZIP includes the same studio and classroom, authenticated access,
+per-browser persistent sessions and an explicit configuration for compiler/code execution.
+Build it with `python tools/package_cpanel.py` after preparing the Linux worker.
+
 1. Press **Zaženi** to run the demo; select **Algebra kanalov** to edit the expression and weights.
 2. Try `sqrt(dR**2 + dG**2 + dB**2)` for colour-change magnitude, or import [a colour-contrast preset](contrib/presets/color-contrast.json).
 3. Add a filter or threshold and select its output in the preview. Use the explanation language and Python/C++/C/Java example selectors to inspect the underlying operation.

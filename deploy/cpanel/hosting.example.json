@@ -1,0 +1,12 @@
+{
+  "allowed_hosts": ["vision.example.com"],
+  "base_path": "",
+  "username": "studio",
+  "access_key": "CHANGE_ME_TO_A_PRIVATE_RANDOM_PASSWORD_AT_LEAST_24_CHARACTERS",
+  "require_https": true,
+  "backend": "opencv24",
+  "opencv24_worker": ".motocam/backends/opencv24/simplemotocam_opencv24",
+  "allow_code_execution": false,
+  "allow_compilers": false,
+  "max_upload_mb": 20
+}

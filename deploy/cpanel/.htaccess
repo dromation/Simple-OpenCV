@@ -1,0 +1,2 @@
+# Fail closed if the private application folder is accidentally made public.
+Require all denied
