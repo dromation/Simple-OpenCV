@@ -1,5 +1,10 @@
 # SimpleOpenCV HTML — addon domena / File Manager
 
+Za stran z vključenimi prenosi za Windows, Linux in macOS uporabi **SimpleOpenCV-Website.zip**.
+Gumb **Download app** na glavni strani prenese izbrani paket iz mape `downloads/`.
+Manjši **SimpleOpenCV-HTML.zip** vsebuje aplikacijo, gumb pa vodi do paketov na GitHub Releases.
+Obe različici delujeta brez strežnika Python. Novo delovno stanje je privzeto v angleščini.
+
 To je samostojna brskalniška izdaja. **Ne potrebuje Python aplikacije, Django,
 Flask, Passengerja, Node.js ali API strežnika.** Vstopna datoteka je `index.html`.
 

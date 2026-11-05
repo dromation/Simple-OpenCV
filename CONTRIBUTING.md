@@ -15,7 +15,9 @@ python -m pytest
 python -m simplemotocam.studio
 ```
 
-The current studio uses NumPy and OpenCV 4. The OpenCV 2.4 source/manuals are historical learning references, not runtime dependencies. Do not install Python 2 dependencies into this environment.
+OpenCV 2.4.13.7 is the primary processing engine, with an explicit current-engine option. The HTML/portable edition runs genuine 2.4 core/imgproc in WebAssembly; the developer edition uses the native worker. Python packages use a supported Python 3 environment. Never silently substitute OpenCV 4 for a selected 2.4 engine.
+
+For the browser edition, run `python tools/package_static.py` and serve `dist/` with a local HTTP server. Build the five executable downloads with Go 1.27.3 and `python tools/package_portable.py --go /path/to/go`. See [the portable guide](docs/PORTABLE.md). Keep the repository free of generated release binaries; publish them as release assets. New workspaces default to English and preserve saved locale choices.
 
 ## Adding an algorithm
 
@@ -33,7 +35,7 @@ English and Slovenian lessons are authored text. The other 19 languages are mach
 
 ## Repository boundaries
 
-Preserve the original Kivy application and historical examples. Avoid mass formatting or changing their licenses. Do not commit `.venv`, translation models, `.motocam` recordings/uploads, credentials or external source snapshots. Synthetic demo images are suitable for screenshots.
+Preserve the original Kivy application and historical examples under `legacy/`. Avoid mass formatting or changing their licenses. Do not commit `.venv`, translation models, `.motocam` recordings/uploads, credentials or external source snapshots. Synthetic demo images are suitable for screenshots. Do not publish screenshots containing user data.
 
 New contributions are submitted under the project MIT license. Credit external algorithms and retain their original notices; do not copy code with unknown or incompatible licensing. Participation follows [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 

@@ -1,0 +1,40 @@
+{
+  "version": "0.6.0",
+  "assets": [
+    {
+      "platform": "windows",
+      "arch": "amd64",
+      "label": "Windows · Intel / AMD 64-bit",
+      "filename": "SimpleOpenCV-0.6.0-windows-amd64.zip",
+      "url": "https://github.com/dromation/Simple-OpenCV/releases/download/v0.6.0/SimpleOpenCV-0.6.0-windows-amd64.zip"
+    },
+    {
+      "platform": "linux",
+      "arch": "amd64",
+      "label": "Linux · Intel / AMD 64-bit",
+      "filename": "SimpleOpenCV-0.6.0-linux-amd64.zip",
+      "url": "https://github.com/dromation/Simple-OpenCV/releases/download/v0.6.0/SimpleOpenCV-0.6.0-linux-amd64.zip"
+    },
+    {
+      "platform": "linux",
+      "arch": "arm64",
+      "label": "Linux · ARM64",
+      "filename": "SimpleOpenCV-0.6.0-linux-arm64.zip",
+      "url": "https://github.com/dromation/Simple-OpenCV/releases/download/v0.6.0/SimpleOpenCV-0.6.0-linux-arm64.zip"
+    },
+    {
+      "platform": "macos",
+      "arch": "amd64",
+      "label": "macOS · Intel",
+      "filename": "SimpleOpenCV-0.6.0-macos-amd64.zip",
+      "url": "https://github.com/dromation/Simple-OpenCV/releases/download/v0.6.0/SimpleOpenCV-0.6.0-macos-amd64.zip"
+    },
+    {
+      "platform": "macos",
+      "arch": "arm64",
+      "label": "macOS · Apple Silicon",
+      "filename": "SimpleOpenCV-0.6.0-macos-arm64.zip",
+      "url": "https://github.com/dromation/Simple-OpenCV/releases/download/v0.6.0/SimpleOpenCV-0.6.0-macos-arm64.zip"
+    }
+  ]
+}

@@ -206,7 +206,7 @@ def default_state():
         )
     return {
         "schema": SCHEMA_VERSION,
-        "name": "Zaznavanje sprememb",
+        "name": "Change detection",
         "source": {"type": "synthetic", "camera": 0, "asset": ""},
         "nodes": nodes,
         "view": {
@@ -214,7 +214,7 @@ def default_state():
             "result": "edges",
             "signed": True,
             "gain": 4.0,
-            "locale": "sl",
+            "locale": "en",
             "codeLanguage": "python",
         },
     }
@@ -499,7 +499,7 @@ def validate_state(state):
     if not isinstance(view.get("signed", True), bool):
         raise ValueError("Signed display must be boolean")
     normalized_view["signed"] = view.get("signed", True)
-    for key, default in [("locale", "sl"), ("codeLanguage", "python")]:
+    for key, default in [("locale", "en"), ("codeLanguage", "python")]:
         value = view.get(key, default)
         if not isinstance(value, str) or not re.fullmatch("[a-zA-Z-]{1,16}", value):
             raise ValueError("Invalid language")

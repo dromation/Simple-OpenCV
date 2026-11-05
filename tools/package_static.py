@@ -58,13 +58,13 @@ def main():
     html=html.replace('<title>','<link rel="icon" href="data:," />\n    <title>',1)
     html=html.replace('<body>','''<body>
     <div id="staticLoading" role="status" style="position:fixed;inset:0;z-index:1000;background:#f5faf9;display:grid;place-content:center;padding:32px;max-width:100vw">
-      <h1>SimpleOpenCV · HTML</h1><p>Nalagam lokalni pogon OpenCV 2.4 … / Loading browser engine …</p>
+      <h1>SimpleOpenCV · HTML</h1><p>Loading OpenCV 2.4 browser engine …</p>
       <button id="staticReset" hidden>Reset current workspace (keep saved projects)</button>
       <noscript>Za uporabo omogoči JavaScript. / Enable JavaScript to use this application.</noscript>
     </div>''')
     html=html.replace('<div class="toolbar">','<div class="toolbar" style="flex-wrap:wrap"><small data-i18n="browserNotice" style="flex-basis:100%"></small>')
     html=html.replace('accept=".png,.jpg,.jpeg,.bmp,.webp,.avi,.mp4,.mov,.mkv"','accept=".png,.jpg,.jpeg,.bmp,.webp,.avi,.mp4,.webm,.mov,.mkv"')
-    html=html.replace('<script src="app.js"></script>','<script src="browser-data.js"></script>\n    <script src="browser-engine.js"></script>\n    <script src="browser-studio.js"></script>\n    <script src="app.js"></script>')
+    html=html.replace('<script src="app.js"></script>','<script src="portable-host.js"></script>\n    <script src="browser-data.js"></script>\n    <script src="browser-engine.js"></script>\n    <script src="browser-studio.js"></script>\n    <script src="app.js"></script>\n    <script src="downloads.js"></script>')
     write('index.html',html)
     write('STATIC-EDITION.txt','SimpleOpenCV static HTML edition. Upload ALL files into the addon domain document root. No Python, Passenger or /api server. Open via HTTPS, not file://. Genuine OpenCV 2.4.13.7 (default) and OpenCV.js 4.13.0 (optional).\n')
     manifest={name:hashlib.sha256(path.read_bytes()).hexdigest() for name,path in sorted(included.items())}

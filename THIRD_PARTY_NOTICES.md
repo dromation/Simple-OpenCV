@@ -29,6 +29,12 @@ frontend CDN, analytics or runtime translation service.
 
 ## Desktop environment and optional translation tools
 
+The downloadable portable launchers embed the Go 1.27.3 runtime. Its original
+[BSD license](docs/licenses/simpleopencv/portable/Go-1.27.3-LICENSE.txt) and
+[patent grant](docs/licenses/simpleopencv/portable/Go-1.27.3-PATENTS.txt) are included.
+Go itself does not need to be installed by application users. This launcher is
+separate from the optional Python developer environment described below.
+
 The notice collection also records the installed NumPy 2.2.6 and opencv-python
 4.14.0.94 wheel licenses, including their supplied third-party notices. These
 Python libraries are **not shipped in the HTML ZIP**. Different installed versions

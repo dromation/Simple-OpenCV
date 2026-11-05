@@ -1,4 +1,4 @@
-# Community code of conduct
+# SimpleOpenCV community code of conduct
 
 This project welcomes learners, researchers and contributors across languages and experience levels.
 

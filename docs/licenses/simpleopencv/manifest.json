@@ -775,5 +775,19 @@
     "group": "tooling",
     "source": "Installed wheel: huggingface_hub-0.36.2.dist-info/licenses/LICENSE",
     "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+  },
+  {
+    "file": "portable/Go-1.27.3-LICENSE.txt",
+    "component": "Go 1.27.3 portable launcher runtime",
+    "group": "portable",
+    "source": "https://github.com/golang/go/blob/go1.27.3/LICENSE",
+    "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+  },
+  {
+    "file": "portable/Go-1.27.3-PATENTS.txt",
+    "component": "Go 1.27.3 portable launcher runtime",
+    "group": "portable",
+    "source": "https://github.com/golang/go/blob/go1.27.3/PATENTS",
+    "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc"
   }
 ]

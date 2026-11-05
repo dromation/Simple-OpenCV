@@ -19,14 +19,14 @@ def build():
         entry=f'<details><summary>{html.escape(item["component"])} · {html.escape(item["file"])}</summary><p>{source}</p><pre>{html.escape(data.decode("utf-8"))}</pre></details>'
         groups.setdefault(item['group'],[]).append(entry)
     parts=[]
-    labels={'browser':('Vključeno v HTML / WebAssembly','Included in HTML / WebAssembly'),
+    labels={'portable':('Prenosljiva aplikacija · zaganjalnik Go','Portable application · Go launcher'),'browser':('Vključeno v HTML / WebAssembly','Included in HTML / WebAssembly'),
             'desktop':('Namizno okolje · ni vključeno v HTML','Desktop environment · not bundled in HTML'),
             'tooling':('Orodja za pripravo prevodov · niso vključena v HTML','Translation build tools · not bundled in HTML'),
             'evidence':('Podatki o prevedenem pogonu','Compiled engine inventory')}
     for key,(sl,en) in labels.items():
         parts.append(f'<h3><span data-lang="sl">{sl}</span><span data-lang="en">{en}</span></h3>'+''.join(groups.get(key,[])))
     project=html.escape((ROOT/'LICENSE').read_text(encoding='utf-8'))
-    template='''<!doctype html><html lang="sl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SimpleOpenCV · About &amp; licenses</title>
+    template='''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SimpleOpenCV · About &amp; licenses</title>
 <style>body{margin:0;background:#f5faf9;color:#203735;font:16px/1.65 system-ui,sans-serif}main{max-width:920px;margin:auto;padding:28px clamp(16px,4vw,48px) 60px}h1{font-size:clamp(28px,5vw,44px);line-height:1.15}h2{margin-top:2em}h3{margin-top:2em}.eyebrow{color:#00877f;letter-spacing:.13em;font-size:12px}.lead{font-size:20px}a{color:#007c75;overflow-wrap:anywhere}.flow,pre{background:#e9f3ef;border:1px solid #cce4db;padding:16px;border-radius:10px;white-space:pre-wrap;overflow-wrap:anywhere}pre{font-size:12px}details{background:white;border:1px solid #d8e5e1;border-radius:10px;margin:10px 0;padding:14px}summary{cursor:pointer;font-weight:600;overflow-wrap:anywhere}nav{display:flex;gap:20px;flex-wrap:wrap}section{scroll-margin-top:16px}[hidden]{display:none!important}.note{padding:14px;background:#fff6de;border-radius:10px}</style></head><body><main>
 <nav><a href="#story"><span data-lang="sl">O aplikaciji</span><span data-lang="en">About</span></a><a href="#licenses"><span data-lang="sl">Licence in avtorstvo</span><span data-lang="en">Licenses and attribution</span></a></nav>
 <section id="story"><article data-lang="sl">@@SL@@</article><article data-lang="en">@@EN@@</article></section>
@@ -42,7 +42,7 @@ def build():
 <p data-lang="en">Bundled official OpenCV 2.4 manuals remain unchanged with their original notices. Explanations, synthetic teaching images and sequences are project-authored. Howse and Trucco–Verri books are cited as references; their scans and full texts are not bundled. Historical external example snapshots without a license are not automatically covered by the application's MIT license. SimpleCV is credited as inspiration; its library is not bundled.</p>
 </section></main><script>
 function language(locale){const lang=locale==='sl'?'sl':'en';document.documentElement.lang=lang;document.querySelectorAll('[data-lang]').forEach(e=>e.hidden=e.dataset.lang!==lang);}
-language(new URLSearchParams(location.search).get('lang')||'sl');
+language(new URLSearchParams(location.search).get('lang')||'en');
 addEventListener('message',e=>{if(e.source===parent&&e.origin===location.origin&&e.data?.type==='about-locale')language(e.data.locale)});
 addEventListener('keydown',e=>{if(e.key==='Escape'&&parent!==self)parent.postMessage({type:'about-close'},location.origin)});
 </script></body></html>'''

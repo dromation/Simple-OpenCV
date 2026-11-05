@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "simplemotocam"
-version = "0.5.0"
+version = "0.6.0"
 description = "Visual OpenCV algorithm studio with channel algebra and standalone export"
 license = {file = "LICENSE"}
 readme = "SIMPLEMOTOCAM.md"
