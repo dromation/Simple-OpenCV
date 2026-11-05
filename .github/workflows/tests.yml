@@ -11,8 +11,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: python -m pip install -r deploy/cpanel/requirements.txt
+      - run: python -m pip install -r deploy/cpanel/requirements.txt cmake==3.31.10
       - run: python tools/package_static.py
+      - run: python tools/fetch_references.py opencv-2.4.13.7
+      - run: python tools/build_opencv24_linux.py --jobs 2
       - run: python tools/browser-tests/static_reference.py
       - run: npm ci --prefix tools/browser-tests
       - run: npm exec --prefix tools/browser-tests -- playwright install --with-deps chromium

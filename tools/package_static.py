@@ -1,4 +1,4 @@
-"""Build a complete index.html deployment with locally bundled OpenCV.js."""
+"""Build a complete index.html deployment with locally bundled OpenCV 2.4 and 4.13 WebAssembly engines."""
 import hashlib
 import json
 from pathlib import Path
@@ -15,9 +15,10 @@ from simplemotocam.studio_engine import KINDS,default_state
 
 def main():
     vendor=ROOT/'deploy/static/vendor'
-    provenance=json.loads((vendor/'SOURCE.json').read_text(encoding='utf-8'))
-    if hashlib.sha256((vendor/'opencv.js').read_bytes()).hexdigest()!=provenance['sha256']:
-        raise RuntimeError('OpenCV.js differs from its pinned checksum')
+    for folder,filename in ((vendor,'opencv.js'),(vendor/'opencv24','opencv24.js')):
+        provenance=json.loads((folder/'SOURCE.json').read_text(encoding='utf-8'))
+        if hashlib.sha256((folder/filename).read_bytes()).hexdigest()!=provenance['sha256']:
+            raise RuntimeError(filename+' differs from its pinned checksum')
     output=ROOT/'dist/SimpleMotocam-HTML'
     if output.exists() and any(output.iterdir()) and not (output/'STATIC-EDITION.txt').exists():
         raise RuntimeError('Refusing to overwrite an unrelated output folder')
@@ -42,7 +43,7 @@ def main():
         item['strings']['exported']=('JavaScript algoritem je izvožen. Uporabi ga s priloženimi brskalniškimi datotekami.' if locale=='sl' else 'JavaScript algorithm exported. Use it with the included browser runtime files.')
         item['strings']['codeContract']=('JavaScript: process(channels, params, shape) → H × W vrednosti. Drugi jeziki ostanejo osnutki. params.gain je nastavljiv.' if locale=='sl' else 'JavaScript: process(channels, params, shape) → H × W values. Other languages remain drafts. params.gain is adjustable.')
         item['strings']['codeHint']=('Lastna koda se izvede v brskalniškem Workerju po Uporabi / Zaženi. Uporabljaj samo zaupanja vredno kodo. Prazen blok prepusti vhod.' if locale=='sl' else 'Custom code runs in a browser Worker after Apply / Run. Run only code you trust. An empty block passes its input through.')
-        item['strings']['browserNotice']=('Brskalniška izdaja · OpenCV.js 4.13.0 · brez strežnika Python · ni OpenCV 2.4' if locale=='sl' else 'Browser edition · OpenCV.js 4.13.0 · no Python server · not OpenCV 2.4')
+        item['strings']['browserNotice']=('Brskalniška izdaja · OpenCV 2.4.13.7 (privzeto) + 4.13 · brez strežnika Python' if locale=='sl' else 'Browser edition · OpenCV 2.4.13.7 (default) + 4.13 · no Python server')
     write('i18n.js','window.STUDIO_I18N = '+json.dumps(catalogs,ensure_ascii=False)+';\n')
     with tempfile.TemporaryDirectory() as folder:
         catalog=library_catalog(folder)
@@ -52,7 +53,7 @@ def main():
     html=html.replace('<title>','<link rel="icon" href="data:," />\n    <title>',1)
     html=html.replace('<body>','''<body>
     <div id="staticLoading" role="status" style="position:fixed;inset:0;z-index:1000;background:#f5faf9;display:grid;place-content:center;padding:32px;max-width:100vw">
-      <h1>SimpleMotocam · HTML</h1><p>Nalagam lokalni pogon OpenCV.js … / Loading browser engine …</p>
+      <h1>SimpleMotocam · HTML</h1><p>Nalagam lokalni pogon OpenCV 2.4 … / Loading browser engine …</p>
       <button id="staticReset" hidden>Reset current workspace (keep saved projects)</button>
       <noscript>Za uporabo omogoči JavaScript. / Enable JavaScript to use this application.</noscript>
     </div>''')
@@ -60,7 +61,7 @@ def main():
     html=html.replace('accept=".png,.jpg,.jpeg,.bmp,.webp,.avi,.mp4,.mov,.mkv"','accept=".png,.jpg,.jpeg,.bmp,.webp,.avi,.mp4,.webm,.mov,.mkv"')
     html=html.replace('<script src="app.js"></script>','<script src="browser-data.js"></script>\n    <script src="browser-engine.js"></script>\n    <script src="browser-studio.js"></script>\n    <script src="app.js"></script>')
     write('index.html',html)
-    write('STATIC-EDITION.txt','SimpleMotocam static HTML edition. Upload ALL files into the addon domain document root. No Python, Passenger or /api server. Open via HTTPS, not file://. OpenCV.js 4.13.0.\n')
+    write('STATIC-EDITION.txt','SimpleMotocam static HTML edition. Upload ALL files into the addon domain document root. No Python, Passenger or /api server. Open via HTTPS, not file://. Genuine OpenCV 2.4.13.7 (default) and OpenCV.js 4.13.0 (optional).\n')
     manifest={name:hashlib.sha256(path.read_bytes()).hexdigest() for name,path in sorted(included.items())}
     write('PACKAGE-MANIFEST.json',json.dumps(manifest,indent=2)+'\n')
     archive=ROOT/'dist/SimpleMotocam-HTML.zip'

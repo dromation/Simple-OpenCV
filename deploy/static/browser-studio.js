@@ -1,7 +1,15 @@
 /* Browser-only API for the shared Studio interface. All data stays on this device. */
 "use strict";
 window.StaticStudio=(()=>{
- const clone=x=>structuredClone(x), backend={id:"browser",version:"4.13.0"};
+ const clone=x=>structuredClone(x), backend={id:"opencv24",version:"2.4.13.7"};
+ const backends={opencv24:{name:"OpenCV 2.4 · WebAssembly",version:"2.4.13.7",available:true,kinds:"*"},browser:{name:"OpenCV.js · browser",version:"4.13.0",available:true,kinds:"*"}};
+ const probes=new Map();
+ async function probeEngine(selected){
+  if(!backends[selected?.id]||backends[selected.id].version!==selected.version)throw Error("Unsupported OpenCV engine/version");
+  const result=await runWorker({action:"probe",backend:selected});
+  if(result.version!==selected.version)throw Error("Unexpected OpenCV binary: "+result.version);
+  probes.set(selected.id,result);return result;
+ }
  let db,state,revision=0,index=0,previous=null,authorized=false,worker,requestId=0;
  let media=null,mediaKey="",mediaURL=null,stream=null;
  const pending=new Map(),canvas=document.createElement("canvas");
@@ -24,7 +32,7 @@ window.StaticStudio=(()=>{
    if(data.timeout){clearTimeout(p.timer);p.timer=setTimeout(()=>failWorker("Block execution timed out"),Math.min(30,data.timeout)*1000);return;}
    clearTimeout(p.timer);pending.delete(data.id);data.error?p.reject(Error(data.error)):p.resolve(data);
   };
-  worker.onerror=()=>failWorker("Cannot load browser-worker.js / vendor/opencv.js. Upload the entire ZIP, not only index.html.");
+  worker.onerror=()=>failWorker("Cannot load browser worker / OpenCV engine. Upload the entire ZIP, including vendor/, not only index.html.");
  }
  function failWorker(error){worker?.terminate();worker=null;for(const p of pending.values()){clearTimeout(p.timer);p.reject(Error(error));}pending.clear();}
  function runWorker(data,timeout=45000){
@@ -78,19 +86,19 @@ window.StaticStudio=(()=>{
   context.putImageData(image,0,0);return c.toDataURL("image/jpeg",.85);
  }
  function convertBuiltin(input){
-  const next=clone(input);next.backend=clone(backend);
+  const next=clone(input);next.backend=clone(backends[input.backend?.id]?input.backend:backend);
   for(const n of next.nodes){if(n.kind!=="custom")n.runtime="javascript";else n.runtime??=input.backend?.id==="browser"?"javascript":"python";}
   return next;
  }
  async function catalog(){
   const result=clone(STATIC_DATA.catalog);
-  result.backends={browser:{name:"OpenCV.js · browser",version:"4.13.0",available:true,kinds:"*"}};
+  result.backends=clone(backends);
   result.runtimes={javascript:{name:"JavaScript · browser",available:true,kinds:"*",api:1}};
   for(const [id,name]of [["python","Python"],["c","C"],["cpp","C++"],["java","Java"]])result.runtimes[id]={name:name+" · draft",available:false,kinds:["custom"],reason:"draftOnly",api:1};
   result.starters.javascript='function process(channels, params, shape) {\n  return channels[params.input].map(x => x * params.gain);\n}';
   result.entries=result.entries.filter(e=>e.type!=="api");
   for(const e of result.entries){if(e.state)e.state=convertBuiltin(e.state);delete e.backends;}
-  for(const name of STATIC_DATA.apiFunctions)result.entries.push({id:"jsapi:"+name,type:"api",group:"apiGroup",label:"cv."+name,signature:"OpenCV.js 4.13.0 · cv."+name,source:"https://docs.opencv.org/4.13.0/",note:"apiHint"});
+  for(const [id,probe]of probes)for(const name of probe.functions)result.entries.push({id:id+"api:"+name,type:"api",group:"apiGroup",backends:[id],label:"cv."+name,signature:"OpenCV "+probe.version+" · "+name,source:id==="opencv24"?"https://docs.opencv.org/2.4/":"https://docs.opencv.org/4.13.0/",note:"apiHint"});
   for(const record of await all("projects"))result.entries.push({id:"project:"+record.id,type:"example",additional:true,group:"savedGroup",label:record.state.name,state:record.state,note:"recipeHint"});
   for(const record of await all("blocks"))result.entries.push({id:"saved:"+record.id,type:"example",additional:true,group:"savedGroup",label:record.state.name,state:record.state,note:"recipeHint"});
   return result;
@@ -103,9 +111,9 @@ window.StaticStudio=(()=>{
     const request=indexedDB.open("simplemotocam-static-v1:"+base.pathname,1);
     request.onupgradeneeded=()=>{for(const name of ["settings","assets","projects","blocks"])request.result.createObjectStore(name);};request.onsuccess=()=>resolve(request.result);request.onerror=()=>reject(Error("Browser storage unavailable. Enable site storage / leave private mode."));
    });
-   const probe=await runWorker({action:"probe"});if(probe.version!==backend.version)throw Error("Unexpected OpenCV.js version: "+probe.version);
-   STATIC_DATA.apiFunctions=probe.functions;
    const saved=await get("settings","working");state=SMEngine.validate(saved||convertBuiltin(STATIC_DATA.state),STATIC_DATA.blocks);
+   await probeEngine(backend);
+   if(state.backend.id!==backend.id)await probeEngine(state.backend);
    for(const lesson of window.SEQUENCE_DATA?.lessons||[])lesson.state=convertBuiltin(lesson.state);
    document.getElementById("staticLoading")?.remove();
   })();return initializing;
@@ -115,18 +123,24 @@ window.StaticStudio=(()=>{
   if(path==="/api/bootstrap")return {state:clone(state),blocks:clone(STATIC_DATA.blocks),catalog:await catalog(),token:"browser-local",revision,hosting:info,projects:await api("/api/projects")};
   if(path==="/api/config"){
    let next=clone(data);
-   if(next.backend?.id!=="browser"){
-    if(!confirm(message("Ta projekt uporablja drug pogon. Ustvarim brskalniško kopijo z OpenCV.js 4.13.0? Rezultati se lahko razlikujejo od OpenCV 2.4.","This project uses another engine. Create a browser copy with OpenCV.js 4.13.0? Results may differ from OpenCV 2.4.")))throw Error("Engine conversion cancelled");
+   const foreignEngine=!backends[next.backend?.id];
+   const foreignCode=next.nodes?.some(n=>n.kind==="custom"&&n.enabled!==false&&(n.runtime|| (next.backend?.id==="browser"?"javascript":"python"))!=="javascript");
+   if(foreignEngine||foreignCode){
+    if(!confirm(message("Pripravim brskalniško kopijo? Nepodprt pogon se zamenja z OpenCV 2.4.13.7; Python/C/C++/Java koda ostane ohranjena kot izključen osnutek.","Create a browser copy? An unsupported engine changes to OpenCV 2.4.13.7; Python/C/C++/Java code is preserved as a disabled draft.")))throw Error("Browser conversion cancelled");
     next=convertBuiltin(next);
     for(const n of next.nodes)if(n.kind==="custom"&&n.runtime!=="javascript")n.enabled=false;
    }
+   // Built-in blocks call the selected compiled engine; their host adapter is JavaScript.
+   for(const n of next.nodes||[]){if(n.kind!=="custom")n.runtime="javascript";else n.runtime??=next.backend?.id==="browser"?"javascript":"python";}
    next=SMEngine.validate(next,STATIC_DATA.blocks);
    if(["image","video"].includes(next.source.type)&&!(await get("assets",next.source.asset)))throw Error("Media is not stored in this browser. Select it again.");
-   const changed=JSON.stringify(next.nodes)!==JSON.stringify(state.nodes)||JSON.stringify(next.source)!==JSON.stringify(state.source);
+   const newBackend=JSON.stringify(next.backend)!==JSON.stringify(state.backend);
+   const changed=newBackend||JSON.stringify(next.nodes)!==JSON.stringify(state.nodes)||JSON.stringify(next.source)!==JSON.stringify(state.source);
    const newSource=JSON.stringify(next.source)!==JSON.stringify(state.source);
+   if(newBackend)await probeEngine(next.backend);
    await put("settings",next,"working");
    if(newSource){stop();index=0;}if(changed){previous=null;authorized=false;}
-   state=next;revision++;return {state:clone(state),revision};
+   state=next;revision++;return {state:clone(state),revision,...(newBackend?{catalog:await catalog()}:{})};
   }
   if(path==="/api/frame"){
    const hasCode=state.nodes.some(n=>n.kind==="custom"&&n.enabled&&n.params.code.trim());
@@ -135,7 +149,7 @@ window.StaticStudio=(()=>{
    const result=await runWorker({action:"frame",...image,state,previous});
    const stats={};for(const [name,values]of Object.entries(result.values)){let min=Infinity,max=-Infinity,sum=0;for(const x of values){min=Math.min(min,x);max=Math.max(max,x);sum+=x;}stats[name]={min,max,mean:sum/values.length};}
    previous=result.previous;index++;
-   return {revision,frame:index,ready:result.ready,backend:clone(backend),size:[image.width,image.height],originalSize:image.originalSize,stats,processingMs:Math.round(performance.now()-started),images:{camera:canvas.toDataURL("image/jpeg",.85),signal:preview(result.values[state.view.signal],image.width,image.height,state.view.signed,state.view.gain),result:preview(result.values[state.view.result],image.width,image.height,false,state.view.gain)}};
+   return {revision,frame:index,ready:result.ready,backend:clone(state.backend),size:[image.width,image.height],originalSize:image.originalSize,stats,processingMs:Math.round(performance.now()-started),images:{camera:canvas.toDataURL("image/jpeg",.85),signal:preview(result.values[state.view.signal],image.width,image.height,state.view.signed,state.view.gain),result:preview(result.values[state.view.result],image.width,image.height,false,state.view.gain)}};
   }
   if(path==="/api/stop"){stop();return {stopped:true};}
   if(path==="/api/projects")return (await all("projects")).sort((a,b)=>b.savedAt.localeCompare(a.savedAt)).map(r=>({id:r.id,name:r.state.name,savedAt:r.savedAt}));
@@ -159,7 +173,7 @@ window.StaticStudio=(()=>{
   if(!image&&!video)throw Error("Unsupported media type");const asset=uid()+extension;await put("assets",blob,asset);return {asset,type:image?"image":"video"};
  }
  function exportAlgorithm(state){
-  return `// SimpleMotocam browser algorithm · MIT. OpenCV.js 4.13.0, not OpenCV 2.4.\n// Place alongside browser-worker.js, browser-engine.js and vendor/opencv.js.\n// Import processFrame from this ES module in a page served via HTTP(S).\nexport const STATE = ${JSON.stringify(state,null,2)};\nlet worker, sequence=0, previous=null;\nexport function reset(){previous=null;}\nexport function close(){worker?.terminate();worker=null;previous=null;}\nlet busy=false;\nexport async function processFrame(imageData){\n if(busy)throw Error('Await the previous frame');busy=true;\n try {\n if(!worker)worker=new Worker(new URL('./browser-worker.js',import.meta.url));\n const id=++sequence;\n const result=await new Promise((resolve,reject)=>{\n  let timer;const arm=seconds=>{clearTimeout(timer);timer=setTimeout(()=>{close();reject(Error('Block execution timed out'));},seconds*1000);};arm(45);\n  worker.onmessage=({data})=>{if(data.id!==id)return;if(data.timeout){arm(data.timeout);return;}clearTimeout(timer);data.error?reject(Error(data.error)):resolve(data);};\n  worker.onerror=()=>{clearTimeout(timer);close();reject(Error('Cannot load browser runtime'));};\n  worker.postMessage({id,action:'frame',state:STATE,rgba:imageData.data,width:imageData.width,height:imageData.height,previous});\n });\n previous=result.previous;return result.values;\n }finally{busy=false;}\n}\n`;
+  return `// SimpleMotocam browser algorithm · MIT. OpenCV ${state.backend.version}.\n// Place alongside browser-worker.js, browser-engine.js, browser-opencv24.js and vendor/.\n// Import processFrame from this ES module in a page served via HTTP(S).\nexport const STATE = ${JSON.stringify(state,null,2)};\nlet worker, sequence=0, previous=null;\nexport function reset(){previous=null;}\nexport function close(){worker?.terminate();worker=null;previous=null;}\nlet busy=false;\nexport async function processFrame(imageData){\n if(busy)throw Error('Await the previous frame');busy=true;\n try {\n if(!worker)worker=new Worker(new URL('./browser-worker.js',import.meta.url));\n const id=++sequence;\n const result=await new Promise((resolve,reject)=>{\n  let timer;const arm=seconds=>{clearTimeout(timer);timer=setTimeout(()=>{close();reject(Error('Block execution timed out'));},seconds*1000);};arm(45);\n  worker.onmessage=({data})=>{if(data.id!==id)return;if(data.timeout){arm(data.timeout);return;}clearTimeout(timer);data.error?reject(Error(data.error)):resolve(data);};\n  worker.onerror=()=>{clearTimeout(timer);close();reject(Error('Cannot load browser runtime'));};\n  worker.postMessage({id,action:'frame',state:STATE,rgba:imageData.data,width:imageData.width,height:imageData.height,previous});\n });\n previous=result.previous;return result.values;\n }finally{busy=false;}\n}\n`;
  }
  window.addEventListener("pagehide",()=>{stop();worker?.terminate();});
  async function resetWorkspace(){if(db){await put("settings",convertBuiltin(STATIC_DATA.state),"working");location.reload();}}

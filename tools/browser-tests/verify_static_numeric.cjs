@@ -12,9 +12,10 @@ const url=process.env.STUDIO_TEST_URL||'http://127.0.0.1:8780/SimpleMotocam-HTML
    const results=[];
    try{
     for(const test of fixture.tests){
-     const state=structuredClone(test.state);state.backend={id:'browser',version:'4.13.0'};state.nodes.forEach(n=>n.runtime='javascript');
-     const actual=await run({state,rgba:new Uint8ClampedArray(fixture.rgba),width:fixture.width,height:fixture.height,previous:null});
-     const values=actual.values[state.view.result];let max=0;for(let i=0;i<values.length;i++)max=Math.max(max,Math.abs(values[i]-test.output[i]));results.push({kind:test.kind,max});
+     const state=structuredClone(test.state);state.backend=test.engine==='opencv24'?{id:'opencv24',version:'2.4.13.7'}:{id:'browser',version:'4.13.0'};state.nodes.forEach(n=>n.runtime='javascript');
+     const image=fixture.images[test.image];
+     const actual=await run({state,rgba:new Uint8ClampedArray(image.rgba),width:image.width,height:image.height,previous:null});
+     const values=actual.values[state.view.result];let max=0;for(let i=0;i<values.length;i++)max=Math.max(max,Math.abs(values[i]-test.output[i]));results.push({engine:test.engine,image:test.image,kind:test.kind,params:state.nodes.at(-1).params,max});
     }
    }finally{worker.terminate();}
    return results;
@@ -60,11 +61,21 @@ const url=process.env.STUDIO_TEST_URL||'http://127.0.0.1:8780/SimpleMotocam-HTML
    next.nodes.push({id:'legacy-code',kind:'custom',enabled:true,params:{...STATIC_DATA.blocks.custom.params,code:'def process(c,p):\n    return c["R"]'}});
    const result=await api('/api/config',next);return result.state.nodes.at(-1);
   });assert.equal(imported.runtime,'python');assert.equal(imported.enabled,false);assert(imported.params.code.startsWith('def process'));
+  const disabledImport=await page.evaluate(async()=>{
+   const next=structuredClone(STATIC_DATA.state);
+   next.nodes.push({id:'legacy-draft',kind:'custom',enabled:false,params:{...STATIC_DATA.blocks.custom.params,code:'def process(c,p):\n    return c["R"]'}});
+   return (await api('/api/config',next)).state.nodes.at(-1);
+  });assert.equal(disabledImport.runtime,'python');assert.equal(disabledImport.enabled,false);
+  const rejected=await page.evaluate(async()=>{
+   const before=(await api('/api/bootstrap')).state,next=structuredClone(before);next.backend.version='2.4.0';
+   try{await api('/api/config',next);return false;}catch{return JSON.stringify((await api('/api/bootstrap')).state)===JSON.stringify(before);}
+  });assert(rejected,'an unavailable version must fail without changing the project');
   // Teaching sequence image is also loaded through local files, never an API upload.
   await page.evaluate(()=>loadDetectionSequence(SEQUENCE_DATA.lessons.find(x=>x.sample).id));await page.evaluate(()=>queue);
   assert.equal(await page.locator('body.error').count(),0,await page.locator('#status').textContent());
   assert.equal(await page.evaluate(()=>state.source.type),'image');
-  console.log('PASS 24 browser blocks versus native numerical reference; restricted algebra; image persistence; executable JS export; explicit browser camera.');
-  console.log(JSON.stringify(results));
+  assert.equal(await page.evaluate(()=>state.backend.id),'opencv24');
+  console.log('PASS '+results.length+' browser cases versus genuine native OpenCV 2.4 / current numerical references; restricted algebra; image persistence; executable JS export; explicit browser camera.');
+  console.log('Maximum absolute difference:',Math.max(...results.map(r=>r.max)));
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});

@@ -49,7 +49,7 @@ globalThis.SMEngine = (() => {
  function validate(input,definitions){
   const state=structuredClone(input);
   if(state.schema!==1||typeof state.name!=="string"||!state.name.trim()||state.name.length>100)throw Error("Invalid project name/schema");
-  if(state.backend?.id!=="browser"||state.backend.version!=="4.13.0")throw Error("This edition requires OpenCV.js 4.13.0");
+  if(!state.backend||({opencv24:"2.4.13.7",browser:"4.13.0"})[state.backend.id]!==state.backend.version)throw Error("Choose OpenCV 2.4.13.7 or OpenCV.js 4.13.0");
   if(!["synthetic","image","video","camera"].includes(state.source?.type))throw Error("Invalid source");
   if(!Array.isArray(state.nodes)||state.nodes.length<2||state.nodes.length>32||state.nodes[0].kind!=="source"||state.nodes[1].kind!=="channels")throw Error("Start with source and RGB channels; maximum 32 blocks");
   const names=new Set(["R","G","B","A"]),ids=new Set(),unique=new Set();
@@ -141,7 +141,8 @@ globalThis.SMEngine = (() => {
    }else if(k==="algebra"){
     const tree=expression(p.expression,new Set([...Object.keys(values),"wR","wG","wB"]));
     out=Float32Array.from({length},(_,i)=>evaluate(tree,values,{wR:p.wR,wG:p.wG,wB:p.wB},i));
-   }else if(["confidence","luminance","color_distance","invert","threshold"].includes(k)){
+   }else if(k==="threshold"&&state.backend.id==="opencv24")out=cv.vision(k,values[p.input],w,h,p);
+   else if(["confidence","luminance","color_distance","invert","threshold"].includes(k)){
     out=Float32Array.from({length},(_,i)=>{
      const r=values.R[i],g=values.G[i],b=values.B[i];
      if(k==="confidence")return Math.min(1,Math.min(r,g,b,1-r,1-g,1-b)/p.margin);
@@ -149,7 +150,7 @@ globalThis.SMEngine = (() => {
      if(k==="color_distance")return Math.hypot(r-p.red,g-p.green,b-p.blue)/Math.sqrt(3);
      return k==="invert"?1-values[p.input][i]:values[p.input][i]>p.threshold?1:0;
     });
-   }else out=vision(cv,k,values[p.input],w,h,p);
+   }else out=cv.vision(k,values[p.input],w,h,p);
    if(!out||out.length!==length)throw Error(n.id+": return H × W values");
    out=Float32Array.from(out);if(!out.every(Number.isFinite))throw Error(n.id+": nonfinite output; check division, roots and code");values[p.output]=out;
   }

@@ -13,7 +13,7 @@ Flask, Passengerja, Node.js ali API strežnika.** Vstopna datoteka je `index.htm
 4. Odpri `https://tvoja-domena.si/` oziroma podmapo, v katero si razširil ZIP.
    Če je ostal stari `index.php` ali stari index.html, po varnostni kopiji odstrani
    oziroma preimenuj samo stare vstopne datoteke, ki bi imele prednost.
-5. Osveži s Ctrl+F5. Prvi zagon naloži približno 11 MB lokalnega OpenCV.js.
+5. Osveži s Ctrl+F5. Pogon 2.4 je priložen lokalno; dodatni OpenCV 4.13 se naloži šele ob izbiri.
 
 ## Kaj deluje
 
@@ -29,16 +29,26 @@ Flask, Passengerja, Node.js ali API strežnika.** Vstopna datoteka je `index.htm
   Drug računalnik nima teh podatkov: prenesi JSON in ponovno izberi svoje medije.
   Brisanje podatkov spletnega mesta izbriše lokalne projekte; delaj JSON kopije.
 - **Izvozi JavaScript** prenese datoteko algoritma. Uporabi jo skupaj s
-  `browser-worker.js`, `browser-engine.js` in mapo `vendor/` na spletni strani;
+  `browser-worker.js`, `browser-engine.js`, `browser-opencv24.js` in mapo `vendor/` na spletni strani;
   uvozi `processFrame(imageData)` iz modula. Izvoz ne vsebuje Python strežnika.
 
 ## Različica OpenCV in primerjava rezultatov
 
-Ta izdaja uporablja lokalno priloženi **OpenCV.js 4.13.0 / WebAssembly**.
-**Ni isti pogon kot izvirni OpenCV 2.4.13.7.** Stara namizna in Python izdaja
-ostajata na voljo ločeno. Uvoz projekta iz drugega pogona zahteva potrditev;
-izvirna datoteka ostane nespremenjena, pripravi se brskalniška kopija. Lastna
-koda v neizvedljivem jeziku se pri uvozu izključi in ostane osnutek.
+Privzeti pogon je **pravi OpenCV 2.4.13.7**, preveden iz preverjene izvirne C++
+kode v WebAssembly. Ni preimenovani OpenCV 4. V glavi aplikacije lahko izbereš
+še priloženi **OpenCV.js 4.13.0**. Izbira se ohrani v shranjenem projektu in
+izvoženem JavaScript modulu. Preklop počisti zgodovino časovnih razlik.
+
+Pogon 2.4 vključuje modula **core in imgproc**, ki izvajata 19 obstoječih
+OpenCV blokov. RGB, razlike, algebra kanalov in lastna JavaScript koda se
+izvajajo v skupnem brskalniškem sloju. To ni prenos vseh modulov OpenCV 2.4;
+zajem kamere in videa izvaja brskalnik. Učilnica ohrani svoje primere za 2.4.
+
+Že shranjeni projekti iz prejšnje izdaje ohranijo svojo izbiro 4.13; za delo
+z 2.4 izberi **OpenCV 2.4.13.7** zgoraj. Novi projekti se začnejo z 2.4.
+Pri uvozu neizvedljiva Python/C/C++/Java koda ostane izključen osnutek;
+izvirna datoteka se ne spreminja. Prevajanje lastne C/C++/Java kode je še
+vedno funkcija namizne/strežniške izdaje.
 
 Matematične definicije in float32 kanali ostajajo ohranjeni; rezultati OpenCV
 med različicami niso nujno bitno enaki. Preview omeji daljšo stran na 960 px.
@@ -58,7 +68,7 @@ nista varnostni peskovnik za zlonamerno kodo.
 
 - Uporabi spletni naslov HTTP(S), ne dvoklika na lokalni `file://index.html`.
 - Preveri, da je razširjen celoten ZIP in poti ohranijo velike/male črke.
-- `vendor/opencv.js` mora biti prisoten. Vse knjižnice so v ZIP-u; CDN ni potreben.
+- `vendor/opencv24/opencv24.js` in `vendor/opencv.js` morata biti prisotna. Vse knjižnice so v ZIP-u; CDN ni potreben.
 - Če gostovanje dodaja strogo Content-Security-Policy, mora dovoliti lokalne
   Workerje in WebAssembly; izvajanje lastne kode zahteva JavaScript eval v Workerju.
 - Če ostaja stara stran, odstrani predpomnilnik in preveri Document Root ter
@@ -66,5 +76,6 @@ nista varnostni peskovnik za zlonamerno kodo.
 - Gumb Reset current workspace obnovi samo trenutno delovno stanje; shranjene
   projekte in medije ohrani.
 
-OpenCV.js: https://docs.opencv.org/4.13.0/ (Apache 2.0, priložena licenca v vendor/).
+OpenCV 2.4: https://github.com/opencv/opencv/tree/2.4.13.7 (BSD, licenca v vendor/opencv24/).
+OpenCV.js 4.13: https://docs.opencv.org/4.13.0/ (Apache 2.0, priložena licenca v vendor/).
 SimpleMotocam: MIT, glej LICENSE. Arhivski priročniki imajo svoje izvirne licence.

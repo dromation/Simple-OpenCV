@@ -211,7 +211,7 @@ $("opencvBackend").onchange=()=>{
       requireAppliedCode();
       const next=clone(state);next.backend={id:choice,version:catalog.backends[choice].version};
       const r=await api("/api/config",next);
-      remember();state=r.state;revision=r.revision;valid=true;render();await frame();
+      remember();state=r.state;revision=r.revision;if(r.catalog)catalog=r.catalog;valid=true;render();await frame();
     } finally {renderBackend();$("run").textContent="▶ "+t("run");}
   });
 };
@@ -873,6 +873,7 @@ async function load(newState) {
   const r = await api("/api/config", newState);
   remember();
   state = r.state;
+  if(r.catalog)catalog=r.catalog;
   codeDrafts.clear();
   revision = r.revision;
   valid = true;

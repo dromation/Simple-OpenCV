@@ -5,6 +5,7 @@ The new SimpleMotocam application, project-authored lessons and supporting code 
 | Material | Origin / terms |
 | --- | --- |
 | OpenCV 4 Python runtime | [OpenCV](https://github.com/opencv/opencv), Apache-2.0 for modern OpenCV; binary wheels include additional dependency notices. See installed `opencv-python` distribution. |
+| Browser WebAssembly engines | OpenCV 2.4.13.7 core/imgproc compiled from the pinned source using Emscripten 3.1.74 (BSD-style OpenCV notice, bundled zlib notice and Emscripten MIT/UIUC notice in `deploy/static/vendor/opencv24/`). Optional official OpenCV.js 4.13.0 is Apache-2.0; its license and source checksum are in `deploy/static/vendor/`. |
 | NumPy | [NumPy](https://github.com/numpy/numpy), BSD-3-Clause and bundled dependency notices. |
 | OpenCV 2.4.13.7 source and English manuals | [OpenCV 2.4.13.7](https://github.com/opencv/opencv/tree/2.4.13.7), original BSD-style notices retained in `docs/licenses/OpenCV-2.4-LICENSE.txt`; PDFs remain unmodified. Documentation download URLs and SHA-256 hashes are in `docs/opencv-2.4-manuals/sources.json`. |
 | Optional translation model | M2M100 418M, MIT; CTranslate2, MIT; SentencePiece, Apache-2.0. See `docs/opencv-2.4-manuals/learning/MODEL.md` and each upstream package's notices. Model weights are not committed. |

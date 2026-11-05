@@ -5,8 +5,10 @@ serve `dist/` with `python -m http.server 8780 --bind 127.0.0.1 --directory dist
 Run `npm run test:static`. For numerical parity, first run
 `python tools/browser-tests/static_reference.py` from the project root, then
 `npm run test:static:numeric` here. These use only a plain static file server,
-check that no `/api` requests occur, and compare the 24 mathematical/vision
-blocks to a deterministic native reference. Camera tests use a fake browser
+check that no `/api` requests occur, verify 2.4 as the default and both engine
+choices, and compare 136 cases (24 mathematical/vision blocks, extra parameter
+sets, noise and structured detection scenes) to genuine native 2.4 / current
+references. Build the native 2.4 worker before generating fixtures. Camera tests use a fake browser
 device; they do not access the user's camera. Storage is a fresh test profile.
 
 Use a **disposable** server session: this test edits its state and saves synthetic test projects.

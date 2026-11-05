@@ -1,2 +1,5 @@
 # Preserve the exact upstream byte stream verified by SOURCE.json on all hosts.
 deploy/static/vendor/opencv.js -text -diff
+deploy/static/vendor/opencv24/opencv24.js -text -diff
+# Keep the upstream license text, including its original whitespace.
+deploy/static/vendor/opencv24/Emscripten-LICENSE.txt -text -whitespace

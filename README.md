@@ -31,11 +31,15 @@ The default moving part is synthetic. No camera is opened automatically. Images 
 
 **Addon domain / File Manager only:** use the [static HTML edition](deploy/static/UPLOAD-HTML.md).
 Upload and extract `SimpleMotocam-HTML.zip` in the domain's document root; its
-`index.html` runs the studio entirely in the browser with bundled OpenCV.js 4.13.0.
+`index.html` runs the studio entirely in the browser with **genuine OpenCV 2.4.13.7
+WebAssembly as the default**, and OpenCV.js 4.13.0 as an optional second engine.
 No Python app or `/api` server is required. This edition keeps the block builder,
 classroom, image/video/camera inputs, local project storage and JavaScript export.
-It is a separate engine from OpenCV 2.4; C/C++/Java/Python code remains a draft
+The engine selector, saved states, classroom sequences and exported modules retain
+the chosen OpenCV version. C/C++/Java/Python custom code remains a disabled draft
 unless run in the original desktop/server edition. Build: `python tools/package_static.py`.
+The [OpenCV 2.4 WebAssembly build notes](docs/OPENCV24_WASM.md) document the pinned
+source, included modules, reproducible toolchain and numerical verification.
 
 Requires Python 3.10+ and a modern browser. On Windows, double-click **Install-SimpleMotocam.cmd**, then **Start-SimpleMotocam.cmd**. The installer uses the project's isolated `.venv` environment.
 
@@ -57,7 +61,7 @@ The studio opens at **http://127.0.0.1:8765**. Use `--no-browser` or `--port 876
 
 For your own domain on cPanel, use the separate [Python/WSGI hosting edition](deploy/cpanel/INSTALL-CPANEL.md).
 It needs **Setup Python App / Application Manager**, HTTPS and a compatible Linux
-OpenCV 2.4 worker; uploading HTML to PHP-only hosting does not run this engine.
+OpenCV 2.4 native worker. For hosting without Python, use the HTML/WebAssembly edition above.
 The deployment ZIP includes the same studio and classroom, authenticated access,
 per-browser persistent sessions and an explicit configuration for compiler/code execution.
 Build it with `python tools/package_cpanel.py` after preparing the Linux worker.

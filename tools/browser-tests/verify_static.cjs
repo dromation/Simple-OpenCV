@@ -7,14 +7,35 @@ const url=process.env.STUDIO_TEST_URL||'http://127.0.0.1:8780/SimpleMotocam-HTML
   const errors=[],requests=[];page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>requests.push(r.url()));page.on('dialog',d=>d.accept());
   page.on('console',m=>{if(m.type()==='error')console.log('Browser:',m.text());});
   await page.goto(url);await page.waitForFunction(()=>document.querySelector('#status').dataset.frame);
-  assert.equal(await page.evaluate(()=>state.backend.id),'browser');assert.equal(await page.locator('#staticLoading').count(),0);
-  assert.match(await page.locator('#backendBadge').textContent(),/OpenCV.js 4.13.0/);
+  assert.equal(await page.evaluate(()=>state.backend.id),'opencv24');assert.equal(await page.locator('#staticLoading').count(),0);
+  assert.match(await page.locator('#backendBadge').textContent(),/OpenCV 2.4.13.7/);
   assert.equal(await page.evaluate(()=>Object.keys(blocks).length),28);
+  assert.equal(await page.locator('#opencvBackend option:not(:disabled)').count(),2);
+  assert(!requests.some(r=>r.endsWith('/vendor/opencv.js')),'4.x must not load for the default 2.4 engine');
+  await page.evaluate(()=>api('/api/frame',{}));
+  await page.selectOption('#opencvBackend','browser');await page.evaluate(()=>queue);
+  assert.equal(await page.evaluate(()=>state.backend.version),'4.13.0');
+  assert.match(await page.locator('#backendBadge').textContent(),/OpenCV.js 4.13.0/);
+  assert.equal((await page.evaluate(()=>api('/api/frame',{}))).backend.id,'browser');
+  const currentExport=await page.evaluate(()=>api('/api/export',state));assert(currentExport.includes('4.13.0'));
+  await page.reload();await page.waitForFunction(()=>document.querySelector('#status').dataset.frame);
+  assert.equal(await page.evaluate(()=>state.backend.id),'browser','explicit 4.x choice survives reload');
+  await page.selectOption('#opencvBackend','opencv24');await page.evaluate(()=>queue);
+  assert.equal(await page.evaluate(()=>state.backend.id),'opencv24');
+  assert.match(await page.locator('#backendBadge').textContent(),/OpenCV 2.4.13.7/);
+  // Switching engines invalidates history, independently of UI auto-preview.
+  const reset=await page.evaluate(async()=>{
+   const next=structuredClone(state);next.backend={id:'browser',version:'4.13.0'};
+   await api('/api/config',next);const a=await api('/api/frame',{});
+   next.backend={id:'opencv24',version:'2.4.13.7'};await api('/api/config',next);const b=await api('/api/frame',{});
+   return [a.ready,b.ready];
+  });assert.deepEqual(reset,[false,false]);
+
   assert(requests.every(r=>!new URL(r).pathname.includes('/api/')));
   assert(requests.every(r=>new URL(r).origin===new URL(url).origin));
   for(const kind of await page.evaluate(()=>Object.keys(blocks).filter(k=>!['source','channels','difference','custom'].includes(k)))){
    const result=await page.evaluate(async kind=>{
-    const next=structuredClone(STATIC_DATA.state);next.backend={id:'browser',version:'4.13.0'};
+    const next=structuredClone(STATIC_DATA.state);next.backend={id:'opencv24',version:'2.4.13.7'};
     const p=structuredClone(STATIC_DATA.blocks[kind].params);if('input' in p)p.input='R';if(kind==='algebra')p.expression='clip(R-G,-1,1)';
     next.nodes=next.nodes.slice(0,2).concat({id:'test',kind,params:p,enabled:true,runtime:'javascript'});next.nodes.slice(0,2).forEach(n=>n.runtime='javascript');
     next.view.signal=next.view.result=p.output;
@@ -33,7 +54,7 @@ const url=process.env.STUDIO_TEST_URL||'http://127.0.0.1:8780/SimpleMotocam-HTML
   await page.click('#applyCode');await page.evaluate(()=>queue);assert.equal(await page.locator('body.error').count(),0);
   await page.click('#closeCodeEditor');
   await page.fill('#name','Static browser project');await page.locator('#name').press('Tab');await page.evaluate(()=>queue);
-  const saved=await page.evaluate(()=>api('/api/save',state));assert.equal(saved.state.name,'Static browser project');
+  const saved=await page.evaluate(()=>api('/api/save',state));assert.equal(saved.state.name,'Static browser project');assert.equal(saved.state.backend.id,'opencv24');
   const exported=await page.evaluate(()=>api('/api/export',state));assert(exported.includes('export async function processFrame'));
   await page.reload();await page.waitForFunction(()=>typeof state!=='undefined'&&state?.name==='Static browser project');assert.equal(await page.locator('#name').inputValue(),'Static browser project');
   await page.click('#guide');await page.waitForFunction(()=>document.querySelector('#classroomFrame').contentDocument?.querySelector('#locale'));

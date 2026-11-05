@@ -1,0 +1,13 @@
+{
+  "version": "2.4.13.7",
+  "source": "https://github.com/opencv/opencv/tree/2.4.13.7",
+  "commit": "51cfa519249c89d24035b3f96315ad997deb300f",
+  "emscripten": "3.1.74",
+  "modules": [
+    "core",
+    "imgproc"
+  ],
+  "sha256": "1b75b7c47d63b31b1ad5ee2e2789b630913200492efe362f2cb1b7f4704f59b0",
+  "build": "tools/build_opencv24_wasm.py",
+  "license": "BSD-3-Clause"
+}
