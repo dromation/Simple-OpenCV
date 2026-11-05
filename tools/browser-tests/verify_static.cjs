@@ -49,7 +49,10 @@ const url=process.env.STUDIO_TEST_URL||'http://127.0.0.1:8780/SimpleOpenCV-HTML/
   const starter=await page.locator('#customCode').inputValue();assert(starter.includes('function process'));
   await page.click('#applyCode');await page.evaluate(()=>queue);assert.equal(await page.locator('body.error').count(),0,await page.locator('#status').textContent());
   await page.fill('#customCode','function process(c,p){while(true){}}');await page.fill('[data-parameter="timeout"]','0.2');await page.locator('[data-parameter="timeout"]').press('Tab');await page.evaluate(()=>queue);
-  await page.click('#applyCode');await page.evaluate(()=>queue);assert.match(await page.locator('#status').textContent(),/timed out/);
+  await page.click('#applyCode');
+  // Apply persists first, then queues execution; wait for the observable result.
+  await page.waitForFunction(()=>/timed out/.test(document.querySelector('#status').textContent));
+  assert.match(await page.locator('#status').textContent(),/timed out/);
   await page.fill('#customCode',starter);await page.fill('[data-parameter="timeout"]','5');await page.locator('[data-parameter="timeout"]').press('Tab');await page.evaluate(()=>queue);
   await page.click('#applyCode');await page.evaluate(()=>queue);assert.equal(await page.locator('body.error').count(),0);
   await page.click('#closeCodeEditor');
