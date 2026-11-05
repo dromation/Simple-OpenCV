@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SimpleMotocam · Algorithm Studio</title>
+    <title>SimpleOpenCV · Algorithm Studio</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <header>
-      <a class="brand" href="./" aria-label="SimpleMotocam"
-        ><span class="mark">◉</span> SimpleMotocam <small>STUDIO</small></a
+      <a class="brand" href="./" aria-label="SimpleOpenCV"
+        ><span class="mark">◉</span> SimpleOpenCV <small>STUDIO</small></a
       ><input id="name" data-i18n-aria="projectName" maxlength="100" /><span
         class="spacer"
       ></span>
@@ -147,7 +147,8 @@
       <span class="dot"></span
       ><span id="status" role="status" data-i18n="starting"></span
       ><span class="spacer"></span
-      ><span>OpenCV · <span data-i18n="local"></span></span>
+      ><button id="openAbout" data-i18n="about" type="button"></button>
+      <span>OpenCV · <span data-i18n="local"></span></span>
     </footer>
     <dialog id="projects" aria-labelledby="projectsTitle">
       <div class="dialog-head">
@@ -180,6 +181,13 @@
         </button>
       </div>
       <iframe id="classroomFrame" data-i18n-title="guide"></iframe>
+    </dialog>
+    <dialog id="about" aria-labelledby="aboutTitle">
+      <div class="classroom-head">
+        <h2 id="aboutTitle" data-i18n="about"></h2>
+        <button id="closeAbout" data-i18n-aria="close" data-i18n-title="close">×</button>
+      </div>
+      <iframe id="aboutFrame" data-i18n-title="about"></iframe>
     </dialog>
     <input
       id="media"

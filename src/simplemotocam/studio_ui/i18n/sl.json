@@ -188,6 +188,7 @@
     "javaCodeContract": "Java: public static float[] process(Map<String, float[]> channels, Params p). Vrni p.rows * p.cols vrednosti. Parametri: p.input, p.gain, p.backend. Tukaj pišeš metode; aplikacija pripravi razred UserBlock.",
     "compiledHint": "Prvi zagon prevede kodo (do 30 sekund). Naslednje sličice uporabijo že prevedeno različico. Časovna omejitev bloka velja za izvajanje. Adapterji obdelujejo kanale float; operacije OpenCV ostanejo ločeni bloki izbranega pogona.",
     "blockMathRuntime": "Ta blok se izvede kot prevedena koda izbranega jezika.",
-    "blockVisionRuntime": "Izbrani jezik uporablja adapter do skupnega pogona OpenCV. Algoritem in različica OpenCV ostaneta enaka."
+    "blockVisionRuntime": "Izbrani jezik uporablja adapter do skupnega pogona OpenCV. Algoritem in različica OpenCV ostaneta enaka.",
+    "about": "O aplikaciji"
   }
 }

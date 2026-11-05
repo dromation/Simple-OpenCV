@@ -1,0 +1,23 @@
+<p class="eyebrow">OD SLIKE DO LASTNEGA ALGORITMA</p>
+<h1>Zakaj SimpleOpenCV?</h1>
+<p class="lead">Prostor za eksperimentiranje z računalniškim vidom: razstavi signal, spremeni matematiko, sestavi zaporedje in shrani tisto, kar deluje.</p>
+<h2>Začetek: poskusi v SimpleCV</h2>
+<p>Izhodišče projekta so bili avtorjevi poskusi v SimpleCV. Sliko je razdelil na rdeči, zeleni in modri kanal, jih prikazoval ločeno ter odšteval posamezne kanale med dvema posnetkoma. Tako je lahko opazoval spremembe, ki se pri prezgodnji pretvorbi v sivinsko sliko lahko izgubijo.</p>
+<p>Iz tega je nastala želja po okolju, kjer lahko spreminjaš samo eno predpostavko: izbrani kanal, utež, prag, filter ali enačbo. Rezultat spremembe mora biti takoj viden, brez stalnega preskakovanja med datotekami s kodo.</p>
+<h2>OpenCV 2.4 kot glavni temelj obdelave</h2>
+<p>Projekt temelji na repozitoriju <a href="https://github.com/dromation/Simple-OpenCV" target="_blank" rel="noopener">Simple-OpenCV</a>. OpenCV 2.4.13.7 ostaja glavni pogon zaradi kontinuitete s starejšimi poskusi, učnimi primeri in njihovimi algoritmi. SimpleCV je del zgodbe in navdih za pristop; ta aplikacija ni uradni naslednik ali kopija knjižnice SimpleCV.</p>
+<p>Zbirki <a href="https://github.com/mech-id-x/ComputerVision-MachineVision/tree/master/samples_code" target="_blank" rel="noopener">ComputerVision-MachineVision</a> in <a href="https://github.com/mech-id-x/SI_Eksperimenti_Strojnega_Vida" target="_blank" rel="noopener">SI_Eksperimenti_Strojnega_Vida</a> sta povezani z raziskovanjem in učnimi primeri projekta. Pri tujem gradivu veljajo njegove izvirne licence.</p>
+<h2>Od skript do sestavljanja blokov</h2>
+<p>Aplikacija se je razvila v vizualni laboratorij, najprej pod imenom SimpleMotocam in zdaj kot <strong>SimpleOpenCV</strong>. Algoritme sestavljaš iz blokov, povezuješ njihove kanale in spreminjaš parametre. Prazen blok omogoča lastno kodo. Dodatne primere poiščeš v knjižnici, uspešno sestavo pa shraniš kot stanje in izvoziš za ponovno uporabo.</p>
+<div class="flow">Kamera / slika → RGB → razlike kanalov → algebra → filter → robovi / zaznava</div>
+<pre>ΔR = R(t) − R(t−1)
+ΔG = G(t) − G(t−1)
+S = wR · ΔR + wG · ΔG + wB · ΔB</pre>
+<p>RGB so podatki slike. Dodatni A je izpeljana ocena zaupanja po izbranem modelu, ne samostojna meritev kamere ali samodejno pravilna verjetnost. Tudi tak model je namenjen raziskovanju in preverjanju.</p>
+<h2>Učenje in primerjava rezultatov</h2>
+<p>Učilnica v aplikaciji povezuje matematično razlago, zaporedja za zaznavanje in primere v različnih programskih jezikih. Cilj je razumeti, zakaj zaporedje deluje, preizkusiti drugo rešitev in primerjati rezultate. Geometrija in meroslovje sta smer nadaljnjega razvoja.</p>
+<h2>Zakaj različica za brskalnik?</h2>
+<p>Za uporabo na navadni domeni je nastala izdaja HTML. Pravi OpenCV 2.4.13.7 je preveden v WebAssembly; za trenutne bloke vključuje core in imgproc. OpenCV.js 4.13.0 je dodatna izbira. Izbrani pogon se shrani z algoritmom, zato lahko različici primerjaš zavestno.</p>
+<p>Obdelava poteka na uporabnikovem računalniku. Gostovanje dostavlja datoteke in ne potrebuje Python strežnika. HTML izdaja izvaja lastno kodo v JavaScriptu; lastna Python/C/C++/Java koda potrebuje namizno ali ustrezno strežniško okolje. Priloženi prevodi so že pripravljeni, modeli za prevajanje niso naloženi v brskalnik.</p>
+<h2>Avtorstvo in odprta koda</h2>
+<p>Projekt razvijajo mech-id-x in sodelavci na osnovi izvirnega dela Dromation. Lastna koda aplikacije ima licenco MIT. OpenCV in druge komponente ohranijo svoje licence, navedene spodaj. SimpleOpenCV ni uradni izdelek ali potrjena izdaja projektov OpenCV oziroma SimpleCV.</p>

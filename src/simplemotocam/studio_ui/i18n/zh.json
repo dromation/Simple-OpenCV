@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "ed07b386caac8c10e57baffbd06f360517718e045b03762623e03eeec00a0aac",
+  "sourceDigest": "a90ecb15c027ee4d642cb2f9712b0f489bcc3c89488da8e23247a9328e25e042",
   "protectedFallbackKeys": [
     "export",
     "exampleHint",
@@ -210,6 +210,7 @@
     "javaCodeContract": "Java: public static float[] process(Map<String, float[]> channels, Params p). 返回 p.rows * p.cols 值。 参数: p.input, p.gain, p.backend。 在这里写方法;应用程序提供 UserBlock 类。",
     "compiledHint": "第一行编写您的代码(高达 30 秒)。 后来,重复使用建筑。 区块时间限制适用于执行。 这些适配器处理流通渠道; OpenCV 操作在所选择的发动机中保持单独的区块。",
     "blockMathRuntime": "这个区块在所选择的语言中作为编写代码运行。",
-    "blockVisionRuntime": "选择的语言使用共享 OpenCV 引擎的适配器。 算法和 OpenCV 版本保持相同。"
+    "blockVisionRuntime": "选择的语言使用共享 OpenCV 引擎的适配器。 算法和 OpenCV 版本保持相同。",
+    "about": "关于应用"
   }
 }

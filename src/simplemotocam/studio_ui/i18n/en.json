@@ -188,6 +188,7 @@
     "javaCodeContract": "Java: public static float[] process(Map<String, float[]> channels, Params p). Return p.rows * p.cols values. Parameters: p.input, p.gain, p.backend. Write methods here; the application supplies the UserBlock class.",
     "compiledHint": "The first run compiles your code (up to 30 seconds). Later frames reuse the build. The block time limit applies to execution. These adapters process float channels; OpenCV operations remain separate blocks in the selected engine.",
     "blockMathRuntime": "This block runs as compiled code in the selected language.",
-    "blockVisionRuntime": "The selected language uses an adapter to the shared OpenCV engine. The algorithm and OpenCV version stay the same."
+    "blockVisionRuntime": "The selected language uses an adapter to the shared OpenCV engine. The algorithm and OpenCV version stay the same.",
+    "about": "About"
   }
 }

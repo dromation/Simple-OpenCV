@@ -1,0 +1,23 @@
+<p class="eyebrow">FROM IMAGES TO YOUR OWN ALGORITHM</p>
+<h1>Why SimpleOpenCV?</h1>
+<p class="lead">A place to experiment with computer vision: separate the signals, change the mathematics, assemble a pipeline and save what works.</p>
+<h2>The starting point: experiments in SimpleCV</h2>
+<p>The project began with the author's experiments in SimpleCV: separating red, green and blue channels, displaying them individually and subtracting individual channels between frames. This made it possible to inspect changes that an early conversion to grayscale can hide.</p>
+<p>Those experiments suggested an environment where one assumption could be changed at a time: a channel, weight, threshold, filter or equation. Its effect should be visible immediately, without constantly switching between source files.</p>
+<h2>OpenCV 2.4 as the primary processing foundation</h2>
+<p>The codebase builds on the <a href="https://github.com/dromation/Simple-OpenCV" target="_blank" rel="noopener">Simple-OpenCV repository</a>. OpenCV 2.4.13.7 remains the primary engine to maintain continuity with earlier experiments, teaching examples and algorithms. SimpleCV inspired the approach; this application is not an official successor or a copy of the SimpleCV library.</p>
+<p>The <a href="https://github.com/mech-id-x/ComputerVision-MachineVision/tree/master/samples_code" target="_blank" rel="noopener">ComputerVision-MachineVision</a> and <a href="https://github.com/mech-id-x/SI_Eksperimenti_Strojnega_Vida" target="_blank" rel="noopener">SI_Eksperimenti_Strojnega_Vida</a> collections are associated with the project's research and teaching examples. Third-party material retains its original licensing terms.</p>
+<h2>From scripts to configurable blocks</h2>
+<p>The application grew into a visual laboratory, initially called SimpleMotocam and now named <strong>SimpleOpenCV</strong>. Assemble algorithms from blocks, connect their channels and adjust parameters. An empty block accepts custom code. Find additional examples in the library, save a successful configuration and export it for reuse.</p>
+<div class="flow">Camera / image → RGB → channel differences → algebra → filter → edges / detection</div>
+<pre>ΔR = R(t) − R(t−1)
+ΔG = G(t) − G(t−1)
+S = wR · ΔR + wG · ΔG + wB · ΔB</pre>
+<p>RGB carries image data. The added A channel is a derived confidence weight under a chosen model, not a separate camera measurement or an automatically calibrated probability. The model itself is open to experimentation and validation.</p>
+<h2>Learning and comparing results</h2>
+<p>The in-app classroom connects mathematical explanations, detection sequences and examples in different programming languages. The aim is to understand why a sequence works, try alternatives and compare results. Geometry and metrology are directions for further development.</p>
+<h2>Why a browser edition?</h2>
+<p>The HTML edition makes the application usable on an ordinary domain. Genuine OpenCV 2.4.13.7 is compiled to WebAssembly, with core and imgproc supporting the current blocks. OpenCV.js 4.13.0 is an optional second engine. The selected version is saved with the algorithm, allowing deliberate comparisons.</p>
+<p>Processing runs on the user's computer. Hosting serves files and needs no Python server. Custom code in the HTML edition runs in JavaScript; custom Python/C/C++/Java code requires the desktop or an appropriate server environment. Translations are prepared in advance; translation models are not loaded into the browser.</p>
+<h2>Authorship and open source</h2>
+<p>Developed by mech-id-x and contributors on the original Dromation work. Project-authored application code uses the MIT license. OpenCV and other components retain their own licenses, listed below. SimpleOpenCV is not an official or endorsed product of the OpenCV or SimpleCV projects.</p>

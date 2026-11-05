@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "ed07b386caac8c10e57baffbd06f360517718e045b03762623e03eeec00a0aac",
+  "sourceDigest": "a90ecb15c027ee4d642cb2f9712b0f489bcc3c89488da8e23247a9328e25e042",
   "protectedFallbackKeys": [
     "export",
     "exampleHint",
@@ -208,6 +208,7 @@
     "javaCodeContract": "Java: public static float[] process(Map<String, float[]> channels, Params p). Povratak vrijednosti p.rows * p.cols Parametri: p.input, p.gain, p.backend. Napisajte metode ovdje; aplikacija pruža razred UserBlock.",
     "compiledHint": "Prva trka sastavlja svoj kod (do 30 sekundi). Kasnije okvir ponovno koristi građevinu. Rok za blokiranje primjenjuje se na izvršenje. Ovi adapteri obrađuju kanale pluta; OpenCV operacije ostaju odvojenim blokovima u odabranom motoru.",
     "blockMathRuntime": "Ovaj blok djeluje kao kompilirani kod na odabranom jeziku.",
-    "blockVisionRuntime": "Izabrani jezik koristi adapter za zajednički OpenCV motor. Algoritam i OpenCV verzija ostaju isti."
+    "blockVisionRuntime": "Izabrani jezik koristi adapter za zajednički OpenCV motor. Algoritam i OpenCV verzija ostaju isti.",
+    "about": "O aplikaciji"
   }
 }

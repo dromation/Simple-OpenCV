@@ -3,3 +3,8 @@ deploy/static/vendor/opencv.js -text -diff
 deploy/static/vendor/opencv24/opencv24.js -text -diff
 # Keep the upstream license text, including its original whitespace.
 deploy/static/vendor/opencv24/Emscripten-LICENSE.txt -text -whitespace
+
+# Preserve upstream notices byte-for-byte, including their whitespace.
+docs/licenses/simpleopencv/** -text -whitespace
+# Generated page embeds unmodified license notices in preformatted sections.
+src/simplemotocam/studio_ui/about.html -whitespace

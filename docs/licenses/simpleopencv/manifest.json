@@ -1,0 +1,779 @@
+[
+  {
+    "file": "browser/OpenCV-2.4.13.7.txt",
+    "component": "OpenCV 2.4.13.7",
+    "group": "browser",
+    "source": "deploy/static/vendor/opencv24/OpenCV-LICENSE.txt",
+    "sha256": "46e42877dfc3ac65769292cb4dc1a04b204ad9e40859a390f4c035d6179fbcc4"
+  },
+  {
+    "file": "browser/OpenCV-4.13.0.txt",
+    "component": "OpenCV 4.13.0",
+    "group": "browser",
+    "source": "deploy/static/vendor/OpenCV-LICENSE.txt",
+    "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+  },
+  {
+    "file": "browser/zlib-1.2.7.txt",
+    "component": "zlib 1.2.7 (OpenCV 2.4)",
+    "group": "browser",
+    "source": "deploy/static/vendor/opencv24/zlib-LICENSE.txt",
+    "sha256": "29027dfb334aea40a177c5fb4ee69e487b071c455465f4f9e35a410debc61d6e"
+  },
+  {
+    "file": "browser/Emscripten.txt",
+    "component": "Emscripten runtime",
+    "group": "browser",
+    "source": "deploy/static/vendor/opencv24/Emscripten-LICENSE.txt",
+    "sha256": "620a78084fc7ca97c0b5dea9abf891f3ffcadfdbf305276f099c9c4e12fc1d86"
+  },
+  {
+    "file": "browser/zlib-1.3.1.txt",
+    "component": "zlib-1.3.1 (OpenCV 4.13)",
+    "group": "browser",
+    "source": "https://raw.githubusercontent.com/opencv/opencv/4.13.0/3rdparty/zlib/LICENSE",
+    "sha256": "845efc77857d485d91fb3e0b884aaa929368c717ae8186b66fe1ed2495753243"
+  },
+  {
+    "file": "browser/Protobuf-3.19.1.txt",
+    "component": "Protobuf-3.19.1 (OpenCV 4.13)",
+    "group": "browser",
+    "source": "https://raw.githubusercontent.com/opencv/opencv/4.13.0/3rdparty/protobuf/LICENSE",
+    "sha256": "6e5e117324afd944dcf67f36cf329843bc1a92229a8cd9bb573d7a83130fea7d"
+  },
+  {
+    "file": "browser/FlatBuffers-25.9.23.txt",
+    "component": "FlatBuffers-25.9.23 (OpenCV 4.13)",
+    "group": "browser",
+    "source": "https://raw.githubusercontent.com/opencv/opencv/4.13.0/3rdparty/flatbuffers/LICENSE.txt",
+    "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+  },
+  {
+    "file": "browser/SoftFloat.txt",
+    "component": "SoftFloat (OpenCV 4.13)",
+    "group": "browser",
+    "source": "https://raw.githubusercontent.com/opencv/opencv/4.13.0/modules/core/3rdparty/SoftFloat/COPYING.txt",
+    "sha256": "0c5b08365136da52639d777f1ebfc03988b0169d80655c90c59f1b3fa3e526a2"
+  },
+  {
+    "file": "browser/FLANN.txt",
+    "component": "FLANN (OpenCV 4.13)",
+    "group": "browser",
+    "source": "https://raw.githubusercontent.com/opencv/opencv/4.13.0/modules/flann/include/opencv2/flann/flann.hpp",
+    "sha256": "f25691afb72b2d0bdbea81e96c2db7f02206c9d060562c007a00cd2a3af28de8"
+  },
+  {
+    "file": "desktop/numpy-2.2.6-LICENSE.txt",
+    "component": "numpy 2.2.6",
+    "group": "desktop",
+    "source": "Installed numpy 2.2.6 wheel: numpy-2.2.6.dist-info/LICENSE.txt",
+    "sha256": "14256cc3a2c9d32ac284da96b937feb44f72dd90bee2317ac3020166846ad99d"
+  },
+  {
+    "file": "desktop/opencv-python-4.14.0.94-LICENSE-3RD-PARTY.txt",
+    "component": "opencv-python 4.14.0.94",
+    "group": "desktop",
+    "source": "Installed opencv-python 4.14.0.94 wheel: opencv_python-4.14.0.94.dist-info/LICENSE-3RD-PARTY.txt",
+    "sha256": "e24e3768561906cc7ccba808f2e8bb4b4bcb2988fece11656b7b56cf14da6bc5"
+  },
+  {
+    "file": "desktop/opencv-python-4.14.0.94-LICENSE.txt",
+    "component": "opencv-python 4.14.0.94",
+    "group": "desktop",
+    "source": "Installed opencv-python 4.14.0.94 wheel: opencv_python-4.14.0.94.dist-info/LICENSE.txt",
+    "sha256": "edef0fac1eb08d29d34563f724742e078da2513e196133a12c6ad9ff01e26107"
+  },
+  {
+    "file": "browser/OpenCV-4.13-build-information.txt",
+    "component": "OpenCV 4.13 build inventory",
+    "group": "evidence",
+    "source": "cv.getBuildInformation() from pinned vendor/opencv.js",
+    "sha256": "8eb988ed4643793a311fd7a89df5c82447bbf14cb7532efb8fcccd9cbbc328e3"
+  },
+  {
+    "file": "browser/musl.txt",
+    "component": "musl (Emscripten runtime)",
+    "group": "browser",
+    "source": "https://github.com/emscripten-core/emscripten/blob/3.1.74/system/lib/libc/musl/COPYRIGHT",
+    "sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af"
+  },
+  {
+    "file": "browser/libcxx.txt",
+    "component": "libcxx (Emscripten runtime)",
+    "group": "browser",
+    "source": "https://github.com/emscripten-core/emscripten/blob/3.1.74/system/lib/libcxx/LICENSE.TXT",
+    "sha256": "539dd7aed86e8a4f12cbdd0e6c50c189c7d74847e4fecc64ce2c6ee3a01da38b"
+  },
+  {
+    "file": "browser/libcxxabi.txt",
+    "component": "libcxxabi (Emscripten runtime)",
+    "group": "browser",
+    "source": "https://github.com/emscripten-core/emscripten/blob/3.1.74/system/lib/libcxxabi/LICENSE.TXT",
+    "sha256": "e2b35be49f7284a45b7baca8fc7b3ab7440e7902392b2528a457816b5bb2a15c"
+  },
+  {
+    "file": "browser/compiler-rt.txt",
+    "component": "compiler-rt (Emscripten runtime)",
+    "group": "browser",
+    "source": "https://github.com/emscripten-core/emscripten/blob/3.1.74/system/lib/compiler-rt/LICENSE.TXT",
+    "sha256": "1a8f1058753f1ba890de984e48f0242a3a5c29a6a8f2ed9fd813f36985387e8d"
+  },
+  {
+    "file": "tooling/CTranslate2-4.8.3.txt",
+    "component": "CTranslate2-4.8.3",
+    "group": "tooling",
+    "source": "https://raw.githubusercontent.com/OpenNMT/CTranslate2/v4.8.3/LICENSE",
+    "sha256": "54aa79d9fe3c09e67a16dcd95b9e88676405a6ec174efda31036983cf7672ecb"
+  },
+  {
+    "file": "tooling/SentencePiece-0.2.2.txt",
+    "component": "SentencePiece-0.2.2",
+    "group": "tooling",
+    "source": "https://raw.githubusercontent.com/google/sentencepiece/v0.2.2/LICENSE",
+    "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+  },
+  {
+    "file": "tooling/Tokenizers-0.22.2.txt",
+    "component": "Tokenizers-0.22.2",
+    "group": "tooling",
+    "source": "https://raw.githubusercontent.com/huggingface/tokenizers/v0.22.2/LICENSE",
+    "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+  },
+  {
+    "file": "tooling/M2M100.txt",
+    "component": "M2M100",
+    "group": "tooling",
+    "source": "https://raw.githubusercontent.com/facebookresearch/fairseq/main/LICENSE",
+    "sha256": "52412d7bc7ce4157ea628bbaacb8829e0a9cb3c58f57f99176126bc8cf2bfc85"
+  },
+  {
+    "file": "tooling/transformers-4.57.6/licenses/LICENSE",
+    "component": "transformers 4.57.6",
+    "group": "tooling",
+    "source": "Installed wheel: transformers-4.57.6.dist-info/licenses/LICENSE",
+    "sha256": "77fd4710def9ec3c0f6225800e0235f15a425abd4a8b03559127fcd782612049"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/LICENSE",
+    "sha256": "0fc92425d130d9c87a5eb7427082e3afdbff6ef169bc678e15abba4c2d37c934"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/FP16/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/FP16/LICENSE",
+    "sha256": "68349589306bdfa3631ac7f84633956bf21b6a448ed5e43383ea75a8a5f54e4c"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/FXdiv/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/FXdiv/LICENSE",
+    "sha256": "9e7b48284b1aef91999d1967d093711bab8f3bbbaf31e0670ab7a3af077c0a2b"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/NNPACK/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/NNPACK/LICENSE",
+    "sha256": "a4dadeb3d59219de6cdf5cb6bf920760103eed9ae5af2e71b0e8462645397b66"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/NVTX/LICENSE.txt",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/NVTX/LICENSE.txt",
+    "sha256": "c3b19baa37cf18bac07b65700824acadcfa617316f02af10d3852ed20f4f6ab8"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/NVTX/docs/LICENSE.txt",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/NVTX/docs/LICENSE.txt",
+    "sha256": "c3b19baa37cf18bac07b65700824acadcfa617316f02af10d3852ed20f4f6ab8"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/NVTX/python/LICENSE.txt",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/NVTX/python/LICENSE.txt",
+    "sha256": "c3b19baa37cf18bac07b65700824acadcfa617316f02af10d3852ed20f4f6ab8"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/NVTX/rust/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/NVTX/rust/LICENSE",
+    "sha256": "4baebe905073b57ce85f6a0aeb242cac589181f6574c0dc87993c25d9bcf4775"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/NVTX/tools/docs/github-markdown-css/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/NVTX/tools/docs/github-markdown-css/LICENSE",
+    "sha256": "fcf1a18be2e25ba82acf2c59821b030d8ee764e4e201db6ef3c51900d385515f"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/VulkanMemoryAllocator/LICENSE.txt",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/VulkanMemoryAllocator/LICENSE.txt",
+    "sha256": "e5fc8b0b0357a75d63649c8f2552576aaa6941c361a013710bb53afc64d3a8aa"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/XNNPACK/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/XNNPACK/LICENSE",
+    "sha256": "4805a18e3c617424da5b7f6d8b9fde3df2fb6a5e26a6b6663a6cdb66db664d8c"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/aiter/3rdparty/composable_kernel/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/aiter/3rdparty/composable_kernel/LICENSE",
+    "sha256": "99ec4452f4047b6c53016a502bf94451eb317eff5aab5f63cebc16f94020d64f"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/aiter/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/aiter/LICENSE",
+    "sha256": "844e3a38ca6f748e10eb63f07eb343ddca3b5a0a6bb40b0f621fcc54ea03deb3"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/benchmark/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/benchmark/LICENSE",
+    "sha256": "3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/composable_kernel/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/composable_kernel/LICENSE",
+    "sha256": "99ec4452f4047b6c53016a502bf94451eb317eff5aab5f63cebc16f94020d64f"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/cpp-httplib/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/cpp-httplib/LICENSE",
+    "sha256": "bb546eae5924d8ee842e0e567e6d533c5824bdebccf605f99a5b3429034e6697"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/cpuinfo/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/cpuinfo/LICENSE",
+    "sha256": "8477bdd6a4d9f5178e5dfda1e32239c7b09c9d6da3804ae3e5c1a80210c0dd21"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/cpuinfo/deps/clog/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/cpuinfo/deps/clog/LICENSE",
+    "sha256": "8c29231fd0034d4b1caaae8c0a63bce71f95cd8c4b0494c8588930b75c3d2155"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/cudnn_frontend/LICENSE.txt",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/cudnn_frontend/LICENSE.txt",
+    "sha256": "b6fe452605fe29245f0cbafa724b42df94a5e170bedb9d45bc9cfaa4883ad907"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/cutlass/LICENSE.txt",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/cutlass/LICENSE.txt",
+    "sha256": "10e174914fb737aec2d32762bd2e45861acb5ebf1656bee6cf575a6019a08cf0"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/cutlass/python/LICENSE.txt",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/cutlass/python/LICENSE.txt",
+    "sha256": "932c16f6c4f0187eda3af18df07300f8807eda85ca974bf46c5ed11fd91e5c2f"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/fbgemm/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/fbgemm/LICENSE",
+    "sha256": "5d5d5b022ecf828c796a64ad7afcfd62971bf58a52b71668cd48137ca02824c5"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/fbgemm/external/composable_kernel/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/fbgemm/external/composable_kernel/LICENSE",
+    "sha256": "99ec4452f4047b6c53016a502bf94451eb317eff5aab5f63cebc16f94020d64f"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/fbgemm/external/cpuinfo/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/fbgemm/external/cpuinfo/LICENSE",
+    "sha256": "8477bdd6a4d9f5178e5dfda1e32239c7b09c9d6da3804ae3e5c1a80210c0dd21"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/fbgemm/external/cpuinfo/deps/clog/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/fbgemm/external/cpuinfo/deps/clog/LICENSE",
+    "sha256": "8c29231fd0034d4b1caaae8c0a63bce71f95cd8c4b0494c8588930b75c3d2155"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/fbgemm/external/cutlass/LICENSE.txt",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/fbgemm/external/cutlass/LICENSE.txt",
+    "sha256": "3288ff56f62ade1ef032bd860b6d92482f83f1d3073ad5125b87228b9c11e0a8"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/fbgemm/external/cutlass/python/LICENSE.txt",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/fbgemm/external/cutlass/python/LICENSE.txt",
+    "sha256": "6b9e8b964c2a90f7743107a23bccec9ebc6f5a47d4a8fa3d986aa6f51f86da68"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/fbgemm/external/googletest/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/fbgemm/external/googletest/LICENSE",
+    "sha256": "46c35a3c9ac8ef63c16ca69b5cf0166df9fcdb789e318175c92a219de517b8e7"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/fbgemm/external/hipify_torch/LICENSE.txt",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/fbgemm/external/hipify_torch/LICENSE.txt",
+    "sha256": "e63d8a0f5ab5cc02d848c6ef51b7bea58644a07223aa0acdb905260a1031b2e6"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/fbgemm/fbgemm_gpu/experimental/hstu/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/fbgemm/fbgemm_gpu/experimental/hstu/LICENSE",
+    "sha256": "c364d38c8ee8070159ad68f56a8bab4917b8d020548da33a01e036505c8e4add"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/fbgemm/fbgemm_gpu/src/quantize_ops/mx/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/fbgemm/fbgemm_gpu/src/quantize_ops/mx/LICENSE",
+    "sha256": "9906940f61b1f0b533fa7d99baf55178b2808fbe113ea51dfbfad8572ccd5f2b"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/fbgemm/fbgemm_gpu/test/quantize/mx/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/fbgemm/fbgemm_gpu/test/quantize/mx/LICENSE",
+    "sha256": "9906940f61b1f0b533fa7d99baf55178b2808fbe113ea51dfbfad8572ccd5f2b"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/flash-attention/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/flash-attention/LICENSE",
+    "sha256": "c364d38c8ee8070159ad68f56a8bab4917b8d020548da33a01e036505c8e4add"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/flash-attention/csrc/composable_kernel/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/flash-attention/csrc/composable_kernel/LICENSE",
+    "sha256": "99ec4452f4047b6c53016a502bf94451eb317eff5aab5f63cebc16f94020d64f"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/flash-attention/csrc/cutlass/LICENSE.txt",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/flash-attention/csrc/cutlass/LICENSE.txt",
+    "sha256": "3288ff56f62ade1ef032bd860b6d92482f83f1d3073ad5125b87228b9c11e0a8"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/flash-attention/csrc/cutlass/python/LICENSE.txt",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/flash-attention/csrc/cutlass/python/LICENSE.txt",
+    "sha256": "6b9e8b964c2a90f7743107a23bccec9ebc6f5a47d4a8fa3d986aa6f51f86da68"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/flash-attention/flash_attn/cute/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/flash-attention/flash_attn/cute/LICENSE",
+    "sha256": "c364d38c8ee8070159ad68f56a8bab4917b8d020548da33a01e036505c8e4add"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/flash-attention/third_party/aiter/3rdparty/composable_kernel/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/flash-attention/third_party/aiter/3rdparty/composable_kernel/LICENSE",
+    "sha256": "99ec4452f4047b6c53016a502bf94451eb317eff5aab5f63cebc16f94020d64f"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/flash-attention/third_party/aiter/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/flash-attention/third_party/aiter/LICENSE",
+    "sha256": "844e3a38ca6f748e10eb63f07eb343ddca3b5a0a6bb40b0f621fcc54ea03deb3"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/flatbuffers/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/flatbuffers/LICENSE",
+    "sha256": "3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/flatbuffers/dart/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/flatbuffers/dart/LICENSE",
+    "sha256": "35cf0c0dca02767d12b9a8c12ae1b6a1c08045f220df4a52b0e01563a568fe6b"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/flatbuffers/swift/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/flatbuffers/swift/LICENSE",
+    "sha256": "3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/fmt/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/fmt/LICENSE",
+    "sha256": "e53b24254a17f6acdaf967557c287dca7e920b22cc6290f6a84d57c34d942a6e"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/gemmlowp/gemmlowp/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/gemmlowp/gemmlowp/LICENSE",
+    "sha256": "3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/gloo/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/gloo/LICENSE",
+    "sha256": "6247f690b423835966eba51cad47b4c7d6a72ca226733dd1c473e4624fe6bb23"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/googletest/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/googletest/LICENSE",
+    "sha256": "46c35a3c9ac8ef63c16ca69b5cf0166df9fcdb789e318175c92a219de517b8e7"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/ideep/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/ideep/LICENSE",
+    "sha256": "e1b43a11adfb7a5bd52089243a273ab85f0a695d0437bb34a418969501392573"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/ideep/mkl-dnn/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/ideep/mkl-dnn/LICENSE",
+    "sha256": "b1dd911e534a75dd4dfd8dbc11a3193bd177c8390e7fcf462f98d2c8c235e112"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/ideep/mkl-dnn/third_party/gtest/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/ideep/mkl-dnn/third_party/gtest/LICENSE",
+    "sha256": "46c35a3c9ac8ef63c16ca69b5cf0166df9fcdb789e318175c92a219de517b8e7"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/ideep/mkl-dnn/third_party/opencl/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/ideep/mkl-dnn/third_party/opencl/LICENSE",
+    "sha256": "3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/kineto/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/kineto/LICENSE",
+    "sha256": "97729794764240cc12e0e22fe31b0cea824741c601bd09bd91b832e285e1f8c5"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/kineto/libkineto/third_party/dynolog_headers/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/kineto/libkineto/third_party/dynolog_headers/LICENSE",
+    "sha256": "f08a94bfb0bdc1d7f1cb59badaf0f8c551b10db871185622dbf1fd036affa9cb"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/kineto/libkineto/third_party/fmt/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/kineto/libkineto/third_party/fmt/LICENSE",
+    "sha256": "25b5db04aa6070c12ac518b91cbd0a59725c050ecb091456e6ebc3d3eeb369cf"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/kineto/libkineto/third_party/googletest/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/kineto/libkineto/third_party/googletest/LICENSE",
+    "sha256": "46c35a3c9ac8ef63c16ca69b5cf0166df9fcdb789e318175c92a219de517b8e7"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/llvm-openmp/LICENSE.txt",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/llvm-openmp/LICENSE.txt",
+    "sha256": "eb3eab74fe9245818659556acf23e81b8c8a24915a4a244a23804f3fcdf1fd9c"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/mimalloc/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/mimalloc/LICENSE",
+    "sha256": "82ade5d7d9b029044b5fbbc326207fc47c2d44ee4dd71e8a559c36d728217de9"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/miniz-3.0.2/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/miniz-3.0.2/LICENSE",
+    "sha256": "0115478d567121238cf6cc1c0c361926cf07a49d9e4c9e66da97fac6a01646b3"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/mslk/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/mslk/LICENSE",
+    "sha256": "322bba2f33f594948052de342fd7d5bd26892e2a92ba75fbb5a433eff0b229c7"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/mslk/external/composable_kernel/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/mslk/external/composable_kernel/LICENSE",
+    "sha256": "99ec4452f4047b6c53016a502bf94451eb317eff5aab5f63cebc16f94020d64f"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/mslk/external/cutlass/LICENSE.txt",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/mslk/external/cutlass/LICENSE.txt",
+    "sha256": "3288ff56f62ade1ef032bd860b6d92482f83f1d3073ad5125b87228b9c11e0a8"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/mslk/external/cutlass/python/LICENSE.txt",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/mslk/external/cutlass/python/LICENSE.txt",
+    "sha256": "6b9e8b964c2a90f7743107a23bccec9ebc6f5a47d4a8fa3d986aa6f51f86da68"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/mslk/external/googletest/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/mslk/external/googletest/LICENSE",
+    "sha256": "46c35a3c9ac8ef63c16ca69b5cf0166df9fcdb789e318175c92a219de517b8e7"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/mslk/external/hipify_torch/LICENSE.txt",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/mslk/external/hipify_torch/LICENSE.txt",
+    "sha256": "e63d8a0f5ab5cc02d848c6ef51b7bea58644a07223aa0acdb905260a1031b2e6"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/mslk/mslk/attention/flash_attn/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/mslk/mslk/attention/flash_attn/LICENSE",
+    "sha256": "c364d38c8ee8070159ad68f56a8bab4917b8d020548da33a01e036505c8e4add"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/onnx/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/onnx/LICENSE",
+    "sha256": "3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/onnx/third_party/pybind11/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/onnx/third_party/pybind11/LICENSE",
+    "sha256": "5494773a5dcf654c0c3c844fbb11cfc4f898ea0ea44cf467f29e5c99097da6e7"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/perfetto/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/perfetto/LICENSE",
+    "sha256": "6bef87f6b4eda6c3cf0f42f780967e192df6412e4933f0ffb106638629aa3364"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/protobuf/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/protobuf/LICENSE",
+    "sha256": "f4df8b2457697851385d9ebb93267832c1dfa24e0e61881952f6b0c452663dc9"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/protobuf/third_party/benchmark/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/protobuf/third_party/benchmark/LICENSE",
+    "sha256": "3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/protobuf/third_party/googletest/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/protobuf/third_party/googletest/LICENSE",
+    "sha256": "46c35a3c9ac8ef63c16ca69b5cf0166df9fcdb789e318175c92a219de517b8e7"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/protobuf/third_party/googletest/googlemock/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/protobuf/third_party/googletest/googlemock/LICENSE",
+    "sha256": "46c35a3c9ac8ef63c16ca69b5cf0166df9fcdb789e318175c92a219de517b8e7"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/protobuf/third_party/googletest/googlemock/scripts/generator/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/protobuf/third_party/googletest/googlemock/scripts/generator/LICENSE",
+    "sha256": "e438ef741bf3660b5c54f4452d7c0b387c8557207cc3e9cda499e461a94df2b2"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/protobuf/third_party/googletest/googletest/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/protobuf/third_party/googletest/googletest/LICENSE",
+    "sha256": "46c35a3c9ac8ef63c16ca69b5cf0166df9fcdb789e318175c92a219de517b8e7"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/protobuf/third_party/utf8_range/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/protobuf/third_party/utf8_range/LICENSE",
+    "sha256": "2317ba964cb26897602b47271a156b2c9ee140d923fa25e8f2229f20d6f3a819"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/psimd/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/psimd/LICENSE",
+    "sha256": "6bc97741b2f00a1d0a2f8e9be4c8af7ff837f968fe8e494864caf57026cfdbcb"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/pthreadpool/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/pthreadpool/LICENSE",
+    "sha256": "2aae36e3c88f88b5e8afff5ca8d05480745ba7ad7e8d62867293c604efc0ce46"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/pybind11/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/pybind11/LICENSE",
+    "sha256": "5494773a5dcf654c0c3c844fbb11cfc4f898ea0ea44cf467f29e5c99097da6e7"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/sleef/LICENSE.txt",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/sleef/LICENSE.txt",
+    "sha256": "beb8e42e9d6b4284e03304d05a81a0755200a965fc8d0a5e0aea1e84cf805d6e"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/tensorpipe/LICENSE.txt",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/tensorpipe/LICENSE.txt",
+    "sha256": "a51531fad20e44cae492c601bc0997d961c17a74f25f9473ff62eb70e108277d"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/tensorpipe/third_party/googletest/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/tensorpipe/third_party/googletest/LICENSE",
+    "sha256": "46c35a3c9ac8ef63c16ca69b5cf0166df9fcdb789e318175c92a219de517b8e7"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/tensorpipe/third_party/googletest/googlemock/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/tensorpipe/third_party/googletest/googlemock/LICENSE",
+    "sha256": "46c35a3c9ac8ef63c16ca69b5cf0166df9fcdb789e318175c92a219de517b8e7"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/tensorpipe/third_party/googletest/googlemock/scripts/generator/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/tensorpipe/third_party/googletest/googlemock/scripts/generator/LICENSE",
+    "sha256": "e438ef741bf3660b5c54f4452d7c0b387c8557207cc3e9cda499e461a94df2b2"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/tensorpipe/third_party/googletest/googletest/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/tensorpipe/third_party/googletest/googletest/LICENSE",
+    "sha256": "46c35a3c9ac8ef63c16ca69b5cf0166df9fcdb789e318175c92a219de517b8e7"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/tensorpipe/third_party/libnop/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/tensorpipe/third_party/libnop/LICENSE",
+    "sha256": "abd3ed80490d1d168f12f6ced5a558398640e6d375382c7b85d290689a222822"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/tensorpipe/third_party/libuv/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/tensorpipe/third_party/libuv/LICENSE",
+    "sha256": "7aab26dd7e0e6661accc1fd9fc19410e01b466aa0ac36ea668b2013152a8ca23"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/tensorpipe/third_party/pybind11/LICENSE",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/tensorpipe/third_party/pybind11/LICENSE",
+    "sha256": "15619fd6ee80e905a159b8139f7791f5ae1dce142d5101d099404cc5cf1007ba"
+  },
+  {
+    "file": "tooling/torch-2.14.1/licenses/third_party/tensorpipe/third_party/pybind11/tools/clang/LICENSE.txt",
+    "component": "torch 2.14.1",
+    "group": "tooling",
+    "source": "Installed wheel: torch-2.14.1.dist-info/licenses/third_party/tensorpipe/third_party/pybind11/tools/clang/LICENSE.txt",
+    "sha256": "dcd8a8d43f2dc19ba6f879f3a7e96f59e66ecb195099f700dfdcfb50641c10c9"
+  },
+  {
+    "file": "tooling/safetensors-0.8.0/licenses/LICENSE",
+    "component": "safetensors 0.8.0",
+    "group": "tooling",
+    "source": "Installed wheel: safetensors-0.8.0.dist-info/licenses/LICENSE",
+    "sha256": "1eb85fc97224598dad1852b5d6483bbcf0aa8608790dcc657a5a2a761ae9c8c6"
+  },
+  {
+    "file": "tooling/huggingface-hub-0.36.2/licenses/LICENSE",
+    "component": "huggingface-hub 0.36.2",
+    "group": "tooling",
+    "source": "Installed wheel: huggingface_hub-0.36.2.dist-info/licenses/LICENSE",
+    "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+  }
+]

@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "ed07b386caac8c10e57baffbd06f360517718e045b03762623e03eeec00a0aac",
+  "sourceDigest": "a90ecb15c027ee4d642cb2f9712b0f489bcc3c89488da8e23247a9328e25e042",
   "protectedFallbackKeys": [
     "export",
     "exampleHint",
@@ -208,6 +208,7 @@
     "javaCodeContract": "Java: public static float[] process(Map<String, float[]> channels, Params p). Retour des valeurs p.rows * p.cols. Paramètres : p.input, p.gain, p.backend. Écrivez les méthodes ici; l'application fournit la classe UserBlock.",
     "compiledHint": "Le premier cours compile votre code (jusqu'à 30 secondes). Plus tard, les cadres réutilisent le bâtiment. Le délai de bloc s’applique à l’exécution. Ces adaptateurs traitent des canaux flottants ; les opérations OpenCV restent des blocs séparés dans le moteur sélectionné.",
     "blockMathRuntime": "Ce bloc fonctionne comme code compilé dans la langue sélectionnée.",
-    "blockVisionRuntime": "Le langage sélectionné utilise un adaptateur pour le moteur OpenCV partagé. L’algorithme et la version OpenCV restent les mêmes."
+    "blockVisionRuntime": "Le langage sélectionné utilise un adaptateur pour le moteur OpenCV partagé. L’algorithme et la version OpenCV restent les mêmes.",
+    "about": "À propos"
   }
 }

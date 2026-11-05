@@ -1,4 +1,4 @@
-/* SimpleMotocam browser numerical engine. MIT. No server or Python required. */
+/* SimpleOpenCV browser numerical engine. MIT. No server or Python required. */
 "use strict";
 globalThis.SMEngine = (() => {
  const f=Math.fround, own=(o,k)=>Object.prototype.hasOwnProperty.call(o,k);

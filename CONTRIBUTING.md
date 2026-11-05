@@ -1,4 +1,4 @@
-# Contributing to SimpleMotocam
+# Contributing to SimpleOpenCV
 
 Build small, inspectable computer-vision experiments. A block should make its mathematics, inputs, outputs and limitations clear.
 

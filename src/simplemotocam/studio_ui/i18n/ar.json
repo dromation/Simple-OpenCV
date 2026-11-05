@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "ed07b386caac8c10e57baffbd06f360517718e045b03762623e03eeec00a0aac",
+  "sourceDigest": "a90ecb15c027ee4d642cb2f9712b0f489bcc3c89488da8e23247a9328e25e042",
   "protectedFallbackKeys": [
     "export",
     "exampleHint",
@@ -219,6 +219,7 @@
     "javaCodeContract": "Java: public static float[] process(Map<String, float[]> channels, Params p). العودة p.rows * p.cols القيم . المعايير : p.input, p.gain, p.backend. اكتب أساليب هنا؛ يقدم التطبيق UserBlock الطبقة .",
     "compiledHint": "أول تشغيل يجمع الرمز الخاص بك (حتى 30 ثانية). في وقت لاحق ، يتم إعادة استخدام الإطار. الحد الأقصى لفترة بلوك ينطبق على التنفيذ. هذه المحولات معالجة القنوات المسطحة؛ OpenCV العمليات لا تزال كتل منفصلة في المحرك المحدد.",
     "blockMathRuntime": "يعمل هذا الكتلة كرمز تم تجميعه في اللغة المختارة.",
-    "blockVisionRuntime": "يستخدم اللغة المختارة محولًا لمحرك OpenCV المشترك. ويظل الخوارزميات والنسخة OpenCV هي نفسها."
+    "blockVisionRuntime": "يستخدم اللغة المختارة محولًا لمحرك OpenCV المشترك. ويظل الخوارزميات والنسخة OpenCV هي نفسها.",
+    "about": "حول التطبيق"
   }
 }

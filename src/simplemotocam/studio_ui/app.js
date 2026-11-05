@@ -60,6 +60,7 @@ function translateInterface() {
   $("interfaceDraft").hidden = ["sl", "en"].includes(state.view.locale);
   $("closeCatalog").setAttribute("aria-label", t("closeBlock"));
   syncClassroom();
+  syncAbout();
 }
 
 function el(tag, text, cls) {
@@ -862,7 +863,7 @@ $("export").onclick = () =>
     requireAppliedCode();
     download(
       await api("/api/export", state, true),
-      window.StaticStudio?.exportName || "simplemotocam_algorithm.py",
+      window.StaticStudio?.exportName || "simpleopencv_algorithm.py",
       window.StaticStudio?.exportMime || "text/x-python",
     );
     status(t("exported"));
@@ -981,6 +982,18 @@ function openClassroom(topic) {
 $("classroomFrame").onload = () => syncClassroom(classroomTopic);
 $("closeClassroom").onclick = () => $("classroom").close();
 $("guide").onclick = () => openClassroom();
+function syncAbout(){
+  $("aboutFrame").contentWindow?.postMessage({type:"about-locale",locale:state?.view.locale||"sl"},location.origin);
+}
+$("openAbout").onclick=()=>{
+  if(!$("aboutFrame").getAttribute("src"))$("aboutFrame").src=appUrl("/about.html?lang="+encodeURIComponent(state.view.locale));
+  $("about").showModal();syncAbout();
+};
+$("aboutFrame").onload=syncAbout;
+$("closeAbout").onclick=()=>$("about").close();
+window.addEventListener("message",event=>{
+  if(event.origin===location.origin&&event.source===$("aboutFrame").contentWindow&&event.data?.type==="about-close")$("about").close();
+});
 $("libraryGuide").onclick = () => openClassroom();
 function changeLocale(locale, program = state.view.codeLanguage) {
   if (!window.TRANSLATIONS.languages.some((l) => l.id === locale)) return;

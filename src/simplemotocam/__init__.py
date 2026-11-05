@@ -1,4 +1,4 @@
-"""SimpleMotocam: explicit channels, signed differences, composable experiments."""
+"""SimpleOpenCV: explicit channels, signed differences, composable experiments."""
 from .channels import ChannelFrame, exposure_confidence
 from .pipeline import ChannelPipeline, PipelineResult
 

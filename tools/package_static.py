@@ -11,15 +11,17 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'src'))
 from simplemotocam.studio_catalog import library_catalog
 from simplemotocam.studio_engine import KINDS,default_state
+from build_about import build as build_about
 
 
 def main():
+    build_about()
     vendor=ROOT/'deploy/static/vendor'
     for folder,filename in ((vendor,'opencv.js'),(vendor/'opencv24','opencv24.js')):
         provenance=json.loads((folder/'SOURCE.json').read_text(encoding='utf-8'))
         if hashlib.sha256((folder/filename).read_bytes()).hexdigest()!=provenance['sha256']:
             raise RuntimeError(filename+' differs from its pinned checksum')
-    output=ROOT/'dist/SimpleMotocam-HTML'
+    output=ROOT/'dist/SimpleOpenCV-HTML'
     if output.exists() and any(output.iterdir()) and not (output/'STATIC-EDITION.txt').exists():
         raise RuntimeError('Refusing to overwrite an unrelated output folder')
     output.mkdir(parents=True,exist_ok=True)
@@ -28,13 +30,16 @@ def main():
         target=output/relative;target.parent.mkdir(parents=True,exist_ok=True)
         target.write_bytes(data if isinstance(data,bytes) else data.encode('utf-8'));included[relative]=target
     def copy(source,relative):write(relative,source.read_bytes())
-    for relative in ('style.css','app.js'):
+    for relative in ('style.css','app.js','about.html'):
         copy(ROOT/'src/simplemotocam/studio_ui'/relative,relative)
     for source in (ROOT/'docs/opencv-2.4-manuals').rglob('*'):
         if source.is_file():copy(source,'manuals/'+source.relative_to(ROOT/'docs/opencv-2.4-manuals').as_posix())
     for source in (ROOT/'deploy/static').rglob('*'):
         if source.is_file():copy(source,source.relative_to(ROOT/'deploy/static').as_posix())
-    copy(ROOT/'LICENSE','LICENSE');copy(ROOT/'THIRD_PARTY_NOTICES.md','THIRD_PARTY_NOTICES.md')
+    copy(ROOT/'LICENSE','LICENSE')
+    write('THIRD_PARTY_NOTICES.md',(ROOT/'THIRD_PARTY_NOTICES.md').read_text(encoding='utf-8').replace('docs/licenses/simpleopencv/','licenses/').replace('deploy/static/vendor/','vendor/').replace('docs/opencv-2.4-manuals/','manuals/'))
+    for source in (ROOT/'docs/licenses/simpleopencv').rglob('*'):
+        if source.is_file():copy(source,'licenses/'+source.relative_to(ROOT/'docs/licenses/simpleopencv').as_posix())
     source=(ROOT/'src/simplemotocam/studio_ui/i18n.js').read_text(encoding='utf-8')
     catalogs=json.loads(source.split('window.STUDIO_I18N = ',1)[1].rstrip(';\n'))
     translations={'sl':'Izvozi JavaScript','en':'Export JavaScript','de':'JavaScript exportieren','fr':'Exporter JavaScript','es':'Exportar JavaScript','it':'Esporta JavaScript','pt':'Exportar JavaScript','hr':'Izvezi JavaScript','sr':'Извези JavaScript','ru':'Экспорт JavaScript','pl':'Eksportuj JavaScript','sv':'Exportera JavaScript','ja':'JavaScript をエクスポート','zh':'导出 JavaScript','ko':'JavaScript 내보내기','hi':'JavaScript निर्यात करें','ar':'تصدير JavaScript','id':'Ekspor JavaScript','th':'ส่งออก JavaScript','bn':'JavaScript রপ্তানি করুন','ne':'JavaScript निर्यात गर्नुहोस्'}
@@ -53,7 +58,7 @@ def main():
     html=html.replace('<title>','<link rel="icon" href="data:," />\n    <title>',1)
     html=html.replace('<body>','''<body>
     <div id="staticLoading" role="status" style="position:fixed;inset:0;z-index:1000;background:#f5faf9;display:grid;place-content:center;padding:32px;max-width:100vw">
-      <h1>SimpleMotocam · HTML</h1><p>Nalagam lokalni pogon OpenCV 2.4 … / Loading browser engine …</p>
+      <h1>SimpleOpenCV · HTML</h1><p>Nalagam lokalni pogon OpenCV 2.4 … / Loading browser engine …</p>
       <button id="staticReset" hidden>Reset current workspace (keep saved projects)</button>
       <noscript>Za uporabo omogoči JavaScript. / Enable JavaScript to use this application.</noscript>
     </div>''')
@@ -61,10 +66,10 @@ def main():
     html=html.replace('accept=".png,.jpg,.jpeg,.bmp,.webp,.avi,.mp4,.mov,.mkv"','accept=".png,.jpg,.jpeg,.bmp,.webp,.avi,.mp4,.webm,.mov,.mkv"')
     html=html.replace('<script src="app.js"></script>','<script src="browser-data.js"></script>\n    <script src="browser-engine.js"></script>\n    <script src="browser-studio.js"></script>\n    <script src="app.js"></script>')
     write('index.html',html)
-    write('STATIC-EDITION.txt','SimpleMotocam static HTML edition. Upload ALL files into the addon domain document root. No Python, Passenger or /api server. Open via HTTPS, not file://. Genuine OpenCV 2.4.13.7 (default) and OpenCV.js 4.13.0 (optional).\n')
+    write('STATIC-EDITION.txt','SimpleOpenCV static HTML edition. Upload ALL files into the addon domain document root. No Python, Passenger or /api server. Open via HTTPS, not file://. Genuine OpenCV 2.4.13.7 (default) and OpenCV.js 4.13.0 (optional).\n')
     manifest={name:hashlib.sha256(path.read_bytes()).hexdigest() for name,path in sorted(included.items())}
     write('PACKAGE-MANIFEST.json',json.dumps(manifest,indent=2)+'\n')
-    archive=ROOT/'dist/SimpleMotocam-HTML.zip'
+    archive=ROOT/'dist/SimpleOpenCV-HTML.zip'
     with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as package:
         for name,path in included.items():package.write(path,name)
     with zipfile.ZipFile(archive) as package:

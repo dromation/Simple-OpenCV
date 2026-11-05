@@ -1,4 +1,4 @@
-# SimpleMotocam / Simple OpenCV
+# SimpleOpenCV (formerly SimpleMotocam)
 
 Working folder: `D:\Dromation\org\apps\betas\SimpleMotocam`.
 

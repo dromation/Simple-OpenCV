@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "ed07b386caac8c10e57baffbd06f360517718e045b03762623e03eeec00a0aac",
+  "sourceDigest": "a90ecb15c027ee4d642cb2f9712b0f489bcc3c89488da8e23247a9328e25e042",
   "protectedFallbackKeys": [
     "export",
     "exampleHint",
@@ -209,6 +209,7 @@
     "javaCodeContract": "Java: public static float[] process(Map<String, float[]> channels, Params p). Powrót p.rows * p.cols i wartości. Wskaźniki parametrów: p.input, p.gain, p.backend. Wpisz tutaj metody; aplikacja dostarcza UserBlock w klasie .",
     "compiledHint": "Pierwsza runda gromadzi swój kod (do 30 sekund). Następnie ramy ponownie wykorzystują budowę. Okres blokowy obowiązuje do wykonania. Te adaptery przetwarzają kanały pływające; operacje OpenCV pozostają oddzielnymi blokami w wybranym silniku.",
     "blockMathRuntime": "Ten blok działa jako skompilowany kod w wybranym języku.",
-    "blockVisionRuntime": "Wybrany język używa adaptera do wspólnego silnika OpenCV. Algorytm i wersja OpenCV pozostają takie same."
+    "blockVisionRuntime": "Wybrany język używa adaptera do wspólnego silnika OpenCV. Algorytm i wersja OpenCV pozostają takie same.",
+    "about": "O aplikacji"
   }
 }

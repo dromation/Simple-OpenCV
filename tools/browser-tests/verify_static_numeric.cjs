@@ -1,5 +1,5 @@
 const {chromium}=require('playwright'),fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
-const url=process.env.STUDIO_TEST_URL||'http://127.0.0.1:8780/SimpleMotocam-HTML/';
+const url=process.env.STUDIO_TEST_URL||'http://127.0.0.1:8780/SimpleOpenCV-HTML/';
 (async()=>{
  const browser=await chromium.launch({headless:true,...(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH}:{}),args:['--use-fake-ui-for-media-stream','--use-fake-device-for-media-stream']});
  try{

@@ -1,4 +1,4 @@
-# SimpleMotocam HTML — addon domena / File Manager
+# SimpleOpenCV HTML — addon domena / File Manager
 
 To je samostojna brskalniška izdaja. **Ne potrebuje Python aplikacije, Django,
 Flask, Passengerja, Node.js ali API strežnika.** Vstopna datoteka je `index.html`.
@@ -6,7 +6,7 @@ Flask, Passengerja, Node.js ali API strežnika.** Vstopna datoteka je `index.htm
 1. V cPanel → Domains poglej **Document Root** svoje addon domene.
 2. V File Managerju odpri TO mapo. Najprej shrani varnostno kopijo obstoječega
    spletnega mesta. Če je mapa namenjena drugim datotekam, uporabi novo podmapo.
-3. Naloži **SimpleMotocam-HTML.zip** in klikni Extract. `index.html`, `app.js`,
+3. Naloži **SimpleOpenCV-HTML.zip** in klikni Extract. `index.html`, `app.js`,
    `browser-worker.js`, `vendor/` in `manuals/` morajo biti v isti mapi, kot so v
    ZIP-u. Naloži **celoten paket**, ne samo index.html. Ne potrebuješ starega
    cPanel/Python paketa ali njegovega `.htaccess` z `Require all denied`.
@@ -78,4 +78,12 @@ nista varnostni peskovnik za zlonamerno kodo.
 
 OpenCV 2.4: https://github.com/opencv/opencv/tree/2.4.13.7 (BSD, licenca v vendor/opencv24/).
 OpenCV.js 4.13: https://docs.opencv.org/4.13.0/ (Apache 2.0, priložena licenca v vendor/).
-SimpleMotocam: MIT, glej LICENSE. Arhivski priročniki imajo svoje izvirne licence.
+SimpleOpenCV: MIT, glej LICENSE. Arhivski priročniki imajo svoje izvirne licence.
+
+## O aplikaciji in licence
+
+Gumb **O aplikaciji** spodaj odpre zgodbo projekta in licence v isti aplikaciji.
+Priloženi so `LICENSE`, `THIRD_PARTY_NOTICES.md`, mapa `licenses/` z izvirnimi
+besedili in njihovimi kontrolnimi vsotami ter pregled `about.html`.
+Pri nadgradnji uporabi isto domeno in isto pot, da ohraniš projekte v brskalniku.
+Ime aplikacije je zdaj SimpleOpenCV; notranji ključi shrambe ostajajo združljivi.

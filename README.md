@@ -1,4 +1,4 @@
-# SimpleMotocam · Simple OpenCV
+# SimpleOpenCV
 
 **Build a vision algorithm. Inspect the mathematics. Save what works.**
 
@@ -8,9 +8,13 @@
 
 A local visual laboratory for experimental computer vision, built on the original Simple-OpenCV repository. Arrange processing blocks, change equations and parameters, inspect live channel data, then export a standalone Python algorithm.
 
-![Actual SimpleMotocam studio: channel blocks, editable mathematics and live previews](docs/images/studio-builder.png)
+![Actual SimpleOpenCV studio: channel blocks, editable mathematics and live previews](docs/images/studio-builder.png)
 
 [Start here](#run-locally) · [Studio guide](docs/STUDIO.md) · [Learning companion](docs/opencv-2.4-manuals/learning/README.en.md) · [Contribute](CONTRIBUTING.md) · [Slovensko](#slovensko)
+
+The application was previously called SimpleMotocam. The internal `simplemotocam`
+Python package and storage identifiers remain compatible with existing projects.
+Open **About** in the application for the project story and offline license texts.
 
 ## From pixels to an experiment
 
@@ -30,7 +34,7 @@ The default moving part is synthetic. No camera is opened automatically. Images 
 ## Run locally
 
 **Addon domain / File Manager only:** use the [static HTML edition](deploy/static/UPLOAD-HTML.md).
-Upload and extract `SimpleMotocam-HTML.zip` in the domain's document root; its
+Upload and extract `SimpleOpenCV-HTML.zip` in the domain's document root; its
 `index.html` runs the studio entirely in the browser with **genuine OpenCV 2.4.13.7
 WebAssembly as the default**, and OpenCV.js 4.13.0 as an optional second engine.
 No Python app or `/api` server is required. This edition keeps the block builder,
@@ -146,7 +150,7 @@ New application code and project-authored material use the **MIT license**, reta
 
 ## Slovensko
 
-SimpleMotocam je lokalni laboratorij za sestavljanje algoritmov računalniškega vida. Zaženi namestitev, nato `Start-SimpleMotocam.cmd`. Bloke dodajaš iz leve knjižnice, spreminjaš enačbe in drsnike, spremljaš dejanske rezultate ter shraniš stanje ali izvoziš samostojno Python datoteko. [Navodila za studio](docs/STUDIO.md) opisujejo delovanje in omejitve; [slovenski učni vodič](docs/opencv-2.4-manuals/learning/README.sl.md) vključuje matematične razlage. Kamera se vključi šele ob izrecno izbranem zajemu. Meroslovje in geometrija ostajata naslednja razvojna modula.
+SimpleOpenCV je lokalni laboratorij za sestavljanje algoritmov računalniškega vida. Zaženi namestitev, nato `Start-SimpleMotocam.cmd`. Bloke dodajaš iz leve knjižnice, spreminjaš enačbe in drsnike, spremljaš dejanske rezultate ter shraniš stanje ali izvoziš samostojno Python datoteko. [Navodila za studio](docs/STUDIO.md) opisujejo delovanje in omejitve; [slovenski učni vodič](docs/opencv-2.4-manuals/learning/README.sl.md) vključuje matematične razlage. Kamera se vključi šele ob izrecno izbranem zajemu. Meroslovje in geometrija ostajata naslednja razvojna modula.
 
 ### OpenCV 2.4 processing in the same studio
 

@@ -82,7 +82,7 @@ def main(argv=None) -> int:
                 for name, plane in result.differences.items():
                     peaks[name] = max(peaks[name], float(np.abs(plane).max()))
                 if args.show:
-                    cv2.imshow("SimpleMotocam channel laboratory", preview(result))
+                    cv2.imshow("SimpleOpenCV channel laboratory", preview(result))
                     if cv2.waitKey(30) & 0xFF in (27, ord("q")):
                         break
                 if processed >= args.frames:

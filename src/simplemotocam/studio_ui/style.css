@@ -719,7 +719,7 @@ header {
   color: #ae3b3b;
   background: #fff0ed;
 }
-#classroom {
+#classroom, #about {
   width: min(1320px, 96vw);
   max-width: 96vw;
   height: 92dvh;
@@ -727,7 +727,7 @@ header {
   padding: 0;
   overflow: hidden;
 }
-#classroom[open] {
+#classroom[open], #about[open] {
   display: flex;
   flex-direction: column;
 }
@@ -743,7 +743,7 @@ header {
 .classroom-head h2 {
   margin: 0;
 }
-#closeClassroom {
+#closeClassroom, #closeAbout {
   position: absolute;
   top: 8px;
   right: 10px;
@@ -752,7 +752,7 @@ header {
   font-size: 23px;
   padding: 0;
 }
-#classroomFrame {
+#classroomFrame, #aboutFrame {
   width: 100%;
   flex: 1;
   min-height: 0;
@@ -805,7 +805,7 @@ html[dir="rtl"] #name {
   .app-language select {
     max-width: 100%;
   }
-  #classroom {
+  #classroom, #about {
     width: 98vw;
     max-width: 98vw;
     height: 96dvh;

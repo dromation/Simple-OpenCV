@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "ed07b386caac8c10e57baffbd06f360517718e045b03762623e03eeec00a0aac",
+  "sourceDigest": "a90ecb15c027ee4d642cb2f9712b0f489bcc3c89488da8e23247a9328e25e042",
   "protectedFallbackKeys": [
     "export",
     "signedMath",
@@ -216,6 +216,7 @@
     "javaCodeContract": "Java: public static float[] process(Map<String, float[]> channels, Params p). ফিরে আসুন p.rows * p.cols মূল্য প্যারামিটার : p.input, p.gain, p.backend. এখানে পদ্ধতি লিখুন; অ্যাপ্লিকেশন সরবরাহ করে UserBlock শ্রেণী",
     "compiledHint": "প্রথম রান আপনার কোড সংগ্রহ করে (অর্ধেক 30 সেকেন্ড পর্যন্ত)। পরবর্তী ধারাবাহিকতা পুনরায় নির্মাণ করা হয়। ব্লক সময়মাত্রা নির্ধারণের জন্য প্রযোজ্য। এই অ্যাডেটরগুলি ফ্লাইট চ্যানেলগুলি প্রক্রিয়া করে; OpenCV অপারেশনগুলি নির্বাচিত মেশিনে আলাদা ব্লকগুলি থাকবে।",
     "blockMathRuntime": "এই ব্লক নির্বাচিত ভাষায় সংযুক্ত কোড হিসাবে কাজ করে।",
-    "blockVisionRuntime": "নির্বাচিত ভাষা একটি সংশ্লিষ্ট OpenCV ইঞ্জিনের জন্য একটি সংশ্লিষ্ট ব্যবহার করে। অ্যালগরিম এবং OpenCV সংস্করণ একই থাকবে।"
+    "blockVisionRuntime": "নির্বাচিত ভাষা একটি সংশ্লিষ্ট OpenCV ইঞ্জিনের জন্য একটি সংশ্লিষ্ট ব্যবহার করে। অ্যালগরিম এবং OpenCV সংস্করণ একই থাকবে।",
+    "about": "অ্যাপ সম্পর্কে"
   }
 }

@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "ed07b386caac8c10e57baffbd06f360517718e045b03762623e03eeec00a0aac",
+  "sourceDigest": "a90ecb15c027ee4d642cb2f9712b0f489bcc3c89488da8e23247a9328e25e042",
   "protectedFallbackKeys": [
     "export",
     "signedMath",
@@ -215,6 +215,7 @@
     "javaCodeContract": "Java: public static float[] process(Map<String, float[]> channels, Params p). 復帰 p.rows * p.cols 価値観 パラメーター: p.input, p.gain, p.backend. 手順をここで書く; アプリケーションが提供する UserBlock クラス",
     "compiledHint": "最初のラウンドはコードを編集します( 30 秒まで)。 後で再利用する構造。 ブロック時間制限は実行に適用されます。 これらのアダプターは流通チャネルを処理し、 OpenCV 作業は選択されたエンジンに別々のブロックを残します。",
     "blockMathRuntime": "このブロックは、選択された言語で編集されたコードとして実行されます。",
-    "blockVisionRuntime": "選択した言語は、共有 OpenCV エンジンのアダプターを使用します。 アルゴリズムと OpenCV バージョンは同じです。"
+    "blockVisionRuntime": "選択した言語は、共有 OpenCV エンジンのアダプターを使用します。 アルゴリズムと OpenCV バージョンは同じです。",
+    "about": "このアプリについて"
   }
 }

@@ -4,7 +4,7 @@
   "model": "facebook/m2m100_418M",
   "revision": "55c2e61bbf05dfb8d7abccdc3fae6fc8512fd636",
   "pipelineVersion": "protected-sentences-v2-beam4",
-  "sourceDigest": "ed07b386caac8c10e57baffbd06f360517718e045b03762623e03eeec00a0aac",
+  "sourceDigest": "a90ecb15c027ee4d642cb2f9712b0f489bcc3c89488da8e23247a9328e25e042",
   "protectedFallbackKeys": [
     "export",
     "exampleHint",
@@ -207,6 +207,7 @@
     "javaCodeContract": "Java: public static float[] process(Map<String, float[]> channels, Params p). Tillbaka p.rows * p.cols värderingar . Parametrar är: p.input, p.gain, p.backend. Skriv metoder här; ansökan ger UserBlock Klassen är.",
     "compiledHint": "Den första körningen sammanställer din kod (upp till 30 sekunder). Därefter återanvänds ramarna av byggnaden. Blocktidsgränsen gäller för verkställighet. Dessa adaptrar behandlar flytande kanaler; OpenCV-operationer förblir separata block i den valda motorn.",
     "blockMathRuntime": "Denna block körs som sammanställd kod i det valda språket.",
-    "blockVisionRuntime": "Det valda språket använder en adapter till den delade OpenCV-motorn. Algoritmen och OpenCV versionen förblir densamma."
+    "blockVisionRuntime": "Det valda språket använder en adapter till den delade OpenCV-motorn. Algoritmen och OpenCV versionen förblir densamma.",
+    "about": "Om appen"
   }
 }
