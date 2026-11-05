@@ -8,3 +8,6 @@ deploy/static/vendor/opencv24/Emscripten-LICENSE.txt -text -whitespace
 docs/licenses/simpleopencv/** -text -whitespace
 # Generated page embeds unmodified license notices in preformatted sections.
 src/simplemotocam/studio_ui/about.html -whitespace
+
+# Historical snapshot: preserve original bytes and whitespace.
+legacy/original-main/** -text -whitespace
