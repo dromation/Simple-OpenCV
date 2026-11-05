@@ -1,0 +1,2 @@
+# Preserve the exact upstream byte stream verified by SOURCE.json on all hosts.
+deploy/static/vendor/opencv.js -text -diff

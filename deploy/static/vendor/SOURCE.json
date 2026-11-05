@@ -1,0 +1,10 @@
+{
+  "library": "OpenCV.js",
+  "version": "4.13.0",
+  "url": "https://docs.opencv.org/4.13.0/opencv.js",
+  "downloaded": "2026-11-05",
+  "sha256": "63366510248adf3a7eddf3e793dd825404efb7df3749f4d6f8557c7fa4ca8aa0",
+  "license": "Apache-2.0",
+  "license_url": "https://raw.githubusercontent.com/opencv/opencv/4.13.0/LICENSE",
+  "wasm": "embedded in opencv.js; no CDN or separate download at runtime"
+}

@@ -29,6 +29,14 @@ The default moving part is synthetic. No camera is opened automatically. Images 
 
 ## Run locally
 
+**Addon domain / File Manager only:** use the [static HTML edition](deploy/static/UPLOAD-HTML.md).
+Upload and extract `SimpleMotocam-HTML.zip` in the domain's document root; its
+`index.html` runs the studio entirely in the browser with bundled OpenCV.js 4.13.0.
+No Python app or `/api` server is required. This edition keeps the block builder,
+classroom, image/video/camera inputs, local project storage and JavaScript export.
+It is a separate engine from OpenCV 2.4; C/C++/Java/Python code remains a draft
+unless run in the original desktop/server edition. Build: `python tools/package_static.py`.
+
 Requires Python 3.10+ and a modern browser. On Windows, double-click **Install-SimpleMotocam.cmd**, then **Start-SimpleMotocam.cmd**. The installer uses the project's isolated `.venv` environment.
 
 Or install from source:

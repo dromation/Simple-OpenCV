@@ -8,7 +8,9 @@
     "test:backends": "node verify_backends.cjs",
     "test:sequences": "node verify_sequences.cjs",
     "test:empty-block": "node verify_empty_block.cjs",
-    "test:compiled": "node verify_compiled.cjs"
+    "test:compiled": "node verify_compiled.cjs",
+    "test:static": "node verify_static.cjs",
+    "test:static:numeric": "node verify_static_numeric.cjs"
   },
   "devDependencies": {
     "playwright": "1.62.1"

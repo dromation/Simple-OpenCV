@@ -77,6 +77,7 @@ function status(text, error = false) {
   }
 }
 async function api(path, data, raw = false) {
+  if (window.StaticStudio) return window.StaticStudio.api(path, data, raw);
   const r = await fetch(
     appUrl(path),
     data === undefined
@@ -98,6 +99,11 @@ async function api(path, data, raw = false) {
 }
 function appUrl(path) {
   return new URL(path.replace(/^\/+/, ""), document.baseURI).href;
+}
+async function uploadMedia(body, extension) {
+  if(window.StaticStudio)return window.StaticStudio.upload(body,extension);
+  const response=await fetch(appUrl("/api/upload"),{method:"POST",headers:{"X-Studio-Token":token,"X-File-Extension":extension},body});
+  const data=await response.json();if(!response.ok)throw Error(data.error);return data;
 }
 function serial(fn) {
   const p = queue.then(fn);
@@ -189,11 +195,11 @@ function entryCompatible(entry) {
 function renderBackend() {
   const select=$("opencvBackend");select.replaceChildren();
   for(const [id, backend] of Object.entries(catalog.backends)) {
-    const option=new Option((id==="opencv24" ? "OpenCV 2.4.13.7" : t("engineCurrent")+" · "+backend.version)+(backend.available?"":" · "+t("engineUnavailable")),id);
+    const option=new Option((id==="browser" ? "OpenCV.js · "+backend.version : id==="opencv24" ? "OpenCV 2.4.13.7" : t("engineCurrent")+" · "+backend.version)+(backend.available?"":" · "+t("engineUnavailable")),id);
     option.disabled=!backend.available;select.append(option);
   }
   select.value=state.backend?.id || "current";
-  $("backendBadge").textContent="OpenCV "+activeBackend().version;
+  $("backendBadge").textContent=(state.backend?.id==="browser"?"OpenCV.js ":"OpenCV ")+activeBackend().version;
   $("backendBadge").title=t("engineScope");
   if(state.backend?.id==="opencv24")$("backendBadge").title=sequenceText("ui.primary")+" · "+t("engineScope");
 }
@@ -342,6 +348,7 @@ function add(kind, index = state.nodes.length, overrides = {}) {
       enabled: true,
       params: p,
     };
+    if(window.StaticStudio)node.runtime=window.StaticStudio.defaultRuntime;
     state.nodes.splice(index, 0, node);
     selected = node.id;
   });
@@ -675,7 +682,7 @@ function renderInspector() {
     const actions=el("div",undefined,"custom-code-actions");actions.append(draft,apply);
     const contract={c:"cCodeContract",cpp:"cppCodeContract",java:"javaCodeContract"}[node.runtime];
     codePanel.append(actions,el("p",t(contract || "codeContract")),el("small",t("codeHint")));
-    if(contract)codePanel.append(el("p",t("compiledHint"),"note"));
+    if(contract&&!window.StaticStudio)codePanel.append(el("p",t("compiledHint"),"note"));
     $("parameters").prepend(codePanel);
   }
   if (state.nodes.indexOf(node)>=2) {
@@ -767,6 +774,7 @@ function render() {
 async function frame(runCode = false) {
   if (!valid) return;
   const data = await api("/api/frame", {runCode:runCode === true});
+  if(data.needsSourceRun){running=false;status(t("run")+" · "+t("camera"));return;}
   if (data.needsCodeRun) {running=false;$("run").textContent="▶ "+t("run");status(t("needsCodeRun"));return;}
   if (data.ended) {
     running = false;
@@ -854,8 +862,8 @@ $("export").onclick = () =>
     requireAppliedCode();
     download(
       await api("/api/export", state, true),
-      "simplemotocam_algorithm.py",
-      "text/x-python",
+      window.StaticStudio?.exportName || "simplemotocam_algorithm.py",
+      window.StaticStudio?.exportMime || "text/x-python",
     );
     status(t("exported"));
   });
@@ -913,16 +921,7 @@ $("media").onchange = () => {
   if (!file) return;
   serial(async () => {
     if (file.size > 100 * 1024 * 1024) throw Error(t("mediaLarge"));
-    const r = await fetch(appUrl("/api/upload"), {
-      method: "POST",
-      headers: {
-        "X-Studio-Token": token,
-        "X-File-Extension": "." + file.name.split(".").pop().toLowerCase(),
-      },
-      body: file,
-    });
-    const data = await r.json();
-    if (!r.ok) throw Error(data.error);
+    const data = await uploadMedia(file,"." + file.name.split(".").pop().toLowerCase());
     remember();
     state.source = { ...state.source, type: data.type, asset: data.asset };
     const config = await api("/api/config", state);
@@ -943,8 +942,7 @@ async function loadDetectionSequence(id) {
     if(item.sample){
       const response=await fetch(appUrl("/manuals/learning/"+item.sample));
       if(!response.ok)throw Error("Missing lesson test scene");
-      const upload=await fetch(appUrl("/api/upload"),{method:"POST",headers:{"X-Studio-Token":token,"X-File-Extension":".png"},body:await response.arrayBuffer()});
-      const asset=await upload.json();if(!upload.ok)throw Error(asset.error);
+      const asset=await uploadMedia(await response.arrayBuffer(),".png");
       next.source={type:asset.type,asset:asset.asset,camera:0};
     }
     await load(next);$("classroom").close();
@@ -1044,4 +1042,8 @@ async function start() {
   await frame();
   await frame();
 }
-start().catch((e) => status(e.message, true));
+start().catch((e) => {
+  status(e.message, true);
+  const loading=document.getElementById("staticLoading");
+  if(loading){loading.querySelector("p").textContent=e.message;loading.querySelector("button").hidden=false;}
+});
