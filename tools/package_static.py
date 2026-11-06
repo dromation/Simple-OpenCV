@@ -66,7 +66,7 @@ def main():
     html=html.replace('accept=".png,.jpg,.jpeg,.bmp,.webp,.avi,.mp4,.mov,.mkv"','accept=".png,.jpg,.jpeg,.bmp,.webp,.avi,.mp4,.webm,.mov,.mkv"')
     html=html.replace('<script src="app.js"></script>','<script src="portable-host.js"></script>\n    <script src="browser-data.js"></script>\n    <script src="browser-engine.js"></script>\n    <script src="browser-studio.js"></script>\n    <script src="app.js"></script>\n    <script src="downloads.js"></script>')
     write('index.html',html)
-    write('STATIC-EDITION.txt','SimpleOpenCV static HTML edition. Upload ALL files into the addon domain document root. No Python, Passenger or /api server. Open via HTTPS, not file://. Genuine OpenCV 2.4.13.7 (default) and OpenCV.js 4.13.0 (optional).\n')
+    write('STATIC-EDITION.txt','SimpleOpenCV browser edition. Processing runs locally in the browser. Genuine OpenCV 2.4.13.7 (default) and OpenCV.js 4.13.0 (optional). No Python server required.\n')
     manifest={name:hashlib.sha256(path.read_bytes()).hexdigest() for name,path in sorted(included.items())}
     write('PACKAGE-MANIFEST.json',json.dumps(manifest,indent=2)+'\n')
     archive=ROOT/'dist/SimpleOpenCV-HTML.zip'

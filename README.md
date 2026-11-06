@@ -16,7 +16,7 @@ language in the header. Existing saved language and engine choices are preserved
 
 ![SimpleOpenCV running its synthetic demonstration](docs/images/simpleopencv-studio.png)
 
-[Download](#download-and-run) · [Host on your domain](#put-it-on-your-domain) ·
+[Download](#download-and-run) · [Browser edition](docs/BROWSER_EDITION.md) ·
 [Classroom](docs/DETECTION_SEQUENCES.md) · [Contribute](CONTRIBUTING.md) ·
 [Code of conduct](CODE_OF_CONDUCT.md) · [Licenses](THIRD_PARTY_NOTICES.md) · [Legacy](legacy/README.md)
 
@@ -39,18 +39,6 @@ Use a current browser with WebAssembly. Keep the launcher running; **Quit deskto
 app** in the footer stops it. Linux extractors must preserve executable permissions
 (`chmod +x SimpleOpenCV` if necessary). Community builds are unsigned and macOS
 bundles are not notarized. [Startup details and build instructions](docs/PORTABLE.md).
-
-## Put it on your domain
-
-Download [SimpleOpenCV-Website.zip](https://github.com/dromation/Simple-OpenCV/releases/download/v0.6.0/SimpleOpenCV-Website.zip),
-upload it with cPanel File Manager and extract **all files** into the domain's
-document root. `index.html` is at the ZIP root. This package includes the five
-desktop downloads behind the page's download button.
-
-Hosting only serves files: processing runs in the user's browser. No Python app,
-Flask, Django, Passenger or API server is required. Use HTTPS for hosted camera
-access. The smaller HTML ZIP uses GitHub release links for downloads instead.
-[Upload instructions](deploy/static/UPLOAD-HTML.md).
 
 ## Experiment with the whole sequence
 

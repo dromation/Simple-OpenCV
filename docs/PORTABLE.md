@@ -51,9 +51,6 @@ is larger because it includes all five downloads. The smaller HTML ZIP uses the
 GitHub release links instead. Portable executables embed only the app, not the
 other platform archives, so there is no recursive packaging.
 
-Upload/extract the complete Website ZIP into the addon domain's document root.
-Use HTTPS for hosted camera access. No Python hosting application is needed.
-
 The launcher only serves embedded files; it has no file-upload or arbitrary
 filesystem endpoint. Host checks and an origin/token-protected shutdown endpoint
 restrict access. Go runtime LICENSE/PATENTS and upstream engine notices are

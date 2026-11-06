@@ -1,4 +1,4 @@
-"""Build self-contained Windows/Linux/macOS launchers and a cPanel download site.
+"""Build self-contained Windows/Linux/macOS launchers and a static website package.
 
 No external Go modules. Supply Go 1.27.3 with --go; no system installation needed.
 Build static HTML first. Each executable embeds only that application, never the
