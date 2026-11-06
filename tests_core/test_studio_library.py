@@ -14,6 +14,7 @@ from simplemotocam.studio_engine import (
     demo_frame,
 )
 from simplemotocam.studio_runtime import runtime_catalog
+from simplemotocam.studio_backend import backend_catalog
 from simplemotocam.studio_catalog import library_catalog, save_library_block
 from simplemotocam.studio import StudioSession, export_python
 
@@ -202,15 +203,27 @@ def test_runtime_compatibility():
         validate_state(state_for("components", minArea=1.2))
 
 
-def test_examples_and_saved_dependencies(tmp_path):
+@pytest.mark.parametrize("backend", ["current", "opencv24"])
+def test_library_examples(tmp_path, backend):
+    if not backend_catalog()[backend]["available"]:
+        pytest.skip("Native OpenCV 2.4 worker required")
     catalog = library_catalog(tmp_path)
     examples = [e for e in catalog["entries"] if e["type"] == "example"]
     assert len(examples) >= 5
+    tested = 0
     for entry in examples:
+        if entry["state"].get("backend", {}).get("id", "current") != backend:
+            continue
         values, ready = StudioPipeline(entry["state"]).process(demo_frame(0, 160, 120))
         assert np.isfinite(values[entry["state"]["view"]["result"]]).all()
         if entry["id"] == "example:lines":
             assert np.count_nonzero(values["lines"]) > 100
+        tested += 1
+    assert tested > 0
+
+
+def test_examples_and_saved_dependencies(tmp_path):
+    catalog = library_catalog(tmp_path)
     assert len([e for e in catalog["entries"] if e["type"] == "reference"]) == 37
     assert any(e["id"] == "api:Canny" for e in catalog["entries"])
     state = default_state()

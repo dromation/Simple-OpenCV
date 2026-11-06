@@ -39,8 +39,13 @@ def main():
         str(target),
     ]
     try:
+        subprocess.run(git + ["init"], check=True)
+        # Preserve exact upstream blobs. OpenCV's own attributes request CRLF
+        # for some files even when core.autocrlf is false; manifests hash bytes.
+        (target / ".git/info/attributes").write_text(
+            "* -text -eol -filter -ident\n", encoding="utf-8"
+        )
         for command in [
-            ["init"],
             ["remote", "add", "origin", url],
             ["fetch", "--depth", "1", "origin", revision],
             ["checkout", "--detach", "FETCH_HEAD"],
