@@ -3,6 +3,7 @@ on: [push, pull_request]
 jobs:
   static-html:
     runs-on: ubuntu-22.04
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -17,7 +18,11 @@ jobs:
       - run: python tools/build_opencv24_linux.py --jobs 2
       - run: python tools/browser-tests/static_reference.py
       - run: npm ci --prefix tools/browser-tests
-      - run: npm exec --prefix tools/browser-tests -- playwright install --with-deps chromium
+      - name: Use the runner's installed Chrome
+        run: |
+          chrome_path="$(command -v google-chrome)"
+          "$chrome_path" --version
+          echo "CHROME_PATH=$chrome_path" >> "$GITHUB_ENV"
       - run: |
           python -m http.server 8780 --bind 127.0.0.1 --directory dist > /tmp/static-studio.log 2>&1 &
           node tools/browser-tests/verify_static.cjs
